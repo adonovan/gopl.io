@@ -3,31 +3,52 @@
 <meta name="go-import" content="gopl.io git https://github.com/adonovan/gopl.io"></meta>
 <title>The Go Programming Language</title>
 <style>
+@font-face {
+	font-family:	MinionPro;
+	font-weight:	normal;
+	src: 		url("fonts/MinionPro-Regular.ttf");
+}
+@font-face {
+	font-family:	Lato;
+	font-weight:	bold;
+	src: 		url("fonts/Lato-Bold.ttf");
+}
+@font-face {
+	font-family:	InconsolataGo;
+	font-weight:	normal;
+	src: 		url("fonts/InconsolataGo-Regular.ttf");
+}
+body {
+	font-family:	MinionPro,"Times New Roman";
+}
 table {
 	margin:	auto;
 }
 h1 {
-	font-family:	Helvetica;
+	font-family:	Lato,Helvetica;
 }
 td {
 	padding:	1em;
 }
+code, pre {
+	font-family:	InconsolataGo;
+}
 p {
-	line-height:   130%;
+	font-size:	110%;
+	line-height:	130%;
 }
 .center {
 	text-align:	center;
 }
 .bio {
-	font-size:	85%;
+	font-size:	95%;
 	text-align:	justify;
 }
 .sm {
 	font-size: 80%;
 }
 #toc h1 {
-	font-family:	"Times New Roman";
-	font-size:	85%;
+	font-size:	95%;
 	font-weight:    normal;
 }
 </style>
@@ -59,7 +80,7 @@ Addison-Wesley; 320pp; ISBN:&nbsp;978-0134190440<br/>
 <td>
 <h1>7. Interfaces</h1>
 <h1>8. Concurrency</h1>
-<h1>9. Packages and the <code>go</code> Tool</h1>
+<h1>9. Packages and the Go Tool</h1>
 <h1>10. Testing</h1>
 <h1>11. Reflection</h1>
 <h1>12. Low-Level Programming</h1>
