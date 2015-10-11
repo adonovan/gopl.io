@@ -3,7 +3,7 @@
 This repository provides the downloadable example programs
 for the book, "The Go Programming Language"; see http://www.gopl.io.
 
-(At present, only gopl.io/ch1/helloworld is available.  The other
+(At present, only `gopl.io/ch1/helloworld` is available.  The other
 programs will be published as soon as the book is printed.)
 
 All programs are licensed for use under the terms of
