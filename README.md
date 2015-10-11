@@ -6,9 +6,9 @@ for the book, "The Go Programming Language"; see http://www.gopl.io.
 (At present, only `gopl.io/ch1/helloworld` is available.  The other
 programs will be published as soon as the book is printed.)
 
-All programs are licensed for use under the terms of
-Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+
+These example programs are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 You can download, build, and run the programs with the following commands:
 
