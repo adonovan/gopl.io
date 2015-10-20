@@ -1,0 +1,30 @@
+@font-face {
+	font-family:	MinionPro;
+	font-weight:	normal;
+	src: 		url("fonts/MinionPro-Regular.ttf");
+}
+@font-face {
+	font-family:	Lato;
+	font-weight:	bold;
+	src: 		url("fonts/Lato-Bold.ttf");
+}
+@font-face {
+	font-family:	Consolas;
+	font-weight:	normal;
+	src: 		url("fonts/Consolas.ttf");
+}
+body {
+	font-family:	MinionPro,"Times New Roman";
+}
+table {
+	margin:		auto;
+}
+h1 {
+	font-family:	Lato,Helvetica;
+	margin-top:	0;
+	margin-bottom:	0.5em;
+}
+code, pre {
+	font-family:	Consolas;
+    	font-size:	92%; 
+}

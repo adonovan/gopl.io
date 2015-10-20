@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>The Go Programming Language - Errata</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <style>
+body {
+	width:	38em;
+	margin: auto;
+}
+pre {
+	padding-left: 1em;
+}
+  </style>
+</head>
+<body>
+  <h1>Errata</h1>
+  <p>
+    <b>p.13</b>: As printed, the <code>gopl.io/ch1/lissajous</code> program
+    is deterministic, not random.  We've added this statement to
+    the downloadable program so that it prints a pseudo-random image
+    each time it is run. (Thanks to Randall McPherson.)
+  </p>
+  <pre>rand.Seed(time.Now().UTC().UnixNano())</pre>
+</body>
+</html>
