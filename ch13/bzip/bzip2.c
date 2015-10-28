@@ -1,4 +1,7 @@
 // Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// See page 362.
 
 //!+
 /* This file is gopl.io/ch13/bzip/bzip2.c,         */

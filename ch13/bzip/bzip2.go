@@ -1,4 +1,7 @@
 // Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// See page 362.
 //!+
 
 // Package bzip provides a writer that uses bzip2 compression (bzip.org).

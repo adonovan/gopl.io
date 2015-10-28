@@ -1,4 +1,8 @@
 // Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// See page 365.
+
 //!+
 
 // Bzipper reads input, bzip2-compresses it, and writes it out.
