@@ -35,6 +35,17 @@ pre {
   </p>
 
   <p>
+    <b>p.68</b>: the table of UTF-8 encodings is missing a bit from each first byte.
+    The corrected table is shown below.  (Thanks to Akshay Kumar, 2015-11-02.)
+  </p>
+  
+  <pre>
+0xxxxxxx                             runes 0−127     (ASCII)
+110xxxxx 10xxxxxx                    128−2047        (values <128 unused)
+1110xxxx 10xxxxxx 10xxxxxx           2048−65535      (values <2048 unused)
+11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  65536−0x10ffff  (other values unused)</pre>
+
+  <p>
     <b>p.74</b>: the comment in <code>gopl.io/ch3/printints</code> should say
     <code>fmt.Sprint</code>, not <code>fmt.Sprintf</code>.
   </p>
