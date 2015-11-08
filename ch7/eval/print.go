@@ -1,8 +1,6 @@
 // Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
 // License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-//+build ignore
-
 package eval
 
 import (
@@ -26,19 +24,19 @@ func write(buf *bytes.Buffer, e Expr) {
 	case Var:
 		fmt.Fprintf(buf, "%s", e)
 
-	case *unary:
+	case unary:
 		fmt.Fprintf(buf, "(%c", e.op)
 		write(buf, e.x)
 		buf.WriteByte(')')
 
-	case *binary:
+	case binary:
 		buf.WriteByte('(')
 		write(buf, e.x)
 		fmt.Fprintf(buf, " %c ", e.op)
 		write(buf, e.y)
 		buf.WriteByte(')')
 
-	case *call:
+	case call:
 		fmt.Fprintf(buf, "%s(", e.fn)
 		for i, arg := range e.args {
 			if i > 0 {
@@ -47,5 +45,8 @@ func write(buf *bytes.Buffer, e Expr) {
 			write(buf, arg)
 		}
 		buf.WriteByte(')')
+
+	default:
+		panic(fmt.Sprintf("unknown Expr: %T", e))
 	}
 }

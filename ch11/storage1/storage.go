@@ -13,7 +13,9 @@ import (
 	"net/smtp"
 )
 
-func bytesInUse(username string) int64 { return 0 /* ... */ }
+var usage = make(map[string]int64)
+
+func bytesInUse(username string) int64 { return usage[username] }
 
 // Email sender configuration.
 // NOTE: never put passwords in source code!

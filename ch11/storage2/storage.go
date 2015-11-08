@@ -4,7 +4,6 @@
 // See page 312.
 
 // Package storage is part of a hypothetical cloud storage server.
-//!+main
 package storage
 
 import (
@@ -13,7 +12,6 @@ import (
 	"net/smtp"
 )
 
-// NOTE: this differs slightly from the printed version.
 var usage = make(map[string]int64)
 
 func bytesInUse(username string) int64 { return usage[username] }

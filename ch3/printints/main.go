@@ -12,7 +12,7 @@ import (
 )
 
 //!+
-// intsToString is like fmt.Sprintf(values) but adds commas.
+// intsToString is like fmt.Sprint(values) but adds commas.
 func intsToString(values []int) string {
 	var buf bytes.Buffer
 	buf.WriteByte('[')
