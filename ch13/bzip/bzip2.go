@@ -34,6 +34,8 @@ func NewWriter(out io.Writer) io.WriteCloser {
 		verbosity  = 0
 		workFactor = 30
 	)
+	// NOTE: This code may not work in future Go releases.
+	// See http://www.gopl.io/errata.html for explanation.
 	w := &writer{w: out, stream: new(C.bz_stream)}
 	C.BZ2_bzCompressInit(w.stream, blockSize, verbosity, workFactor)
 	return w
