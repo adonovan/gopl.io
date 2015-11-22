@@ -69,5 +69,20 @@ pre {
     <b>p.166, ¶2</b>: for "way", read "a way".
   </p>
 
+  <p>
+    <b>p.362</b>: the <code>gopl.io/ch13/bzip</code> program
+    does not comply with the
+    <a href='https://github.com/golang/proposal/blob/master/design/12416-cgo-pointers.md'>proposed rules for passing pointers between Go and C code</a>
+    because the C function <code>bz2compress</code> temporarily stores a Go
+    pointer (<code>in</code>) into the Go heap
+    (the <code>bzstream</code> variable).
+
+    The <code>bz_stream</code> variable should be allocated, and
+    explicitly freed after the call to
+    <code>BZ2_bzCompressEnd</code>, by C functions.
+
+    (Thanks to Joe Tsai, 2015-11-18.)
+  </p>
+
 </body>
 </html>
