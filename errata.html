@@ -75,7 +75,7 @@ pre {
     <a href='https://github.com/golang/proposal/blob/master/design/12416-cgo-pointers.md'>proposed rules for passing pointers between Go and C code</a>
     because the C function <code>bz2compress</code> temporarily stores a Go
     pointer (<code>in</code>) into the Go heap
-    (the <code>bzstream</code> variable).
+    (the <code>bz_stream</code> variable).
 
     The <code>bz_stream</code> variable should be allocated, and
     explicitly freed after the call to
