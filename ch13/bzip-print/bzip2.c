@@ -2,6 +2,11 @@
 // License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 // See page 362.
+// This is the version that appears in print,
+// but it does not comply with the proposed
+// rules for passing pointers between Go and C.
+// (https://github.com/golang/proposal/blob/master/design/12416-cgo-pointers.md)
+// See gopl.io/ch13/bzip for an updated version.
 
 //!+
 /* This file is gopl.io/ch13/bzip/bzip2.c,         */
@@ -17,12 +22,6 @@ int bz2compress(bz_stream *s, int action,
   int r = BZ2_bzCompress(s, action);
   *inlen -= s->avail_in;
   *outlen -= s->avail_out;
-
-  /* "C code may store a Go pointer in C memory subject to rule 2: 
-   * it must stop storing the pointer before it returns to Go." */
-  s->next_in = NULL;
-  s->next_out = NULL;
-  
   return r;
 }
 
