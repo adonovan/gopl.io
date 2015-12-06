@@ -4,7 +4,7 @@
 // See page 16.
 //!+
 
-// Fetch prints the content found at a URL.
+// Fetch prints the content found at each specified URL.
 package main
 
 import (
