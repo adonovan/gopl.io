@@ -5,7 +5,7 @@ package tempconv
 
 import "fmt"
 
-func Example1() {
+func Example_one() {
 	{
 		//!+arith
 		fmt.Printf("%g\n", BoilingC-FreezingC) // "100" °C
@@ -24,7 +24,7 @@ func Example1() {
 	// 180
 }
 
-func Example2() {
+func Example_two() {
 	//!+printf
 	c := FToC(212.0)
 	fmt.Println(c.String()) // "100°C"

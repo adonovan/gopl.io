@@ -19,7 +19,7 @@ import (
 // which requires the // Output comment to be at the end
 // of the function.
 
-func ExampleExpr() {
+func Example_expr() {
 	e, _ := eval.Parse("sqrt(A / pi)")
 	Display("e", e)
 	// Output:
@@ -33,7 +33,7 @@ func ExampleExpr() {
 	// e.args[0].value.y.value = "pi"
 }
 
-func ExampleSlice() {
+func Example_slice() {
 	Display("slice", []*int{new(int), nil})
 	// Output:
 	// Display slice ([]*int):
@@ -41,7 +41,7 @@ func ExampleSlice() {
 	// slice[1] = nil
 }
 
-func ExampleNilInterface() {
+func Example_nilInterface() {
 	var w io.Writer
 	Display("w", w)
 	// Output:
@@ -49,7 +49,7 @@ func ExampleNilInterface() {
 	// w = invalid
 }
 
-func ExamplePtrToInterface() {
+func Example_ptrToInterface() {
 	var w io.Writer
 	Display("&w", &w)
 	// Output:
@@ -57,7 +57,7 @@ func ExamplePtrToInterface() {
 	// (*&w) = nil
 }
 
-func ExampleStruct() {
+func Example_struct() {
 	Display("x", struct{ x interface{} }{3})
 	// Output:
 	// Display x (struct { x interface {} }):
@@ -65,7 +65,7 @@ func ExampleStruct() {
 	// x.x.value = 3
 }
 
-func ExampleInterface() {
+func Example_interface() {
 	var i interface{} = 3
 	Display("i", i)
 	// Output:
@@ -73,7 +73,7 @@ func ExampleInterface() {
 	// i = 3
 }
 
-func ExamplePtrToInterface2() {
+func Example_ptrToInterface2() {
 	var i interface{} = 3
 	Display("&i", &i)
 	// Output:
@@ -82,7 +82,7 @@ func ExamplePtrToInterface2() {
 	// (*&i).value = 3
 }
 
-func ExampleArray() {
+func Example_array() {
 	Display("x", [1]interface{}{3})
 	// Output:
 	// Display x ([1]interface {}):
@@ -90,7 +90,7 @@ func ExampleArray() {
 	// x[0].value = 3
 }
 
-func ExampleMovie() {
+func Example_movie() {
 	//!+movie
 	type Movie struct {
 		Title, Subtitle string

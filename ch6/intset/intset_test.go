@@ -5,7 +5,7 @@ package intset
 
 import "fmt"
 
-func Example1() {
+func Example_one() {
 	//!+main
 	var x, y IntSet
 	x.Add(1)
@@ -30,7 +30,7 @@ func Example1() {
 	// true false
 }
 
-func Example2() {
+func Example_two() {
 	var x IntSet
 	x.Add(1)
 	x.Add(144)

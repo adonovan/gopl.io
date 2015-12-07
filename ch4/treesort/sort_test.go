@@ -18,6 +18,6 @@ func TestSort(t *testing.T) {
 	}
 	treesort.Sort(data)
 	if !sort.IntsAreSorted(data) {
-		t.Errorf("not sorted: %s", data)
+		t.Errorf("not sorted: %v", data)
 	}
 }
