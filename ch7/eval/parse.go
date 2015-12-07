@@ -130,7 +130,7 @@ func parsePrimary(lex *lexer) Expr {
 				lex.next() // consume ','
 			}
 			if lex.token != ')' {
-				msg := fmt.Sprintf("got %s, want ')'", lex.token)
+				msg := fmt.Sprintf("got %#U, want ')'", lex.token)
 				panic(lexPanic(msg))
 			}
 		}
