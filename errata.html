@@ -18,7 +18,7 @@ pre {
 <body>
   <h1>Errata</h1>
   <p>
-    <b>p.9, ¶2</b>: for "can compared", read "can be compared".
+    <b>p.9, ¶2</b>: For "can compared", read "can be compared".
     (Thanks to Antonio Macías Ojeda, 2015-10-22.
     Corrected in the second printing.)
   </p>
@@ -61,18 +61,25 @@ pre {
   </p>
 
   <p>
-    <b>p.52, ¶2</b>: for "an synonym", read "a synonym", twice.
+    <b>p.48</b>: <code>f.ReadByte()</code> serves as an
+    example of a reference to <code>f</code>, but <code>*os.File</code> has no such
+    method.  For "<code>ReadByte</code>", read "<code>Stat</code>", four times.
+    (Thanks to Peter Olsen, 2015-01-06.)
+  </p>
+
+  <p>
+    <b>p.52, ¶2</b>: For "an synonym", read "a synonym", twice.
     (Corrected in the second printing.)
   </p>
 
   <p>
-    <b>p.52, ¶9</b>: for "The integer arithmetic operators", read
+    <b>p.52, ¶9</b>: For "The integer arithmetic operators", read
     "The arithmetic operators".
     (Thanks to Yoshiki Shibata, 2015-12-20.)
   </p>
 
   <p>
-    <b>p.68</b>: the table of UTF-8 encodings is missing a bit from each first byte.
+    <b>p.68</b>: The table of UTF-8 encodings is missing a bit from each first byte.
     The corrected table is shown below.
     (Thanks to Akshay Kumar, 2015-11-02.
     Corrected in the second printing.)
@@ -85,18 +92,23 @@ pre {
 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  65536−0x10ffff  (other values unused)</pre>
 
   <p>
-    <b>p.74</b>: the comment in <code>gopl.io/ch3/printints</code> should say
+    <b>p.73, ¶1</b>: For "a exercise", read "an exercise".
+    (Thanks to vrajmohan, 2015-12-28.)
+  </p>
+
+  <p>
+    <b>p.74</b>: The comment in <code>gopl.io/ch3/printints</code> should say
     <code>fmt.Sprint</code>, not <code>fmt.Sprintf</code>.
     (Corrected in the second printing.)
   </p>
 
   <p>
-    <b>p.75, ¶4</b>: for "<code>%u</code>", read "%<code>o</code>".
+    <b>p.75, ¶4</b>: For "<code>%u</code>", read "%<code>o</code>".
     (Thanks to William Hannish, 2015-12-21.)
   </p>
 
   <p>
-    <b>p.76</b>: the comment <code>// "time.Duration 5ms0s</code> should have
+    <b>p.76</b>: The comment <code>// "time.Duration 5ms0s</code> should have
     a closing double-quotation mark.
     (Corrected in the second printing.)
   </p>
@@ -112,31 +124,44 @@ pre {
   </p>
 
   <p>
-    <b>p.132, code display following ¶3</b>: the final comment
+    <b>p.132, code display following ¶3</b>: The final comment
     should read:<br/>
     <code>// compile error: can't assign func(int, int) int to func(int) int</code><br/>
     (Thanks to Toni Suter, 2015-11-21.)
   </p>
 
   <p>
-    <b>p.166, ¶2</b>: for "way", read "a way".
+    <b>p.166, ¶2</b>: For "way", read "a way".
   </p>
 
   <p>
-    <b>p.200, <code>TestEval</code> function</b>: the format string in the final call to
+    <b>p.200, <code>TestEval</code> function</b>: The format string in the final call to
     <code>t.Errorf</code> should format <code>test.env</code> with <code>%v</code>,
     not <code>%s</code>.
     (Thanks to Mitsuteru Sawa, 2015-12-07.)
   </p>
 
   <p>
-    <b>p.288, code display following ¶4</b>: in the import declaration, for
+    <b>p.222. Exercise 8.1</b>: The port numbers for <code>London</code>
+    and <code>Tokyo</code> should be swapped in the final command to
+    match the earlier commands.
+    (Thanks to Kiyoshi Kamishima, 2016-01-08.)
+  </p>
+
+  <p>
+    <b>p.288, code display following ¶4</b>: In the import declaration, for
     <code>"database/mysql"</code>, read <code>"database/sql"</code>.
     (Thanks to Jose Colon Rodriguez, 2016-01-09.)
   </p>
 
   <p>
-    <b>p.362</b>: the <code>gopl.io/ch13/bzip</code> program
+    <b>p.347, Exercise 12.8</b>: For "like <code>json.Marshal</code>",
+    read "like <code>json.Unmarshal</code>".
+    (Thanks to chai2010, 2016-01-01.)
+  </p>
+
+  <p>
+    <b>p.362</b>: The <code>gopl.io/ch13/bzip</code> program
     does not comply with the
     <a href='https://github.com/golang/proposal/blob/master/design/12416-cgo-pointers.md'>proposed rules for passing pointers between Go and C code</a>
     because the C function <code>bz2compress</code> temporarily stores a Go
