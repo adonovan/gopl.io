@@ -8,11 +8,14 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
 	"math/cmplx"
 	"os"
+
+	// added by boug for writing the png to a file
 )
 
 func main() {
@@ -31,7 +34,26 @@ func main() {
 			img.Set(px, py, mandelbrot(z))
 		}
 	}
-	png.Encode(os.Stdout, img) // NOTE: ignoring errors
+
+	//Adding the file writes
+
+	fmt.Println("opening file")
+
+	f, err := os.Create("C:/Users/Doug/go/out/mandelbrot.png")
+	check(err)
+
+	defer f.Close()
+
+	//png.Encode(os.Stdout, img) // NOTE: ignoring errors
+
+	err = png.Encode(f, img) //added to write img to file
+
+	check(err)
+
+	fmt.Println("Wrote file")
+
+	f.Close()
+
 }
 
 func mandelbrot(z complex128) color.Color {
@@ -81,4 +103,13 @@ func newton(z complex128) color.Color {
 		}
 	}
 	return color.Black
+}
+
+//Functions for checking file errs - Added by doug
+func check(e error) {
+	if e != nil {
+		panic(e)
+
+		fmt.Println("Panic")
+	}
 }
