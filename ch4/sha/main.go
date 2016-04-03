@@ -8,8 +8,8 @@ import (
 	"os"
 )
 
-var t = flag.Bool("t", false, "SHA384")
-var f = flag.Bool("f", false, "SHA512")
+var t = flag.Bool("384", false, "SHA384")
+var f = flag.Bool("512", false, "SHA512")
 
 func main() {
 

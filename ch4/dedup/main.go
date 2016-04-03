@@ -18,9 +18,9 @@ func main() {
 	input := bufio.NewScanner(os.Stdin)
 	for input.Scan() {
 		line := input.Text()
-		if !seen[line] {
-			seen[line] = true
-			fmt.Println(line)
+		if !seen[line] { //Doug's notes: check to see if the line is a key in the map
+			seen[line] = true // If not, add it with a value of true
+			fmt.Println(line) // And Print it
 		}
 	}
 

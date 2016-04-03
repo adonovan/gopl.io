@@ -11,20 +11,41 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	"gopl.io/ch4/github"
+	"github.com/dugwill/MyProjects/timeCalc"
+	"github.com/dugwill/gopl.io/ch4/github"
 )
+
+const ThirtyDays time.Duration = 720 * time.Hour //Set var month to 720 hours
 
 //!+
 func main() {
-	result, err := github.SearchIssues(os.Args[1:])
+
+	result, err := github.SearchIssues(os.Args[1:]) // DW: 'result' is a struct of type IssuesSearchResult
+	// SearchIssues returns the address of the struct
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	fmt.Printf("%d issues:\n", result.TotalCount)
-	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n",
-			item.Number, item.User.Login, item.Title)
+
+	for _, item := range result.Items { // DW: 'result.Items' is a slice containing the pointers to issues
+
+		t0 := time.Now()
+		var yearAgo time.Time = t0.Add(-timeCalc.OneYear)
+
+		//fmt.Println(reflect.TypeOf(item.CreatedAt))
+		//fmt.Println(reflect.TypeOf(yearAgo))
+
+		//Dispaly items created within the last year
+		if item.CreatedAt < yearAgo {
+			fmt.Printf("#%-5d %9.9s %v %.55s\n", //DW: Add %v to display the time
+				item.Number, item.User.Login, item.CreatedAt, item.Title) //DW: added item.CreatedAt to display time
+		}
+
+		fmt.Println(yearAgo.Format("One Year ago was: Jan 2 15:04:05 2006 MST"))
+
 	}
 }
 
