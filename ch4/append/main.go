@@ -37,7 +37,7 @@ func appendInt(x []int, y int) []int {
 		z = x[:zlen]
 	} else {
 		// There is insufficient space.  Allocate a new array.
-		// Grow by doubling, for amortized linear complexity.
+		// Grow by doubling, for amortized constant time complexity.
 		zcap := zlen
 		if zcap < 2*len(x) {
 			zcap = 2 * len(x)
