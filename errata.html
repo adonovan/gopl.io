@@ -214,6 +214,17 @@ pre {
   </p>
 
   <p>
+    <b>p.320, code display following ¶1</b>: The suggested test case
+    does not exercise the unary plus operator, nor is
+    the <code>eval</code> package qualifier appropriate:
+    <pre>{"-x * -x", eval.Env{"x": 2}, "4"}</pre>
+
+    It should read:
+    <pre>{"+x * -x", Env{"x": 2}, "4"}</pre>
+    (Thanks to Shinji Dosaka, 2016-07-15.)
+  </p>
+
+  <p>
     <b>p.347, Exercise 12.8</b>: For "like <code>json.Marshal</code>",
     read "like <code>json.Unmarshal</code>".
     (Thanks to chai2010, 2016-01-01.)
