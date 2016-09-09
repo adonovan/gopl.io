@@ -18,8 +18,8 @@ func TestEqual(t *testing.T) {
 	cyclePtr2 = &cyclePtr2
 
 	type CycleSlice []CycleSlice
-	var cycleSlice CycleSlice
-	cycleSlice = append(cycleSlice, cycleSlice)
+	var cycleSlice = make(CycleSlice, 1)
+	cycleSlice[0] = cycleSlice
 
 	ch1, ch2 := make(chan int), make(chan int)
 	var ch1ro <-chan int = ch1

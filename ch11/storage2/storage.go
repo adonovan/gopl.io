@@ -31,7 +31,7 @@ var notifyUser = func(username, msg string) {
 	err := smtp.SendMail(hostname+":587", auth, sender,
 		[]string{username}, []byte(msg))
 	if err != nil {
-		log.Printf("smtp.SendEmail(%s) failed: %s", username, err)
+		log.Printf("smtp.SendMail(%s) failed: %s", username, err)
 	}
 }
 

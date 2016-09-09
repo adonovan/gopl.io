@@ -146,7 +146,7 @@ func parsePrimary(lex *lexer) Expr {
 		return literal(f)
 
 	case '(':
-		lex.next() // consume ')'
+		lex.next() // consume '('
 		e := parseExpr(lex)
 		if lex.token != ')' {
 			msg := fmt.Sprintf("got %s, want ')'", lex.describe())
