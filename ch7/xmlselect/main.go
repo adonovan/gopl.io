@@ -1,9 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 214.
-//!+
-
 // Xmlselect prints the text of selected elements of an XML document.
 package main
 
@@ -17,7 +11,7 @@ import (
 
 func main() {
 	dec := xml.NewDecoder(os.Stdin)
-	var stack []string // stack of element names
+	var stack []string // the stack of elements
 	for {
 		tok, err := dec.Token()
 		if err == io.EOF {
@@ -52,5 +46,3 @@ func containsAll(x, y []string) bool {
 	}
 	return false
 }
-
-//!-
