@@ -140,6 +140,12 @@ pre {
     read "used as function parameters or results".
     (Thanks to Yang Yang 杨玚, 2016-04-18.)
   </p>
+
+  <p>
+    <b>p.107, ¶6</b>: in "JSON's <code>\U</code><i>hhhh</i> numeric escapes",
+    the <code>U</code> should be lowercase: <code>\u</code><i>hhhh</i>.
+    (Thanks to Kohei Marumoto (丸本耕平), 2016-09-23.)
+  </p>
  
   <p>
     <b>p.112</b>: Exercise 4.11 calls for a "CRUD" (create, read, update,
@@ -220,14 +226,14 @@ pre {
     <pre>{"-x * -x", eval.Env{"x": 2}, "4"}</pre>
 
     It should read:
-    <pre>{"+x * -x", Env{"x": 2}, "4"}</pre>
+    <pre>{"+x * -x", Env{"x": 2}, "-4"}</pre>
     (Thanks to Shinji Dosaka, 2016-07-15.)
   </p>
 
   <p>
-    <b>p.341, Exercise 12.7</b>: For "encoder" and
-    "<code>json.Encoder</code>", read "decoder" and
-    "<code>json.Decoder</code>", respectively.
+    <b>p.341, Exercise 12.7</b>: For "decoder" and
+    "<code>json.Decoder</code>", read "encoder" and
+    "<code>json.Encoder</code>", respectively.
     (Thanks to Yoshiki Shibata, 2016-08-27.)
   </p>
 
@@ -254,7 +260,7 @@ pre {
 
   <p>
     <b>p.366, Exercise 13.3</b>: For <code>bzip2.writer</code>, read <code>bzip.writer</code>.
-    (Thanks to Yoshiki Shibata, 2015-12-20.)
+    (Thanks to Yoshiki Shibata, 2016-09-05.)
   </p>
 
 </body>
