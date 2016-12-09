@@ -8,6 +8,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math"
 )
@@ -29,10 +30,22 @@ func main() {
 		"width='%d' height='%d'>", width, height)
 	for i := 0; i < cells; i++ {
 		for j := 0; j < cells; j++ {
-			ax, ay := corner(i+1, j)
-			bx, by := corner(i, j)
-			cx, cy := corner(i, j+1)
-			dx, dy := corner(i+1, j+1)
+			err, ax, ay := corner(i+1, j)
+			if err != nil {
+				continue
+			}
+			err, bx, by := corner(i, j)
+			if err != nil {
+				continue
+			}
+			err, cx, cy := corner(i, j+1)
+			if err != nil {
+				continue
+			}
+			err, dx, dy := corner(i+1, j+1)
+			if err != nil {
+				continue
+			}
 			fmt.Printf("<polygon points='%g,%g %g,%g %g,%g %g,%g'/>\n",
 				ax, ay, bx, by, cx, cy, dx, dy)
 		}
@@ -40,7 +53,7 @@ func main() {
 	fmt.Println("</svg>")
 }
 
-func corner(i, j int) (float64, float64) {
+func corner(i, j int) (error, float64, float64) {
 	// Find point (x,y) at corner of cell (i,j).
 	x := xyrange * (float64(i)/cells - 0.5)
 	y := xyrange * (float64(j)/cells - 0.5)
@@ -51,7 +64,13 @@ func corner(i, j int) (float64, float64) {
 	// Project (x,y,z) isometrically onto 2-D SVG canvas (sx,sy).
 	sx := width/2 + (x-y)*cos30*xyscale
 	sy := height/2 + (x+y)*sin30*xyscale - z*zscale
-	return sx, sy
+
+	if math.IsNaN(sx) || math.IsNaN(sy) {
+		err := errors.New("Nan")
+		return err, 0.0, 0.0
+	}
+
+	return nil, sx, sy
 }
 
 func f(x, y float64) float64 {
