@@ -25,13 +25,19 @@ func main() {
 // e.g., a => a, a.go => a, a/b/c.go => c, a/b.c.go => b.c
 func basename(s string) string {
 	// Discard last '/' and everything before.
+	// DW: Work backwards through the string
+	// when you find the slash, set s equal to everything after the slash
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == '/' {
+
+			// DW: s get everything after the slash
 			s = s[i+1:]
 			break
 		}
 	}
+
 	// Preserve everything before last '.'.
+	//DW  work backwords. s get everyting before the .
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == '.' {
 			s = s[:i]
