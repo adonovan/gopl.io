@@ -4,10 +4,10 @@
 // See page 148.
 
 // Fetch saves the contents of a URL into a local file.
-package main
+package fetchFunc
 
 import (
-	"fmt"
+	//"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -17,8 +17,8 @@ import (
 //!+
 // Fetch downloads the URL and returns the
 // name and length of the local file.
-func fetch(url string) (filename string, n int64, err error) {
-//	resp, err := http.Head(url)
+func Fetch(url string) (filename string, n int64, err error) {
+	//	resp, err := http.Head(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", 0, err
@@ -26,10 +26,10 @@ func fetch(url string) (filename string, n int64, err error) {
 	defer resp.Body.Close()
 
 	local := path.Base(resp.Request.URL.Path)
-	fmt.Printf("Request: %v\n\n",resp.Request)
-	fmt.Printf("Request.URL: %v\n\n",resp.Request.URL)
-	fmt.Printf("Request.URL.Path: %v\n\n",resp.Request.URL.Path)
-	fmt.Printf("path.Base(Request.URL.Path): %v\n\n",path.Base(resp.Request.URL.Path))
+	//fmt.Printf("Request: %v\n\n", resp.Request)
+	//fmt.Printf("Request.URL: %v\n\n", resp.Request.URL)
+	//fmt.Printf("Request.URL.Path: %v\n\n", resp.Request.URL.Path)
+	//fmt.Printf("path.Base(Request.URL.Path): %v\n\n", path.Base(resp.Request.URL.Path))
 
 	if local == "/" {
 		local = "index.html"
@@ -46,15 +46,16 @@ func fetch(url string) (filename string, n int64, err error) {
 	return local, n, err
 }
 
-//!-
 
-func main() {
-	for _, url := range os.Args[1:] {
-		local, n, err := fetch(url)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "fetch %s: %v\n", url, err)
-			continue
-		}
-		fmt.Fprintf(os.Stderr, "%s => %s (%d bytes).\n", url, local, n)
+func FetchAndSearch(url string, searchText)  {
+	//	resp, err := http.Head(url)
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", 0, err
 	}
+	defer resp.Body.Close()
+
+	
+
+	
 }

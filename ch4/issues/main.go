@@ -29,22 +29,46 @@ func main() {
 	}
 
 	fmt.Printf("%d issues:\n", result.TotalCount)
+	t0 := time.Now()
+	var yearAgo time.Time = t0.Add(-timeCalc.OneYear)
+	yearStart := time.Date(2016, 1, 1, 00, 00, 00, 00, time.UTC)
+	fmt.Println(yearAgo.Format("One Year ago was: Jan 2 15:04:05 2006 MST"))
+
+	fmt.Println()
+	fmt.Println("Items created this year")
 
 	for _, item := range result.Items { // DW: 'result.Items' is a slice containing the pointers to issues
 
-		t0 := time.Now()
-		var yearAgo time.Time = t0.Add(-timeCalc.OneYear)
-
-		//fmt.Println(reflect.TypeOf(item.CreatedAt))
-		//fmt.Println(reflect.TypeOf(yearAgo))
-
 		//Dispaly items created within the last year
-		if item.CreatedAt < yearAgo {
+		if item.CreatedAt.After(yearStart) {
 			fmt.Printf("#%-5d %9.9s %v %.55s\n", //DW: Add %v to display the time
 				item.Number, item.User.Login, item.CreatedAt, item.Title) //DW: added item.CreatedAt to display time
 		}
 
-		fmt.Println(yearAgo.Format("One Year ago was: Jan 2 15:04:05 2006 MST"))
+	}
+	fmt.Println()
+	fmt.Println("Items less than one year old")
+
+	for _, item := range result.Items { // DW: 'result.Items' is a slice containing the pointers to issues
+
+		//Dispaly items created within the last year
+		if item.CreatedAt.After(yearAgo) && item.CreatedAt.Before(yearStart) {
+			fmt.Printf("#%-5d %9.9s %v %.55s\n", //DW: Add %v to display the time
+				item.Number, item.User.Login, item.CreatedAt, item.Title) //DW: added item.CreatedAt to display time
+		}
+
+	}
+
+	fmt.Println()
+	fmt.Println("Items greater than one year old")
+
+	for _, item := range result.Items { // DW: 'result.Items' is a slice containing the pointers to issues
+
+		//Dispaly items created within the last year
+		if item.CreatedAt.Before(yearAgo) {
+			fmt.Printf("#%-5d %9.9s %v %.55s\n", //DW: Add %v to display the time
+				item.Number, item.User.Login, item.CreatedAt, item.Title) //DW: added item.CreatedAt to display time
+		}
 
 	}
 }
