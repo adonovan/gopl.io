@@ -27,6 +27,8 @@ var movies = []Movie{
 		Actors: []string{"Paul Newman"}},
 	{Title: "Bullitt", Year: 1968, Color: true,
 		Actors: []string{"Steve McQueen", "Jacqueline Bisset"}},
+	{Title: "Star Wars", Year: 1978, Color: true,
+		Actors: []string{"Carrie Fisher", "Alec Ginnus", "Mark Hammel", "James Earl Jones (Voice)"}},
 	// ...
 }
 
@@ -39,7 +41,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("JSON marshaling failed: %s", err)
 		}
-		fmt.Printf("%s\n", data)
+		fmt.Printf("%s\n\n", data)
 		//!-Marshal
 	}
 
@@ -49,7 +51,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("JSON marshaling failed: %s", err)
 		}
-		fmt.Printf("%s\n", data)
+		fmt.Printf("%s\n\n", data)
 		//!-MarshalIndent
 
 		//!+Unmarshal
@@ -57,8 +59,19 @@ func main() {
 		if err := json.Unmarshal(data, &titles); err != nil {
 			log.Fatalf("JSON unmarshaling failed: %s", err)
 		}
-		fmt.Println(titles) // "[{Casablanca} {Cool Hand Luke} {Bullitt}]"
+
+		//Add by Doug to unmarshal the actors from the json
+		//gets the actors and stores them in a slice of structs
+		//!+Unmarshal
+		var actors []struct{ Actors []string }
+		if err := json.Unmarshal(data, &actors); err != nil {
+			log.Fatalf("JSON unmarshaling failed: %s", err)
+		}
 		//!-Unmarshal
+
+		fmt.Println(titles) // "[{Casablanca} {Cool Hand Luke} {Bullitt}]"
+		fmt.Println(actors) // Added by doug to print the actors
+
 	}
 }
 

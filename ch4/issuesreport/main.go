@@ -12,15 +12,16 @@ import (
 	"text/template"
 	"time"
 
-	"gopl.io/ch4/github"
+	"github.com/dugwill/gopl.io/ch4/github"
 )
 
 //!+template
+//DAW- the | char sends the result as and arg to the next comman
 const templ = `{{.TotalCount}} issues:
 {{range .Items}}----------------------------------------
 Number: {{.Number}}
 User:   {{.User.Login}}
-Title:  {{.Title | printf "%.64s"}}
+Title:  {{.Title | printf "%.64s"}}  
 Age:    {{.CreatedAt | daysAgo}} days
 {{end}}`
 
@@ -34,8 +35,9 @@ func daysAgo(t time.Time) int {
 //!-daysAgo
 
 //!+exec
+//template.Must is a helper function for error handleing
 var report = template.Must(template.New("issuelist").
-	Funcs(template.FuncMap{"daysAgo": daysAgo}).
+	Funcs(template.FuncMap{"daysAgo": daysAgo}). //DAW-maps daysago in the tempalte to the daysago
 	Parse(templ))
 
 func main() {

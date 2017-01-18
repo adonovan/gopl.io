@@ -13,13 +13,13 @@ import "time"
 const IssuesURL = "https://api.github.com/search/issues"
 
 type IssuesSearchResult struct {
-	TotalCount int `json:"total_count"`
-	Items      []*Issue
+	TotalCount int      `json:"total_count"` //DW-TotalCount is an int with a field tag
+	Items      []*Issue // DW - Items is a slice of pointers to type Issue
 }
 
 type Issue struct {
 	Number    int
-	HTMLURL   string `json:"html_url"`
+	HTMLURL   string `json:"html_url"` //Field Tag
 	Title     string
 	State     string
 	User      *User

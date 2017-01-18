@@ -38,6 +38,7 @@ func main() {
 	// Wheel{Circle:Circle{Point:Point{X:8, Y:8}, Radius:5}, Spokes:20}
 
 	w.X = 42
+	w.Spokes = 12
 
 	fmt.Printf("%#v\n", w)
 	// Output:

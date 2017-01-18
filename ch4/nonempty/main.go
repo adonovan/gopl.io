@@ -27,9 +27,9 @@ func nonempty(strings []string) []string {
 
 func main() {
 	//!+main
-	data := []string{"one", "", "three"}
-	fmt.Printf("%q\n", nonempty(data)) // `["one" "three"]`
-	fmt.Printf("%q\n", data)           // `["one" "three" "three"]`
+	data := []string{"one", "", "three", "four", "", "five"}
+	fmt.Printf("%q\n", nonempty2(data)) // `["one" "three"]`
+	fmt.Printf("%q\n", data)            // `["one" "three" "three"]`
 	//!-main
 }
 
