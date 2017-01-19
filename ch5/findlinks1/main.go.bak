@@ -1,0 +1,116 @@
+// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// See page 122.
+//!+main
+
+// Findlinks1 prints the links in an HTML document read from standard input.
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"golang.org/x/net/html"
+)
+
+func main() {
+	doc, err := html.Parse(os.Stdin)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
+		os.Exit(1)
+	}
+
+	for _, link := range visit(nil, doc) {
+		fmt.Println(link)
+	}
+}
+
+//!-main
+
+//!+visit
+// visit appends to links each link found in n and returns the result.
+func visit(links []string, n *html.Node) []string { //visit take slice of strings and Ptr to HTML node
+
+	fmt.Printf("Start Visit with  Node:%v\n", n)
+	fmt.Printf("n.Type: %v, n.Data: %v\n", n.Type, n.Data)
+	fmt.Printf("Parent: %v\n", n.Parent)
+	fmt.Printf("FirstChild %v\n", n.FirstChild)
+	fmt.Printf("LastChild %v\n", n.LastChild)
+	fmt.Printf("PreviousSibling %v\n", n.PrevSibling)
+	fmt.Printf("NextSibling %v\n", n.NextSibling)
+
+	//fmt.Printf("ElementNode value: %v\n", html.ElementNode)
+	//fmt.Printf("Text node value: %v\n", html.TextNode)
+
+	if n.Type == html.ElementNode && n.Data == "a" { // if n is a html element node type A
+
+		fmt.Printf("!!!!!!!!!!!! Found Node Blah Type A !!!!!!!!!!\n")
+
+		for _, a := range n.Attr { //iterate through all
+
+			//fmt.Printf("a.Key: %v, a.Val: %v\n", a.Key, a.Val)
+
+			if a.Key == "href" {
+				fmt.Printf("Appending\n")
+				links = append(links, a.Val)
+
+			}
+		}
+	}
+
+//	for c := n.FirstChild; c != nil; c = c.NextSibling {
+//		fmt.Printf("Child Found\n")
+//		links = visit(links, c)
+//	}
+
+	if n.FirstChild != nil{
+		fmt.Printf("Child Found\n")
+		links = visit(links,n.FirstChild)
+	}
+	
+	fmt.Printf("--------------------No More Children------------------\n\n")
+
+	
+	if n.NextSibling != nil{
+		fmt.Printf("Sibling Found\n")
+		links = visit(links, n.NextSibling)
+		}
+
+
+	fmt.Printf("------------------No More Sibling--------------------\n\n")
+
+	return links
+}
+
+//!-visit
+
+/*
+//!+html
+package html
+
+type Node struct {
+	Type                    NodeType
+	Data                    string
+	Attr                    []Attribute
+	FirstChild, NextSibling *Node
+}
+
+type NodeType int32
+
+const (
+	ErrorNode NodeType = iota
+	TextNode
+	DocumentNode
+	ElementNode
+	CommentNode
+	DoctypeNode
+)
+
+type Attribute struct {
+	Key, Val string
+}
+
+func Parse(r io.Reader) (*Node, error)
+//!-html
+*/

@@ -18,6 +18,7 @@ import (
 // Fetch downloads the URL and returns the
 // name and length of the local file.
 func fetch(url string) (filename string, n int64, err error) {
+//	resp, err := http.Head(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", 0, err
@@ -25,6 +26,11 @@ func fetch(url string) (filename string, n int64, err error) {
 	defer resp.Body.Close()
 
 	local := path.Base(resp.Request.URL.Path)
+	fmt.Printf("Request: %v\n\n",resp.Request)
+	fmt.Printf("Request.URL: %v\n\n",resp.Request.URL)
+	fmt.Printf("Request.URL.Path: %v\n\n",resp.Request.URL.Path)
+	fmt.Printf("path.Base(Request.URL.Path): %v\n\n",path.Base(resp.Request.URL.Path))
+
 	if local == "/" {
 		local = "index.html"
 	}

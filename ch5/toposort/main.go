@@ -60,6 +60,7 @@ func topoSort(m map[string][]string) []string {
 	for key := range m {
 		keys = append(keys, key)
 	}
+	fmt.Printf("initail sort: %v\n", keys)
 
 	sort.Strings(keys)
 	visitAll(keys)

@@ -8,11 +8,14 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
 	"math/cmplx"
 	"os"
+
+	// added by doug for writing the png to a file
 )
 
 func main() {
@@ -31,18 +34,33 @@ func main() {
 			img.Set(px, py, mandelbrot(z))
 		}
 	}
-	png.Encode(os.Stdout, img) // NOTE: ignoring errors
+
+	//Adding the file writes
+
+	fmt.Println("opening file")
+	f, err := os.Create("C:/Users/Doug/go/out/mandelbrot.png")
+	check(err)
+	defer f.Close()
+	//png.Encode(os.Stdout, img) // NOTE: ignoring errors
+	err = png.Encode(f, img) //added to write img to file
+	check(err)
+	fmt.Println("Wrote file")
+	f.Close()
+
 }
 
 func mandelbrot(z complex128) color.Color {
 	const iterations = 200
-	const contrast = 15
+	const contrast = 5
 
 	var v complex128
 	for n := uint8(0); n < iterations; n++ {
 		v = v*v + z
+		//fmt.Println(cmplx.Abs(v))
 		if cmplx.Abs(v) > 2 {
-			return color.Gray{255 - contrast*n}
+			//fmt.Println(255 - contrast*n)
+			return color.RGBA{255 - uint8(cmplx.Abs(v))*n, 0 + uint8(cmplx.Abs(v))*n, 128 - uint8(cmplx.Abs(v))*n, 128}
+
 		}
 	}
 	return color.Black
@@ -81,4 +99,13 @@ func newton(z complex128) color.Color {
 		}
 	}
 	return color.Black
+}
+
+//Functions for checking file errs - Added by doug
+func check(e error) {
+	if e != nil {
+		panic(e)
+
+		fmt.Println("Panic")
+	}
 }

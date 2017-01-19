@@ -10,16 +10,27 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strings"
 )
 
 // SearchIssues queries the GitHub issue tracker.
 func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	q := url.QueryEscape(strings.Join(terms, " "))
-	resp, err := http.Get(IssuesURL + "?q=" + q)
+
+	fmt.Printf("%s\n", strings.Join(terms, " ")) // DW: print the search strings
+
+	fmt.Printf("%s\n", q) //DW: print the 'QueryEscaped' string. This seems to replace " " with "+"
+
+	fmt.Printf("%s\n", IssuesURL+"?q="+q) //DW: print the url
+
+	resp, err := http.Get(IssuesURL + "?q=" + q) //DW: 'resp' gets the complete response
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println(reflect.TypeOf(resp))
+
 	//!-
 	// For long-term stability, instead of http.Get, use the
 	// variant below which adds an HTTP request header indicating
@@ -40,6 +51,9 @@ func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 		resp.Body.Close()
 		return nil, fmt.Errorf("search query failed: %s", resp.Status)
 	}
+
+	//DW: In the following code:  'result' (Type IssuesSearchResult)
+	// Call a json newDecoder, passing respon.Body, and the address of 'result'
 
 	var result IssuesSearchResult
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

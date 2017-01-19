@@ -11,7 +11,7 @@ import (
 	"log"
 	"os"
 
-	"gopl.io/ch5/links"
+	"github.com/dugwill/gopl.io/ch5/links"
 )
 
 //!+breadthFirst
@@ -20,7 +20,11 @@ import (
 // f is called at most once for each item.
 func breadthFirst(f func(item string) []string, worklist []string) {
 	seen := make(map[string]bool)
+
 	for len(worklist) > 0 {
+
+		fmt.Printf("Worklist: %v\n", worklist)
+
 		items := worklist
 		worklist = nil
 		for _, item := range items {

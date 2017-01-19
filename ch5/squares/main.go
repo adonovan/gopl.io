@@ -21,9 +21,16 @@ func squares() func() int {
 
 func main() {
 	f := squares()
+
 	fmt.Println(f()) // "1"
 	fmt.Println(f()) // "4"
 	fmt.Println(f()) // "9"
+	fmt.Println(f()) // "16"
+	z := squares()
+	fmt.Println(z()) // "1"
+	fmt.Println(z()) // "4"
+	fmt.Println(z()) // "9"
+	fmt.Println(z()) // "16"
 	fmt.Println(f()) // "16"
 }
 

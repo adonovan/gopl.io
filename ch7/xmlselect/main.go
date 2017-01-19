@@ -16,7 +16,18 @@ import (
 )
 
 func main() {
-	dec := xml.NewDecoder(os.Stdin)
+	
+	file, err := os.Open("github.com/InputFiles/manifest.mpd") // For read access.
+	if err != nil {
+		//log.Fatal(err)
+		fmt.Printf("Error opening file\n")
+}
+
+
+	//dec := xml.NewDecoder(os.Stdin)
+
+	dec := xml.NewDecoder(file)
+
 	var stack []string // stack of element names
 	for {
 		tok, err := dec.Token()
@@ -29,9 +40,19 @@ func main() {
 		switch tok := tok.(type) {
 		case xml.StartElement:
 			stack = append(stack, tok.Name.Local) // push
+			fmt.Printf("StartElement: %v\n",tok.Name.Local)
 		case xml.EndElement:
 			stack = stack[:len(stack)-1] // pop
+			fmt.Printf("EndElement\n")
 		case xml.CharData:
+			if containsAll(stack, os.Args[1:]) {
+				fmt.Printf("%s: %s\n", strings.Join(stack, " "), tok)
+			}
+		case xml.Comment:
+			if containsAll(stack, os.Args[1:]) {
+				fmt.Printf("%s: %s\n", strings.Join(stack, " "), tok)
+			}
+		case xml.Decoder:
 			if containsAll(stack, os.Args[1:]) {
 				fmt.Printf("%s: %s\n", strings.Join(stack, " "), tok)
 			}
@@ -43,6 +64,7 @@ func main() {
 func containsAll(x, y []string) bool {
 	for len(y) <= len(x) {
 		if len(y) == 0 {
+			fmt.Printf("Returning True...................\n")
 			return true
 		}
 		if x[0] == y[0] {
@@ -50,6 +72,8 @@ func containsAll(x, y []string) bool {
 		}
 		x = x[1:]
 	}
+
+	fmt.Printf("Returning False\n")
 	return false
 }
 
