@@ -32,7 +32,7 @@ func breadthFirst(f func(item string) []string, worklist []string) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Worklist: %v\n", u.Host)
+	//fmt.Printf("Worklist: %v\n", u.Host)
 	origHost = u.Host
 
 	seen := make(map[string]bool)
