@@ -47,15 +47,3 @@ func Fetch(url string) (filename string, n int64, err error) {
 }
 
 
-func FetchAndSearch(url string, searchText)  {
-	//	resp, err := http.Head(url)
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", 0, err
-	}
-	defer resp.Body.Close()
-
-	
-
-	
-}
