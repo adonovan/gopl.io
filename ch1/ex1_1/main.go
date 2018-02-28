@@ -2,18 +2,19 @@
 // License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 // See page 8.
-// Echo3 prints its command-line arguments.
-// ex 1.2 solution
+
+// ex 1.1 solution
+// print also Args[0] the name of the command invoked
 
 package main
 
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
-	for i, x := range os.Args[1:] {
-		fmt.Println(i, x)
-	}
+	fmt.Println("command:", os.Args[0])
+	fmt.Println("args:", strings.Join(os.Args[1:], " "))
 }

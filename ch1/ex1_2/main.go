@@ -2,18 +2,20 @@
 // License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 // See page 8.
-// Echo3 prints its command-line arguments.
-// ex 1.1 solution
+
+// ex 1.2 solution
+// modify echo program to print the index and value of each of it's
+// arguments, one per line.
 
 package main
 
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
-	fmt.Println(os.Args[0])
-	fmt.Println(strings.Join(os.Args[1:], " "))
+	for i, x := range os.Args[1:] {
+		fmt.Println(i, x)
+	}
 }
