@@ -6,16 +6,15 @@ import (
 )
 
 func TestCToF(t *testing.T) {
-	want := Fahrenheit(FreezingF)
-	c := Celsius(0)
-	f := CToF(c)
+	want := FreezingF
+	f := CToF(FreezingC)
 	if f != want {
 		log.Fatalf("CToF: got %v, want %v", f, want)
 	}
 }
 
 func TestFToC(t *testing.T) {
-	want := Celsius(0)
+	want := FreezingC
 	f := FToC(FreezingF)
 	if f != want {
 		log.Fatalf("FToC: got %v, want %v", f, want)
@@ -23,7 +22,7 @@ func TestFToC(t *testing.T) {
 }
 
 func TestKToC(t *testing.T) {
-	want := Celsius(AbsoluteZeroC)
+	want := AbsoluteZeroC
 	k := KToC(0)
 	if k != want {
 		log.Fatalf("KToC: got %v, want %v", k, want)
@@ -43,7 +42,6 @@ func TestBoiling(t *testing.T) {
 	c := KToC(k)
 	if c != BoilingC {
 		log.Fatalf("KToC: got %v, want %v", k, BoilingC)
-
 	}
 	f := CToF(c)
 	if f != BoilingF {
