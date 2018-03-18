@@ -75,7 +75,7 @@ func WeightConv(toScale *string) (string, error) {
 	case *kg != math.Inf(1) && *toScale == lbFlag:
 		// kilograms to pounds
 		return Kilograms(*kg).Pounds().String(), nil
-	case *kg != math.Inf(1) && *toScale == lbFlag:
+	case *kg != math.Inf(1) && *toScale == stFlag:
 		// kilograms to stone
 		return Kilograms(*kg).Stone().String(), nil
 	default:
