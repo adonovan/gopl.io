@@ -52,7 +52,7 @@ func (kg Kilograms) Pounds() Pounds {
 
 // Kilograms.Stone() -> Stone
 func (kg Kilograms) Stone() Stone {
-	return Stone(kg * PoundsPerKilogram)
+	return Stone(kg * StonePerKilogram)
 }
 
 // WeightFlags calls the flag package to setup weight's local vars.
