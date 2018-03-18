@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2018 Alex G Rice
+ * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+ */
+
 package conv
 
 import (
@@ -7,56 +12,57 @@ import (
 
 func TestCToF(t *testing.T) {
 	want := FreezingF
-	f := CToF(FreezingC)
-	if f != want {
-		log.Fatalf("CToF: got %v, want %v", f, want)
+	got := FreezingC.Fahrenheit()
+	if got != want {
+		log.Fatalf("Fahrenheit: got %v, want %v", got, want)
 	}
 }
 
 func TestFToC(t *testing.T) {
 	want := FreezingC
-	f := FToC(FreezingF)
-	if f != want {
-		log.Fatalf("FToC: got %v, want %v", f, want)
+	got := FreezingF.Celsius()
+	if got != want {
+		log.Fatalf("Celsius: got %v, want %v", got, want)
 	}
 }
 
 func TestKToC(t *testing.T) {
 	want := AbsoluteZeroC
-	k := KToC(0)
-	if k != want {
-		log.Fatalf("KToC: got %v, want %v", k, want)
+	got := Kelvin(0).Celsius()
+	if got != want {
+		log.Fatalf("Celsius: got %v, want %v", got, want)
 	}
 }
 
 func TestCToK(t *testing.T) {
 	want := Kelvin(0)
-	k := CToK(AbsoluteZeroC)
-	if k != want {
-		log.Fatalf("CToK: got %v, want %v", k, want)
+	got := AbsoluteZeroC.Kelvin()
+	if got != want {
+		log.Fatalf("Kelvin: got %v, want %v", got, want)
 	}
 }
 
 func TestBoiling(t *testing.T) {
-	k := BoilingK
-	c := KToC(k)
-	if c != BoilingC {
-		log.Fatalf("KToC: got %v, want %v", k, BoilingC)
+	want := BoilingK
+	got := want.Celsius()
+	if got != BoilingC {
+		log.Fatalf("Celsius: got %v, want %v", got, want)
 	}
-	f := CToF(c)
+	f := got.Fahrenheit()
 	if f != BoilingF {
-		log.Fatalf("CToF: got %v, want %v", k, BoilingF)
+		log.Fatalf("Fahrenheit: got %v, want %v", got, want)
 	}
 }
 
 func TestFreezing(t *testing.T) {
-	k := FreezingK
-	c := KToC(k)
-	if c != FreezingC {
-		log.Fatalf("KToC: got %v, want %v", k, FreezingC)
+	want := FreezingK
+	got := want.Celsius()
+	if got != FreezingC {
+		log.Fatalf("Celsius: got %v, want %v", got, want)
 	}
-	f := CToF(c)
-	if f != FreezingF {
-		log.Fatalf("CToF: got %v, want %v", k, FreezingF)
+	wantF := FreezingF
+	gotF := FreezingC.Fahrenheit()
+	if gotF != wantF {
+		log.Fatalf("Fahrenheit: got %v, want %v", wantF, wantF)
 	}
 }
