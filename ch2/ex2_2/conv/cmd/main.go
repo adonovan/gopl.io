@@ -75,5 +75,7 @@ func main() {
 		fmt.Println(weight)
 		os.Exit(0)
 	}
+	flag.Usage()
+	fmt.Print(usage)
 	log.Fatal("conv: sorry, unsupported conversion")
 }
