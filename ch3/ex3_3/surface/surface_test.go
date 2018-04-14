@@ -24,4 +24,3 @@ func TestCorner(t *testing.T) {
 		}
 	}
 }
-

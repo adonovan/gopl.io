@@ -63,9 +63,9 @@ func main() {
 	for _, p := range polys {
 		fill := ex3_3.Colorize(p.Height(), valleyHeight, peakHeight)
 		fmt.Printf("<polygon fill='rgb(%v, %v, %v)' points='%g,%g %g,%g %g,%g %g,%g'/>\n",
-			int(fill.R * 255),
-			int(fill.G * 255),
-			int(fill.B * 255),
+			int(fill.R*255),
+			int(fill.G*255),
+			int(fill.B*255),
 			p.Ax, p.Ay, p.Bx, p.By, p.Cx, p.Cy, p.Dx, p.Dy,
 		)
 	}

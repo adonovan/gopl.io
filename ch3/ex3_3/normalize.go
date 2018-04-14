@@ -17,4 +17,3 @@ func Normalize(min, max, value float64) (float64, error) {
 	}
 	return (value - min) / (max - min), nil
 }
-

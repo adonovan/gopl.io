@@ -17,19 +17,18 @@ import (
 
 // The "keypoints" of the gradient.
 var gradient = GradientTable{
-{MustParseHex("#9e0142"), 0.0},
-{MustParseHex("#d53e4f"), 0.1},
-{MustParseHex("#f46d43"), 0.2},
-{MustParseHex("#fdae61"), 0.3},
-{MustParseHex("#fee090"), 0.4},
-{MustParseHex("#ffffbf"), 0.5},
-{MustParseHex("#e6f598"), 0.6},
-{MustParseHex("#abdda4"), 0.7},
-{MustParseHex("#66c2a5"), 0.8},
-{MustParseHex("#3288bd"), 0.9},
-{MustParseHex("#5e4fa2"), 1.0},
+	{MustParseHex("#9e0142"), 0.0},
+	{MustParseHex("#d53e4f"), 0.1},
+	{MustParseHex("#f46d43"), 0.2},
+	{MustParseHex("#fdae61"), 0.3},
+	{MustParseHex("#fee090"), 0.4},
+	{MustParseHex("#ffffbf"), 0.5},
+	{MustParseHex("#e6f598"), 0.6},
+	{MustParseHex("#abdda4"), 0.7},
+	{MustParseHex("#66c2a5"), 0.8},
+	{MustParseHex("#3288bd"), 0.9},
+	{MustParseHex("#5e4fa2"), 1.0},
 }
-
 
 // This table contains the "keypoints" of the colorgradient you want to generate.
 // The position of each keypoint has to live in the range [0,1]
@@ -42,12 +41,12 @@ type GradientTable []struct {
 // the two colors around `t`.
 // Note: It relies heavily on the fact that the gradient keypoints are sorted.
 func (self GradientTable) GetInterpolatedColorFor(t float64) colorful.Color {
-	for i := 0 ; i < len(self) - 1 ; i++ {
+	for i := 0; i < len(self)-1; i++ {
 		c1 := self[i]
 		c2 := self[i+1]
 		if c1.Pos <= t && t <= c2.Pos {
 			// We are in between c1 and c2. Go blend them!
-			t := (t - c1.Pos)/(c2.Pos - c1.Pos)
+			t := (t - c1.Pos) / (c2.Pos - c1.Pos)
 			return c1.Col.BlendHcl(c2.Col, t).Clamped()
 		}
 	}
