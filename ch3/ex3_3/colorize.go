@@ -1,6 +1,10 @@
 /*
  * Copyright © 2018 Alex G Rice
  * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+ *
+ * Copyright (c) 2013 Lucas Beyer
+ * License: MIT
+ * https://github.com/lucasb-eyer/go-colorful/tree/master/doc/gradientgen
  */
 
 package ex3_3
@@ -27,25 +31,6 @@ var gradient = GradientTable{
 }
 
 
-// This is a very nice thing Golang forces you to do!
-// It is necessary so that we can write out the literal of the colortable below.
-func MustParseHex(s string) colorful.Color {
-	c, err := colorful.Hex(s)
-	if err != nil {
-		panic("MustParseHex: " + err.Error())
-	}
-	return c
-}
-
-func Colorize(value, valley, peak float64) colorful.Color {
-	// get normalized height in range of 0,1
-	z, err := Normalize(valley, peak, value)
-	if err != nil {
-		log.Fatalf("error: Colorize: %v", err)
-	}
-	return gradient.GetInterpolatedColorFor(z)
-}
-
 // This table contains the "keypoints" of the colorgradient you want to generate.
 // The position of each keypoint has to live in the range [0,1]
 type GradientTable []struct {
@@ -69,4 +54,23 @@ func (self GradientTable) GetInterpolatedColorFor(t float64) colorful.Color {
 
 	// Nothing found? Means we're at (or past) the last gradient keypoint.
 	return self[len(self)-1].Col
+}
+
+// This is a very nice thing Golang forces you to do!
+// It is necessary so that we can write out the literal of the colortable below.
+func MustParseHex(s string) colorful.Color {
+	c, err := colorful.Hex(s)
+	if err != nil {
+		panic("MustParseHex: " + err.Error())
+	}
+	return c
+}
+
+func Colorize(value, valley, peak float64) colorful.Color {
+	// get normalized height in range of 0,1
+	z, err := Normalize(valley, peak, value)
+	if err != nil {
+		log.Fatalf("error: Colorize: %v", err)
+	}
+	return gradient.GetInterpolatedColorFor(z)
 }
