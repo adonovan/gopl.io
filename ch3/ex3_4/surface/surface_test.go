@@ -18,7 +18,7 @@ var tests = [][]float64{
 
 func TestCorner(t *testing.T) {
 	for _, t := range tests {
-		i, j, z, err := Corner(int(t[0]), int(t[1]))
+		i, j, z, err := Corner("Sin", 800, 600, int(t[0]), int(t[1]))
 		if err != nil {
 			log.Fatalf("f: for args %v, got %v, %v, %v", t[0:2], i, j, z)
 		}
