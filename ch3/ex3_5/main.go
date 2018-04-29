@@ -16,7 +16,6 @@ import (
 	"image/color"
 	"image/png"
 	"math"
-	"math/cmplx"
 	"os"
 
 	"github.com/lucasb-eyer/go-colorful"
@@ -25,7 +24,7 @@ import (
 func main() {
 	const (
 		xmin, ymin, xmax, ymax = -2, -2, +2, +2
-		width, height          = 1024, 1024
+		width, height          = 2048, 2048
 	)
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
@@ -49,23 +48,35 @@ func Magnitude(n complex128) float64 {
 	return math.Abs(vector)
 }
 
-const iterations = 255
+const maxIterations = 18
+const escapeRadius = 3.0
 
 var log2 = math.Log(2)
 
+// mandelbrot function with smoothed escape
+// http://linas.org/art-gallery/escape/escape.html
 func mandelbrot(c complex128) color.Color {
 	var z complex128
+	var i uint8
+	var modulus float64
 
-	for n := uint8(0); n < iterations; n++ {
+	for i = uint8(0); i < maxIterations; i++ {
 		z = z*z + c // the mandelbrot equation
-		if cmplx.Abs(z) > 2 {
-			// smoothing equation from http://linas.org/art-gallery/escape/smooth.html
-			mu := float64(n) + 1 - math.Log(math.Log(Magnitude(z)))/log2
-			fract := mu / iterations
-			return gradient.GetInterpolatedColorFor(fract)
+		modulus = Magnitude(z)
+		if modulus > escapeRadius {
+			break
 		}
 	}
-	return color.Black
+	z = z*z + c // the mandelbrot equation (couple of extra iterations helps)
+	z = z*z + c
+	i += 2
+	modulus = Magnitude(z)
+	mu := float64(i) + 1 - math.Log(math.Log(modulus))/log2
+	if math.IsNaN(mu) || math.IsInf(mu, 1) || math.IsInf(mu, -1) {
+		return color.Black
+	}
+	normalizedMu := math.Min(1, mu/float64(maxIterations))
+	return gradient.GetInterpolatedColorFor(normalizedMu)
 }
 
 // The "keypoints" of the gradient.
@@ -103,9 +114,10 @@ func (self GradientTable) GetInterpolatedColorFor(t float64) colorful.Color {
 			return c1.Col.BlendHcl(c2.Col, t).Clamped()
 		}
 	}
-
 	// Nothing found? Means we're at (or past) the last gradient keypoint.
-	return self[len(self)-1].Col
+	// return self[len(self)-1].Col
+	c, _ := colorful.Hex("#000000")
+	return c
 }
 
 // This is a very nice thing Golang forces you to do!
