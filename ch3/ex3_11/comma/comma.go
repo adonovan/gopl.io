@@ -10,7 +10,7 @@ import (
 	"regexp"
 )
 
-var signRegexp = regexp.MustCompile(`\+|\-`) // TODO: probably not all chars need esacaping?
+var signRegexp = regexp.MustCompile(`\+|\-`)
 var decimalRegexp = regexp.MustCompile(`\.\d+`)
 
 // Comma inserts commas at each 1000's place in a numeric string. It allows
