@@ -3,3 +3,4 @@
 *.png
 debug
 .vscode
+debug.test
