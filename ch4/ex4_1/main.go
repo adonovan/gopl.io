@@ -19,8 +19,9 @@ import (
 
 type hash [sha256.Size]uint8
 
-// counter returns the number of ints that are equal in two hash arrays.
-func counter(a hash, b hash) int {
+// diff returns the number of ints that are unequal for each position
+// in two hash arrays.
+func diff(a hash, b hash) int {
 	count := 0
 	for i, n := range a {
 		if b[i] != n {
@@ -43,6 +44,6 @@ func main() {
 	b := os.Args[2]
 	ah := sha256.Sum256([]byte(a))
 	bh := sha256.Sum256([]byte(b))
-	n := counter(hash(ah), hash(bh))
+	n := diff(hash(ah), hash(bh))
 	fmt.Printf("sha256 hashes differ by %d bits\n", n)
 }
