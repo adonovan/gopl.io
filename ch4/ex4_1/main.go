@@ -6,27 +6,27 @@
 // ex 4.1 write a function that counts the number of bits that are different
 // in two SHA256 hashes. (see PopCount from section 2.6.2)
 
-// n.b. the bitcount cannot be calculated directly on an uint because the
-// Sum256() returns [32]uint8. instead check each array position for equality.
-
 package main
 
 import (
 	"crypto/sha256"
 	"fmt"
 	"os"
+
+	"gopl.io/ch2/popcount"
 )
 
 type hash [sha256.Size]uint8
 
 // diff returns the number of ints that are unequal for each position
-// in two hash arrays.
+// in two hash arrays. Each uint is treated as a bitmask.
 func diff(a hash, b hash) int {
 	count := 0
-	for i, n := range a {
-		if b[i] != n {
-			count++
-		}
+	for i, na := range a {
+		nb := b[i]
+		xored := na ^ nb
+		bitCount := popcount.PopCount(uint64(xored))
+		count += bitCount
 	}
 	return count
 }
@@ -45,5 +45,10 @@ func main() {
 	ah := sha256.Sum256([]byte(a))
 	bh := sha256.Sum256([]byte(b))
 	n := diff(hash(ah), hash(bh))
+	if n == 0 {
+		// could have checked for string equality of a, b. but just to be pedantic:
+		fmt.Printf("sha256 hashes are identical\n")
+		os.Exit(0)
+	}
 	fmt.Printf("sha256 hashes differ by %d bits\n", n)
 }
