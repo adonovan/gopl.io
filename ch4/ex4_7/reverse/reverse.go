@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2018 Alex G Rice
+ * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+ */
+
 package reverse
 
 // ex 4.7 Modify reverse the characters of a []byte slice that represents a

@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2018 Alex G Rice
+ * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+ */
+
 // ex 4.6 Write an in-place function that squashes each run of adjacent unicode
 // spaces (see unicode.IsSpace) in a utf8 encoded []byte slice into a single
 // ascii space.

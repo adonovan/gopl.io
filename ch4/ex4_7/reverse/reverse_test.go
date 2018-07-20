@@ -1,3 +1,8 @@
+/*
+ * Copyright © 2018 Alex G Rice
+ * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+ */
+
 package reverse
 
 import (
