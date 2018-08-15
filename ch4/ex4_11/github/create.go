@@ -13,21 +13,21 @@ import (
 	"net/http"
 )
 
-const token = "xxx" // FIXME get token from cli
-
-func CreateIssue(repo string, issue *IssueCreate) (string, error) {
+func CreateIssue(
+	token GithubToken,
+	repo string,
+	issue IssueTemplate,
+) (string, error) {
 	url := APIURL + "repos/" + repo + "/issues"
-	fmt.Println(url)
 	b, err := json.Marshal(issue)
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(string(b))
 	body := bytes.NewBuffer(b)
 	client := &http.Client{}
 	req, _ := http.NewRequest("POST", url, body)
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", "token "+token)
+	req.Header.Add("Authorization", "token "+string(token))
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err

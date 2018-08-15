@@ -13,8 +13,11 @@ package github
 import "time"
 
 const APIURL = "https://api.github.com/"
+const GithubEnvVar = "GITHUB_TOKEN"
 
 var IssuesSearchURL = APIURL + "search/issues"
+
+type GithubToken string
 
 type IssuesSearchResult struct {
 	TotalCount int `json:"total_count"`
@@ -36,8 +39,8 @@ type User struct {
 	HTMLURL string `json:"html_url"`
 }
 
-// IssueCreate is the payload for creating an issue by POST /repos/:owner/:repo/issues
-type IssueCreate struct {
+// IssueTemplate is the payload for creating an issue by POST /repos/:owner/:repo/issues
+type IssueTemplate struct {
 	Title     string   `json:"title"`
 	Body      string   `json:"body"`
 	Assignees []string `json:"assignees,omitempty"`

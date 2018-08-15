@@ -1,14 +1,21 @@
 package github
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestCreateIssue(t *testing.T) {
 	repo := "guidorice/gopl.io"
-	issue := &IssueCreate{
+	token := GithubToken(os.Getenv(GithubEnvVar))
+	if token == "" {
+		t.Fatal("missing Github token")
+	}
+	issue := IssueTemplate{
 		Title: "test issue",
 		Body:  "lorem ipsum",
 	}
-	_, err := CreateIssue(repo, issue)
+	_, err := CreateIssue(token, repo, issue)
 	if err != nil {
 		t.Errorf("CreateIssue: %v", err)
 	}
