@@ -44,7 +44,7 @@ func main() {
 	}
 	for range os.Args[1:] {
 		// receive from channel ch
-		res := <-ch;
+		res := <-ch
 		fmt.Println(res.timing)
 		fmt.Fprintf(out, res.content)
 	}
@@ -53,13 +53,14 @@ func main() {
 
 func fetch(url string, ch chan<- result) {
 	start := time.Now()
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) // TODO: lower timeouts https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779
+
 	if err != nil {
 		ch <- result{fmt.Sprint(err), ""}
 		return
 	}
-	bytes, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close() // don't leak resources
+	bytes, err := ioutil.ReadAll(resp.Body) // TODO: io.LimitReader with MAX_MEMORY
+	resp.Body.Close()                       // don't leak resources
 	if err != nil {
 		ch <- result{fmt.Sprintf("while reading %s: %v", url, err), ""}
 		return

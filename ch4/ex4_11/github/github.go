@@ -17,7 +17,21 @@ const GithubEnvVar = "GITHUB_TOKEN"
 
 var IssuesSearchURL = APIURL + "search/issues"
 
-type GithubToken string
+type Token string
+type Repo string
+type IssueId int
+
+const (
+	_ = 1 << (10 * iota)
+	KiB
+	MiB
+	GiB
+	TiB
+	PiB
+	EiB
+	ZiB
+	YiB
+)
 
 type IssuesSearchResult struct {
 	TotalCount int `json:"total_count"`
@@ -39,10 +53,12 @@ type User struct {
 	HTMLURL string `json:"html_url"`
 }
 
-// IssueTemplate is the payload for creating an issue by POST /repos/:owner/:repo/issues
-type IssueTemplate struct {
+// IssueCreateTemplate is a struct for json serialization from github api. It
+// has a slightly different layout than the full Issue struct returned by the api.
+type IssueCreateTemplate struct {
 	Title     string   `json:"title"`
 	Body      string   `json:"body"`
+	State     string   `json:"string,omitempty"`
 	Assignees []string `json:"assignees,omitempty"`
 	Milestone int      `json:"milestone,omitempty"`
 	Labels    []string `json:"labels,omitempty"`
