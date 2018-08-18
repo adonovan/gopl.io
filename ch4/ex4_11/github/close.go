@@ -14,18 +14,13 @@ import (
 	"net/http"
 )
 
-// CreateIssue creates an issue using github api and the token, repo, and
-// template.
-func CreateIssue(token Token, repo Repo, issueSrc IssueCreate) (Issue, error) {
-	url := APIURL + "repos/" + repo + "/issues"
-	b, err := json.Marshal(issueSrc)
-	if err != nil {
-		return Issue{}, err
-	}
-	body := bytes.NewBuffer(b)
-	// TODO: lower timeouts https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779
+// CloseIssue closes an issue id via github api
+func CloseIssue(token Token, repo Repo, id IssueId) (Issue, error) {
+	url := APIURL + "repos/" + string(repo) + "/issues/" + string(id)
 	client := &http.Client{}
-	req, _ := http.NewRequest("POST", string(url), body)
+	patch := `{ "state": "closed" }`
+	body := bytes.NewBufferString(patch)
+	req, _ := http.NewRequest("PATCH", string(url), body)
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", "token "+string(token))
 	resp, err := client.Do(req)
@@ -33,10 +28,15 @@ func CreateIssue(token Token, repo Repo, issueSrc IssueCreate) (Issue, error) {
 		return Issue{}, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusCreated {
+	if resp.StatusCode != http.StatusOK {
 		limitedReader := &io.LimitedReader{R: resp.Body, N: KiB}
 		msg, _ := ioutil.ReadAll(limitedReader)
-		return Issue{}, fmt.Errorf("create issue failed: status %s, msg %s", resp.Status, msg)
+		err := fmt.Errorf(
+			"close failed: status %s, msg %s",
+			resp.Status,
+			msg,
+		)
+		return Issue{}, err
 	}
 	limitedReader := &io.LimitedReader{R: resp.Body, N: MiB}
 	data, err := ioutil.ReadAll(limitedReader)

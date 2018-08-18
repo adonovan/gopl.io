@@ -10,7 +10,9 @@
 // See https://developer.github.com/v3/search/#search-issues.
 package github
 
-import "time"
+import (
+	"time"
+)
 
 const APIURL = "https://api.github.com/"
 const GithubEnvVar = "GITHUB_TOKEN"
@@ -19,7 +21,7 @@ var IssuesSearchURL = APIURL + "search/issues"
 
 type Token string
 type Repo string
-type IssueId int
+type IssueId string
 
 const (
 	_ = 1 << (10 * iota)
@@ -53,9 +55,9 @@ type User struct {
 	HTMLURL string `json:"html_url"`
 }
 
-// IssueCreateTemplate is a struct for json serialization from github api. It
+// IssueCreate is a struct for json serialization from github api. It
 // has a slightly different layout than the full Issue struct returned by the api.
-type IssueCreateTemplate struct {
+type IssueCreate struct {
 	Title     string   `json:"title"`
 	Body      string   `json:"body"`
 	State     string   `json:"string,omitempty"`

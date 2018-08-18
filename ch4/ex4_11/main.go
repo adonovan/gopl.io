@@ -8,10 +8,17 @@
 // stantial text input is required.
 package main
 
+// TODO: add update feature w/ editor
+
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"strings"
+	"text/template"
+	"time"
 
 	"github.com/guidorice/gopl.io/ch4/ex4_11/github"
 )
@@ -27,15 +34,14 @@ const (
 	close
 )
 
-// container for flag parsing
+// tmp container for flag parsing
 type flags struct {
 	search bool
 	create bool
-	read   bool
-	update bool
-	close  bool
+	read   int
+	update int
+	close  int
 	repo   string
-	issue  int
 }
 
 // runtime options (after flag parse)
@@ -53,39 +59,89 @@ var f flags
 // package init
 func init() {
 	flag.BoolVar(&f.create, "create", false, "create a github issue")
-	flag.BoolVar(&f.read, "read", false, "read a github issue")
+	flag.BoolVar(&f.create, "c", false, "create a github issue (shorthand)")
+	flag.IntVar(&f.close, "close", -1, "close a github issue")
+	flag.IntVar(&f.read, "read", -1, "read a github issue")
+	flag.IntVar(&f.read, "r", -1, "read a github issue (shorthand)")
+	flag.BoolVar(&f.search, "search", false, "search issues by terms")
+	flag.BoolVar(&f.search, "s", false, "search issues by terms (shorthand)")
 	flag.StringVar(&f.repo, "repo", "", "repository name")
-	flag.IntVar(&f.issue, "issue", 0, "issue number")
+	flag.Usage = Usage
 }
 
-// parseAction converts boolean flags into more readable action type.
-func parseAction() {
+var Usage = func() {
+	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+	// TODO: add detailed usage w/ examples
+	flag.PrintDefaults()
+}
+
+// checkFlags converts boolean, int, etc flags into more readable types.
+func checkFlags() {
 	opts.repo = github.Repo(f.repo)
-	opts.issue = github.IssueId(f.issue)
 	if f.create {
 		opts.action = create
-	} else if f.read {
+	} else if f.read > 0 {
 		opts.action = read
+		opts.issue = github.IssueId(strconv.Itoa(f.read))
+	} else if f.close > 0 {
+		opts.action = close
+		opts.issue = github.IssueId(strconv.Itoa(f.close))
+		if opts.issue == "0" {
+			flag.Usage()
+			os.Exit(2)
+		}
+	} else if f.search {
+		opts.action = search
+		opts.message = strings.Join(flag.Args(), " ")
 	}
 }
+
+const IssuesSearchTemplate = `{{.TotalCount}} issues:
+{{range .Items}}----------------------------------------
+Number: {{.Number}}
+User:   {{.User.Login}}
+Title:  {{.Title | printf "%.64s"}}
+Age:    {{.CreatedAt | daysAgo}} days
+{{end}}`
+
+func daysAgo(t time.Time) int {
+	return int(time.Since(t).Hours() / 24)
+}
+
+var IssuesSearchReport = template.Must(template.New("searchResult").
+	Funcs(template.FuncMap{"daysAgo": daysAgo}).
+	Parse(IssuesSearchTemplate))
+
+const IssueTemplate = `issue#:  {{.Number}} {{.HTMLURL}}
+title:   {{.Title}}
+state:   {{.State}}
+age:    {{.CreatedAt | daysAgo}} days
+creator: {{.User.Login}} {{.User.HTMLURL}}
+
+{{.Body}}
+`
+
+var IssueReport = template.Must(template.New("issue").
+	Funcs(template.FuncMap{"daysAgo": daysAgo}).
+	Parse(IssueTemplate))
 
 func main() {
 	flag.Parse()
-	parseAction()
+	checkFlags()
 	opts.token = github.Token(os.Getenv(github.GithubEnvVar))
-	if opts.token == "" {
-		log.Fatal("error: missing github token in env " + github.GithubEnvVar)
-	}
-	if opts.repo == "" {
-		log.Fatal("error: missing repository name")
+	if opts.token == "" || opts.repo == "" {
+		flag.Usage()
+		os.Exit(2)
 	}
 	switch opts.action {
 	case create:
-		template := github.IssueCreateTemplate{
+		// TODO: get title, body from flag
+		// TODO: open editor option
+		tmpl := github.IssueCreate{
 			Title: "test api create",
 			Body:  "lorem ipsum",
 		}
-		_, err := github.CreateIssue(opts.token, opts.repo, template)
+		_, err := github.CreateIssue(opts.token, opts.repo, tmpl)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -94,6 +150,20 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf("%v", issue)
+		IssueReport.Execute(os.Stdout, issue)
+	case search:
+		// prefix the search terms with a single repo
+		terms := "repo:" + string(opts.repo) + " " + opts.message
+		results, err := github.SearchIssues(terms)
+		if err != nil {
+			log.Fatal(err)
+		}
+		IssuesSearchReport.Execute(os.Stdout, results)
+	case close:
+		issue, err := github.CloseIssue(opts.token, opts.repo, opts.issue)
+		if err != nil {
+			log.Fatal(err)
+		}
+		IssueReport.Execute(os.Stdout, issue)
 	}
 }

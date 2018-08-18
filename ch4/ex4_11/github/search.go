@@ -12,12 +12,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
-// SearchIssues queries the GitHub issue tracker.
-func SearchIssues(terms []string) (*IssuesSearchResult, error) {
-	q := url.QueryEscape(strings.Join(terms, " "))
+// TODO: add auth token so private repos can be searched as well as public.
+
+// SearchIssues queries the GitHub issue tracker. note: searches across all
+// repos, so add add terms like repo:golang/go is:open json decoder to narrow scope.
+func SearchIssues(terms string) (*IssuesSearchResult, error) {
+	q := url.QueryEscape(terms)
 	resp, err := http.Get(IssuesSearchURL + "?q=" + q)
 	if err != nil {
 		return nil, err

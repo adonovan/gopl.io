@@ -11,13 +11,12 @@ func TestCreateIssue(t *testing.T) {
 	if token == "" {
 		t.Fatal("missing Github token")
 	}
-	issue := IssueCreateTemplate{
+	issue := IssueCreate{
 		Title: "test issue",
 		Body:  "lorem ipsum",
 	}
-	newIssue, err := CreateIssue(token, repo, issue)
+	_, err := CreateIssue(token, repo, issue)
 	if err != nil {
 		t.Errorf("CreateIssue: %v", err)
 	}
-	t.Logf("%v", newIssue)
 }

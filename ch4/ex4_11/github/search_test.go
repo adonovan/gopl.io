@@ -5,7 +5,10 @@
 
 package github
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestSearchIssues(t *testing.T) {
 	terms := []string{
@@ -14,7 +17,7 @@ func TestSearchIssues(t *testing.T) {
 		"json",
 		"decoder",
 	}
-	_, err := SearchIssues(terms)
+	_, err := SearchIssues(strings.Join(terms, " "))
 	if err != nil {
 		t.Errorf("SearchIssues: %v", err)
 	}
