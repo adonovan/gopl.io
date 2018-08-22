@@ -14,19 +14,25 @@ import (
 	"net/url"
 )
 
-// TODO: add auth token so private repos can be searched as well as public.
-
 // SearchIssues queries the GitHub issue tracker. note: searches across all
 // repos, so add add terms like repo:golang/go is:open json decoder to narrow scope.
-func SearchIssues(terms string) (*IssuesSearchResult, error) {
+func SearchIssues(token Token, terms string) (*IssuesSearchResult, error) {
 	q := url.QueryEscape(terms)
-	resp, err := http.Get(IssuesSearchURL + "?q=" + q)
+	u := IssuesSearchURL + "?q=" + q
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", string(u), nil)
+	// allow authenticated searches, but don't require token
+	if string(token) != "" {
+		req.Header.Add("Content-Type", "application/json")
+		req.Header.Add("Authorization", "token "+string(token))
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("search query failed: %s", resp.Status)
+		return nil, fmt.Errorf("SearchIssues: search query failed: %s", resp.Status)
 	}
 	var result IssuesSearchResult
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

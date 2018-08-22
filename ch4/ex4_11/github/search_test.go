@@ -6,6 +6,7 @@
 package github
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
@@ -17,7 +18,8 @@ func TestSearchIssues(t *testing.T) {
 		"json",
 		"decoder",
 	}
-	_, err := SearchIssues(strings.Join(terms, " "))
+	token := Token(os.Getenv(GithubEnvVar))
+	_, err := SearchIssues(token, strings.Join(terms, " "))
 	if err != nil {
 		t.Errorf("SearchIssues: %v", err)
 	}

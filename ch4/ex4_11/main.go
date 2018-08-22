@@ -8,7 +8,8 @@
 // stantial text input is required.
 package main
 
-// TODO: add update feature w/ editor
+// TODO: lower timeouts in all http clients https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779
+// TODO: implement updating w/ editor
 
 import (
 	"flag"
@@ -34,38 +35,42 @@ const (
 	close
 )
 
-// tmp container for flag parsing
+// tmp struct for flag parsing
 type flags struct {
-	search bool
-	create bool
-	read   int
-	update int
-	close  int
-	repo   string
+	close   int
+	create  bool
+	message string
+	read    int
+	repo    string
+	search  bool
+	title   string
+	update  int
 }
 
-// runtime options (after flag parse)
+// runtime options struct (after flag parse)
 type options struct {
 	action  action
-	repo    github.Repo
 	issue   github.IssueId
-	message string // can also be search terms, space separated
+	message string
+	query   string
+	repo    github.Repo
+	search  string
+	title   string
 	token   github.Token
 }
 
-var opts options
 var f flags
+var opts options
 
 // package init
 func init() {
 	flag.BoolVar(&f.create, "create", false, "create a github issue")
-	flag.BoolVar(&f.create, "c", false, "create a github issue (shorthand)")
 	flag.IntVar(&f.close, "close", -1, "close a github issue")
 	flag.IntVar(&f.read, "read", -1, "read a github issue")
-	flag.IntVar(&f.read, "r", -1, "read a github issue (shorthand)")
 	flag.BoolVar(&f.search, "search", false, "search issues by terms")
-	flag.BoolVar(&f.search, "s", false, "search issues by terms (shorthand)")
 	flag.StringVar(&f.repo, "repo", "", "repository name")
+	flag.StringVar(&f.title, "title", "", "title of new issue")
+	flag.StringVar(&f.message, "message", "", "message body of new issue")
 	flag.Usage = Usage
 }
 
@@ -80,6 +85,13 @@ func checkFlags() {
 	opts.repo = github.Repo(f.repo)
 	if f.create {
 		opts.action = create
+		opts.title = f.title
+		opts.message = f.message
+		if opts.repo == "" || opts.title == "" {
+			log.Printf("Example: -create -title \"title...\" -message \"message...\"")
+			flag.Usage()
+			os.Exit(2)
+		}
 	} else if f.read > 0 {
 		opts.action = read
 		opts.issue = github.IssueId(strconv.Itoa(f.read))
@@ -92,7 +104,15 @@ func checkFlags() {
 		}
 	} else if f.search {
 		opts.action = search
-		opts.message = strings.Join(flag.Args(), " ")
+		opts.query = strings.Join(flag.Args(), " ")
+	}
+}
+
+func checkAuth() {
+	opts.token = github.Token(os.Getenv(github.GithubEnvVar))
+	if opts.token == "" {
+		log.Printf("warning: no auth token, set environment variable" +
+			github.GithubEnvVar)
 	}
 }
 
@@ -128,42 +148,47 @@ var IssueReport = template.Must(template.New("issue").
 func main() {
 	flag.Parse()
 	checkFlags()
-	opts.token = github.Token(os.Getenv(github.GithubEnvVar))
-	if opts.token == "" || opts.repo == "" {
-		flag.Usage()
-		os.Exit(2)
-	}
+	checkAuth()
 	switch opts.action {
 	case create:
-		// TODO: get title, body from flag
-		// TODO: open editor option
-		tmpl := github.IssueCreate{
-			Title: "test api create",
-			Body:  "lorem ipsum",
+		if opts.message == "" {
+			b, err := editorMessage()
+			if err != nil {
+				log.Fatal(err)
+			}
+			opts.message = string(b)
 		}
-		_, err := github.CreateIssue(opts.token, opts.repo, tmpl)
+		tmpl := github.IssueCreate{
+			Title: opts.title,
+			Body:  opts.message,
+		}
+		issue, err := github.CreateIssue(opts.token, opts.repo, tmpl)
 		if err != nil {
 			log.Fatal(err)
 		}
+		IssueReport.Execute(os.Stdout, issue)
 	case read:
 		issue, err := github.ReadIssue(opts.token, opts.repo, opts.issue)
 		if err != nil {
 			log.Fatal(err)
 		}
 		IssueReport.Execute(os.Stdout, issue)
-	case search:
-		// prefix the search terms with a single repo
-		terms := "repo:" + string(opts.repo) + " " + opts.message
-		results, err := github.SearchIssues(terms)
-		if err != nil {
-			log.Fatal(err)
-		}
-		IssuesSearchReport.Execute(os.Stdout, results)
 	case close:
 		issue, err := github.CloseIssue(opts.token, opts.repo, opts.issue)
 		if err != nil {
 			log.Fatal(err)
 		}
 		IssueReport.Execute(os.Stdout, issue)
+	case search:
+		// prefix the search terms with a single repo name
+		terms := "repo:" + string(opts.repo) + " " + opts.query
+		results, err := github.SearchIssues(opts.token, terms)
+		if err != nil {
+			log.Fatal(err)
+		}
+		IssuesSearchReport.Execute(os.Stdout, results)
+	default:
+		flag.Usage()
+		os.Exit(2)
 	}
 }

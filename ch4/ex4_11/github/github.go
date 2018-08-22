@@ -19,8 +19,13 @@ const GithubEnvVar = "GITHUB_TOKEN"
 
 var IssuesSearchURL = APIURL + "search/issues"
 
+// Token is a string type for github authorization token.
 type Token string
+
+// Repo is a string type for github repository path.
 type Repo string
+
+// IssueId is a string type for convenience (although issue ids are sequential integers)
 type IssueId string
 
 const (

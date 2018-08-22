@@ -23,7 +23,6 @@ func CreateIssue(token Token, repo Repo, issueSrc IssueCreate) (Issue, error) {
 		return Issue{}, err
 	}
 	body := bytes.NewBuffer(b)
-	// TODO: lower timeouts https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779
 	client := &http.Client{}
 	req, _ := http.NewRequest("POST", string(url), body)
 	req.Header.Add("Content-Type", "application/json")
@@ -36,7 +35,7 @@ func CreateIssue(token Token, repo Repo, issueSrc IssueCreate) (Issue, error) {
 	if resp.StatusCode != http.StatusCreated {
 		limitedReader := &io.LimitedReader{R: resp.Body, N: KiB}
 		msg, _ := ioutil.ReadAll(limitedReader)
-		return Issue{}, fmt.Errorf("create issue failed: status %s, msg %s", resp.Status, msg)
+		return Issue{}, fmt.Errorf("CreateIssue: failed with status %s, msg %s", resp.Status, msg)
 	}
 	limitedReader := &io.LimitedReader{R: resp.Body, N: MiB}
 	data, err := ioutil.ReadAll(limitedReader)
