@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+*.png
+debug
+.vscode
+debug.test
