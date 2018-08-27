@@ -23,7 +23,7 @@ func main() {
 	// NOTE: ignoring potential errors from input.Err()
 	for line, n := range counts {
 		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
+			fmt.Printf("%s\t%d\n", line, n)
 		}
 	}
 }
