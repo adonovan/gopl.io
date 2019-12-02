@@ -1,10 +1,4 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 20.
-//!+
-
-// Server2 is a minimal "echo" and counter server.
+// Server2 is
 package main
 
 import (
@@ -23,19 +17,27 @@ func main() {
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 
-// handler echoes the Path component of the requested URL.
 func handler(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	count++
 	mu.Unlock()
-	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+	fmt.Fprintf(w, "URL.Paht = %q\n", r.URL.Path)
 }
 
-// counter echoes the number of calls so far.
 func counter(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
 }
 
-//!-
+/*
+go build -o server2.exe
+server2.exe
+
+on browser
+http://localhost:8000/
+http://localhost:8000/abcd
+http://localhost:8000/count
+http://localhost:8000/count
+http://localhost:8000/count
+*/
