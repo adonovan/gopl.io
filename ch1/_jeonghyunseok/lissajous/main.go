@@ -66,4 +66,5 @@ func lissajous(out io.Writer) {
 /*
 go build -o lissajous.exe
 lissajous.exe web
+lissajous.exe >out.gif
 */
