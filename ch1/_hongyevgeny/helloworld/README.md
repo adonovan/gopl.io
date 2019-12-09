@@ -1,6 +1,6 @@
-## 예제 실행
+## 예제 코드
 
-```go
+```
 package main
 
 import "fmt"
@@ -10,7 +10,7 @@ func main() {
 }
 ```
 
-## 결과
+## 실행 결과
 
 ```
 Hello, world 한자는 제가 잘 못하네요 ㅎㅎ
