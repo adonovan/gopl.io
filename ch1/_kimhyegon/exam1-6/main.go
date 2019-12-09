@@ -2,7 +2,7 @@ package main
 
 import (
 	"image"
-	"image/color"
+	"image/color/palette"
 	"image/gif"
 	"io"
 	"math"
@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-var palette = []color.Color{color.White, color.Black}
+//var palette = []color.Color{color.White, color.Black}
 
 const (
 	whiteIndex = 0 // 팔레트의 첫 번째 색상
@@ -37,11 +37,12 @@ func lissajous(out io.Writer) {
 
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
-		img := image.NewPaletted(rect, palette)
+		//img := image.NewPaletted(rect, palette)
+		img := image.NewPaletted(rect, palette.Plan9)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), blackIndex)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), 255)
 		}
 
 		phase += 0.1
