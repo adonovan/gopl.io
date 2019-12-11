@@ -12,7 +12,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", handler) // 왜 모든 하위 path에 매칭될까?
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 	// log.Fatal() 은 메시지를 출력하고 os.Exit(1)을 호출
 }
