@@ -1,0 +1,7 @@
+0.10s  197717 http://www.naver.com
+0.11s  195373 http://www.naver.com
+0.29s  828009 http://www.bmw.co.jp/ja/index.html
+0.29s  828009 http://www.bmw.co.jp/ja/index.html
+0.37s   11071 https://golang.org
+0.37s   11071 https://golang.org
+0.37s elapsed
