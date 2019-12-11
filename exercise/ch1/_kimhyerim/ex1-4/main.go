@@ -19,7 +19,7 @@ func main() {
 	counts := make(map[string]int)
 	files := os.Args[1:]
 	if len(files) == 0 {
-		countLines(os.Stdin, counts)
+		fmt.Println("Enter a filename.")
 	} else {
 		for _, arg := range files {
 			f, err := os.Open(arg)
@@ -28,21 +28,22 @@ func main() {
 				continue
 			}
 
-			countLines(f, counts)
+			if isDuplicated(f, counts) {
+				fmt.Println(arg)
+			}
 			f.Close()
 		}
 	}
 
-	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
-		}
-	}
 }
 
-func countLines(f *os.File, counts map[string]int) {
+func isDuplicated(f *os.File, counts map[string]int) bool {
 	input := bufio.NewScanner(f)
 	for input.Scan() {
-		counts[input.Text()]++
+		if counts[input.Text()]++; counts[input.Text()] > 1 {
+			return true
+		}
 	}
+
+	return false
 }
