@@ -10,6 +10,8 @@ import (
 
 func main() {
 	counts := make(map[string]int)
+	// os.Args : Command Line 의 Arguments 를 얻기 위해 사용
+	// os.Args[0:1] -> 실행되는 Go 프로그램의 이름
 	files := os.Args[1:]
 	if len(files) == 0 {
 		countLines(os.Stdin, counts)
@@ -18,6 +20,8 @@ func main() {
 			f, err := os.Open(arg)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "dup2: %v\n", err)
+				// 파일이 없는 경우, 아래 과정 필요 없기 때문
+				continue
 			}
 			countLines(f, counts)
 			f.Close()
