@@ -11,11 +11,20 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
+	_ "net/http/pprof" // pprof https://medium.com/@laeshiny/golang-package-pprof-in-net-http-9d34fcb6d675
 	"time"
 )
 
 func main() {
+	// pprof https://medium.com/@laeshiny/golang-package-pprof-in-net-http-9d34fcb6d675
+	done := make(chan int)
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+		done <- 1
+	}()
+
 	start := time.Now()
 	ch := make(chan string)
 	// for _, url := range os.Args[1:] {
@@ -27,6 +36,7 @@ func main() {
 		fmt.Println(<-ch) // blocking
 	}
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+	<-done
 }
 
 func fetch(url string, ch chan<- string) {

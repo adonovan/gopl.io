@@ -2,9 +2,6 @@
 // SetColorIndex의 세 번째 인수를 변경해
 // 여러 색상의 이미지를 생성하도록 리사주 프로그램을 수정하라.
 
-// 1.5 가독성을 높이기 위해 검은색 위에 녹색을 칠하도록 리사주 프로그램의 색상 팔레트를 변경하라.
-// 웹 색상 #RRGGBB를 만들려면 color.RGBA{0xRR, 0xGG, 0xBB, 0xff}를 사용하며,
-// 각 16진 숫자의 쌍은 픽셀에서 적색, 녹색, 청색의 세기를 나타낸다.
 // start witl lissajous.go
 // Lissajous generates GIF animations of random Lissajous figures.
 package main
@@ -69,9 +66,9 @@ func lissajous(out io.Writer) {
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
 
-	randomIndex := uint8(rand.Intn(len(Plan9)))
+	// randomIndex := uint8(rand.Intn(len(Plan9)))
 	for i := 0; i < nframes; i++ {
-		// randomIndex := uint8(rand.Intn(len(Plan9)))
+		randomIndex := uint8(rand.Intn(len(Plan9)))
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
 		img := image.NewPaletted(rect, Plan9)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
@@ -87,6 +84,7 @@ func lissajous(out io.Writer) {
 	gif.EncodeAll(out, &anim) // NOTE: ignoring encoding errors
 }
 
+// Plan9 is color.Color slices
 var Plan9 = []color.Color{
 	color.RGBA{0x00, 0x00, 0x00, 0xff},
 	color.RGBA{0x00, 0x00, 0x44, 0xff},

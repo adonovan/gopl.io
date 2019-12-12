@@ -27,14 +27,28 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// 1st
 	for _, url := range os.Args[1:] {
-		go fetch(url, ch, f)
 		go fetch(url, ch, f)
 	}
 	for range os.Args[1:] {
 		fmt.Print(<-ch) // blocking
+	}
+	// 2nd
+	for _, url := range os.Args[1:] {
+		go fetch(url, ch, f)
+	}
+	for range os.Args[1:] {
 		fmt.Print(<-ch) // blocking
 	}
+	// 3rd
+	for _, url := range os.Args[1:] {
+		go fetch(url, ch, f)
+	}
+	for range os.Args[1:] {
+		fmt.Print(<-ch) // blocking
+	}
+
 	result := fmt.Sprintf("%.2fs elapsed\n", time.Since(start).Seconds())
 	f.WriteString(result)
 }
@@ -67,6 +81,14 @@ func fetch(url string, ch chan<- string, file *os.File) {
 go build -o ex1-10.exe
 ex1-10.exe https://golang.org http://www.naver.com http://www.bmw.co.jp/ja/index.html
 type result.txt
-
-no cache I guess
 */
+
+// 0.11s  196060 http://www.naver.com
+// 0.29s  707989 http://www.bmw.co.jp/ja/index.html
+// 0.44s   11071 https://golang.org
+// 0.02s  196692 http://www.naver.com
+// 0.12s  709009 http://www.bmw.co.jp/ja/index.html
+// 0.21s   11071 https://golang.org
+// 0.03s  194647 http://www.naver.com
+// 0.11s  707989 http://www.bmw.co.jp/ja/index.html
+// 0.21s   11071 https://golang.org

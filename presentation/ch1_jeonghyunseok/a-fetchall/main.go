@@ -45,3 +45,8 @@ go build -o fetchall.exe
 fetchall https://golang.org http://gopl.io https://godoc.org
 
 */
+
+// 0.43s   11071 https://golang.org
+// 0.45s    6833 https://godoc.org
+// 1.46s    4154 http://gopl.io
+// 1.46s elapsed

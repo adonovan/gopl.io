@@ -19,8 +19,7 @@ import (
 	"time"
 )
 
-// 아래 두 줄로 바탕 검정에 초록선을 그릴 수 있다.
-
+// Green 을 정의해보자. 아래 두 줄로 바탕 검정에 초록선을 그릴 수 있다.
 var Green = color.RGBA{0x00, 0xFF, 0x00, 0xFF}
 var palette = []color.Color{color.Black, Green} // background, foreground color
 // var palette = []color.Color{color.White, color.Black}
@@ -81,4 +80,5 @@ func lissajous(out io.Writer) {
 /*
 go build -o ex1-5.exe
 ex1-5.exe web
+http://localhost:8000
 */

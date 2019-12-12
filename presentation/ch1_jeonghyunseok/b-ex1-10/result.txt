@@ -1,7 +1,10 @@
-0.10s  197717 http://www.naver.com
-0.11s  195373 http://www.naver.com
-0.29s  828009 http://www.bmw.co.jp/ja/index.html
-0.29s  828009 http://www.bmw.co.jp/ja/index.html
-0.37s   11071 https://golang.org
-0.37s   11071 https://golang.org
-0.37s elapsed
+0.11s  196060 http://www.naver.com
+0.29s  707989 http://www.bmw.co.jp/ja/index.html
+0.44s   11071 https://golang.org
+0.02s  196692 http://www.naver.com
+0.12s  709009 http://www.bmw.co.jp/ja/index.html
+0.21s   11071 https://golang.org
+0.03s  194647 http://www.naver.com
+0.11s  707989 http://www.bmw.co.jp/ja/index.html
+0.21s   11071 https://golang.org
+0.86s elapsed
