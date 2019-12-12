@@ -1,0 +1,3 @@
+0.13s  220233 https://daum.net
+0.62s   82885 https://github.com/gopl-study/gopl.io/tree/master/ch1
+1.54s  196988 https://naver.com
