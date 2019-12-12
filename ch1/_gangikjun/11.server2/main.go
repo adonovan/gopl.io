@@ -1,10 +1,4 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 20.
-//!+
-
-// Server2 is a minimal "echo" and counter server.
+// Server2는 최소한의 echo 및 카운터 서버다
 package main
 
 import (
@@ -23,19 +17,16 @@ func main() {
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 
-// handler echoes the Path component of the requested URL.
 func handler(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	count++
 	mu.Unlock()
+
 	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
 }
 
-// counter echoes the number of calls so far.
 func counter(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
 }
-
-//!-
