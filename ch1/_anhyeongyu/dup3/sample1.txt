@@ -1,0 +1,8 @@
+hello
+hello
+halo
+hello
+halo
+bye
+bye
+goodbye
