@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -16,10 +13,3 @@ func main() {
 	}
 	fmt.Println(s)
 }
-```
-
-## 실행 결과
-
-```
-hello nice to meet you
-```
