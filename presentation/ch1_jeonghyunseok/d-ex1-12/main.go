@@ -45,8 +45,8 @@ func main() {
 }
 
 func helpHandler(w http.ResponseWriter, r *http.Request) {
-	help := "you can send query: cycles, size, delay"
-	help2 := "ex)http://localhost:8000/?cycles=20&size=200&delay=4"
+	help := "you can send query: cycles, size, delay\n"
+	help2 := "ex)http://localhost:8000/?cycles=20&size=200&delay=4\n"
 
 	fmt.Fprint(w, help)
 	fmt.Fprint(w, help2)
@@ -118,6 +118,7 @@ go build -o ex1-12.exe
 ex1-12.exe web
 
 on browser
+http://localhost:8000/help
 http://localhost:8000/?cycles=20&size=200&delay=4
 http://localhost:8000/?cycles=50&size=300&delay=8
 http://localhost:8000/?cycles=50&size=300&delay=2
