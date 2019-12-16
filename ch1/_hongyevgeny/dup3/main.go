@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -29,11 +26,3 @@ func main() {
 		}
 	}
 }
-```
-
-## 실행 결과
-
-```
-3	hi
-2	hello
-```
