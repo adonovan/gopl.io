@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -21,11 +18,4 @@ func main(){
 			fmt.Printf("%d\t%s\n",n,line);
 		}
 	}
-}```
-
-## 실행 결과
-
-```
-3	hello
-3	hi
-```
+}
