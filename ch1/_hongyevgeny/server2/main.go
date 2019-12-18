@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -31,13 +28,3 @@ func counter(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Count %d\n", count)
 	mu.Unlock()
 }
-```
-
-## 실행 결과
-
-```
-URL.Path = "/"
-Count 1
-URL.Path = "/"
-Count 2
-```
