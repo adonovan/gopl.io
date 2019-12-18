@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -46,13 +43,3 @@ func fetch(url string, ch chan<- string) {
 	ch <- fmt.Sprintf("%.2fs %7d %s", secs, nbytes, url)
 
 }
-```
-
-## 실행 결과
-
-```
-0.59s   11071 https://golang.org
-0.68s    6833 https://godoc.org
-2.30s    4154 https://gopl.io
-2.30s elapsed
-```
