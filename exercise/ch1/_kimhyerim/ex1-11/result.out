@@ -1,0 +1,51 @@
+Get https://pornhub.com: read tcp 172.30.1.50:50187->66.254.114.41:443: read: connection reset by peer
+0.35s  194528 https://naver.com
+0.38s   90291 https://office.com
+0.38s   36964 https://live.com
+0.40s  237294 https://qq.com
+0.48s   13899 https://login.tmall.com
+Get https://tribunnews.com: x509: certificate is valid for *.maintenis.com, maintenis.com, not tribunnews.com
+0.50s  107107 https://jd.com
+0.50s   83236 https://bing.com
+0.56s  210136 https://sohu.com
+0.59s   13875 https://google.com.hk
+0.63s   13869 https://google.co.in
+0.65s   13272 https://google.com
+0.70s    9029 https://myshopify.com
+0.70s   96507 https://apple.com
+0.72s   18614 https://yahoo.co.jp
+0.74s  137666 https://babytree.com
+0.81s   59735 https://aliexpress.com
+0.95s  115302 https://stackoverflow.com
+1.06s  372670 https://twitter.com
+1.15s   47625 https://msn.com
+1.21s   81997 https://wikipedia.org
+1.34s  158948 https://microsoft.com
+1.38s   87349 https://twitch.tv
+1.43s   83793 https://facebook.com
+1.47s   94478 https://blogspot.com
+1.59s  206084 https://ebay.com
+1.60s  309016 https://youtube.com
+1.62s   38197 https://instagram.com
+1.64s  131519 https://okezone.com
+1.65s    6400 https://amazon.com
+1.72s  351693 https://yahoo.com
+1.73s  434336 https://csdn.net
+1.81s  231582 https://tmall.com
+1.82s  107618 https://yandex.ru
+1.83s   14665 https://pages.tmall.com
+1.90s  543971 https://sina.com.cn
+2.05s  531978 https://reddit.com
+2.15s  208364 https://livejasmin.com
+2.30s  496002 https://netflix.com
+2.40s  435763 https://amazon.co.jp
+2.72s    7888 https://tianya.cn
+2.74s   11141 https://vk.com
+3.13s   74291 https://360.cn
+3.84s  393929 https://taobao.com
+4.12s  156042 https://baidu.com
+18.94s   88974 https://weibo.com
+Get https://xinhuanet.com: dial tcp 202.108.119.193:443: i/o timeout
+Get https://alipay.com: dial tcp 110.75.139.5:443: i/o timeout
+Get https://microsoftonline.com: dial tcp 52.178.167.109:443: i/o timeout
+30.01s elapsed
