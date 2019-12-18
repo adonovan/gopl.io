@@ -1,6 +1,3 @@
-## 예제 코드
-
-```
 package main
 
 import (
@@ -17,11 +14,4 @@ func main() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
 }
- ```
-
-## 실행 결과
-
-```
-URL.Path = "/"
-URL.Path = "/help"
-```
+ 
