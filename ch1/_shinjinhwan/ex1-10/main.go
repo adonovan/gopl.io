@@ -16,12 +16,22 @@ func main() {
 	for _, url := range os.Args[1:] {
 		go fetch(url, ch)
 	}
-
-	for range os.Args[1:] {
-		fmt.Println(<-ch) // receive data through ch
+	f, err := os.Create("resp-result.txt")
+	if err != nil {
+		panic(err)
 	}
 
-	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+	for range os.Args[1:] {
+		recv := <- ch
+		fmt.Println(recv) // receive data through ch
+		w, err := f.WriteString(recv + "\n")
+		if err != nil {
+			fmt.Println(w)
+			panic(err)
+		}
+	}
+
+	fmt.Printf("%.2f s elapsed\n", time.Since(start).Seconds())
 }
 
 func fetch(url string, ch chan<- string) {
