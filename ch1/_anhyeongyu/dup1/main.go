@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+
 	counts := make(map[string]int)
 	input := bufio.NewScanner(os.Stdin)
 
@@ -22,6 +23,8 @@ func main() {
 	}
 	// NOTE: input.Err()에서의 잠재적 오류는 무시한다.
 	for line, n := range counts {
+		// Map은 순서가 없다!!
+		// HashTable을 사용하기 때문 랜덤하게 출력
 		if n > 1 {
 			// f로 끝나는 포매팅 함수는 포매팅 규칙을 사용
 			// %d: 10진 정수, %s: 문자열
