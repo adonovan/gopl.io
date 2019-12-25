@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1d4542d1-200d-481d-8085-d471db1f5a71" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../ch1/_kimhyegon/server2/main" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/.idea/ch2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/.idea/_kimhyegon.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../ch2/_kimhyegon/boiling/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/_kimhyegon.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basename1/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/basename2/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/comma/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ex3-5/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ex3-5/test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ex3-5/test2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mandelbrot/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mandelbrot/test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/netflag/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/printints/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/surface/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch1/_kimhyegon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../ch1/_kimhyegon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch1/_kimhyegon/server1/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../ch1/_kimhyegon/server1/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch1/_kimhyegon/server2/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../ch1/_kimhyegon/server2/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch1/_kimhyegon/server3/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../ch1/_kimhyegon/server3/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch2/tempconv0/celsius.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ch2/tempconv0/tempconv_test.go" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go Application" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="$USER_HOME$/go/go1.13.5" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1VQgzM3gshc8mwUokl6T7Zua3vk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go Application" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunManager" selected="Go Build.go build main.go (1)">
+    <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="_kimhyegon" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/comma/main.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="_kimhyegon" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/basename2/main.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go (1)" />
+        <item itemvalue="Go Build.go build main.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="2401" height="506" key="GridCell.Tab.0.bottom" timestamp="1577254220569">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.0.bottom/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220569" />
+    <state width="2401" height="506" key="GridCell.Tab.0.center" timestamp="1577254220569">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.0.center/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220569" />
+    <state width="2401" height="506" key="GridCell.Tab.0.left" timestamp="1577254220568">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.0.left/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220568" />
+    <state width="2401" height="506" key="GridCell.Tab.0.right" timestamp="1577254220569">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.0.right/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220569" />
+    <state width="2401" height="506" key="GridCell.Tab.1.bottom" timestamp="1577254220570">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.1.bottom/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220570" />
+    <state width="2401" height="506" key="GridCell.Tab.1.center" timestamp="1577254220569">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.1.center/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220569" />
+    <state width="2401" height="506" key="GridCell.Tab.1.left" timestamp="1577254220569">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.1.left/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220569" />
+    <state width="2401" height="506" key="GridCell.Tab.1.right" timestamp="1577254220570">
+      <screen x="0" y="23" width="2880" height="1523" />
+    </state>
+    <state width="2401" height="506" key="GridCell.Tab.1.right/-2560.23.2560.1577/0.23.2880.1523@0.23.2880.1523" timestamp="1577254220570" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/basename2/main.go</url>
+          <line>8</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
