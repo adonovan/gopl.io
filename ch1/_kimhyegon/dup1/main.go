@@ -9,7 +9,10 @@ import (
 func main() {
 	counts := make(map[string]int)
 	input := bufio.NewScanner(os.Stdin)
+	i := 0
 	for input.Scan() {
+		// debug
+		fmt.Printf("input value: [%d],%v\n", i, input.Text())
 		counts[input.Text()]++
 	}
 

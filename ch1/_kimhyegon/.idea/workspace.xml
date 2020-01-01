@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dff31451-834f-4fd3-a3d2-6abf193ce2cb" name="Default Changelist" comment="Argument 처리 -&gt; 화면에 출력">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/_kimhyegon.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-1/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-2/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-3/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-4/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-5/main" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-5/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-5/out.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-6/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exam1-6/out.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lissajous/out.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dup1/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/dup1/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dup2/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/dup2/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dup3/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/dup3/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/echo2/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/echo2/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/echo3/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/echo3/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetchall/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/fetchall/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lissajous/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lissajous/main.go" afterDir="false" />
+    <list default="true" id="dff31451-834f-4fd3-a3d2-6abf193ce2cb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server2/main" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server1/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server1/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server2/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server2/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server3/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server3/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +59,31 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
+  <component name="RunManager" selected="Go Build.go build main.go (1)">
+    <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="_kimhyegon" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/ex1-12/main.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="_kimhyegon" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <parameters value="http://gopl.io" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/ex1-9/main.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go (1)" />
+        <item itemvalue="Go Build.go build main.go" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
       <list>
@@ -92,32 +99,125 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-1" />
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-2" />
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-3" />
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-4" />
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-5" />
+                        <option value="dir:/Users/BlackwoolfMacDev/Library/Mobile Documents/com~apple~CloudDocs/Desktop/데스크탑 - Blackwoolf-Dev_iMacPro의 iMac Pro/Study/Books/GoLang/The Go Programming Language /gopl.io/ch1/_kimhyegon/exam1-6" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="log.Println --&gt; Hellow 출력" />
     <MESSAGE value="샘플코드 추가" />
     <MESSAGE value="Argument 처리 -&gt; 화면에 출력" />
-    <option name="LAST_COMMIT_MESSAGE" value="Argument 처리 -&gt; 화면에 출력" />
+    <MESSAGE value="연습문제 1-6까지 추가" />
+    <MESSAGE value="연습문제 1-7, 연습문제 1-7, 연습문제 1-7, 연습문제 1-12 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="연습문제 1-7, 연습문제 1-7, 연습문제 1-7, 연습문제 1-12 추가" />
   </component>
   <component name="WindowStateProjectService">
     <state x="782" y="311" key="#Notifications" timestamp="1575614616791">
       <screen x="0" y="23" width="1920" height="1125" />
     </state>
     <state x="782" y="311" key="#Notifications/0.23.1920.1125@0.23.1920.1125" timestamp="1575614616791" />
-    <state x="131" y="246" key="CommitChangelistDialog2" timestamp="1575617033983">
-      <screen x="0" y="23" width="1920" height="1124" />
+    <state x="590" y="229" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576051955707">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state x="590" y="229" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1125@0.23.1920.1125" timestamp="1576051955707" />
+    <state x="835" y="217" key="#go_build_main.go" timestamp="1576048144591">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state x="835" y="217" key="#go_build_main.go/0.23.1920.1125@0.23.1920.1125" timestamp="1576048144591" />
+    <state x="131" y="246" key="CommitChangelistDialog2" timestamp="1576198647314">
+      <screen x="0" y="23" width="1920" height="1127" />
     </state>
     <state x="131" y="246" key="CommitChangelistDialog2/0.23.1920.1124@0.23.1920.1124" timestamp="1575617033983" />
-    <state x="131" y="246" key="CommitChangelistDialog2/0.23.1920.1125@0.23.1920.1125" timestamp="1575615001850" />
+    <state x="131" y="246" key="CommitChangelistDialog2/0.23.1920.1125@0.23.1920.1125" timestamp="1575879128723" />
+    <state x="131" y="246" key="CommitChangelistDialog2/0.23.1920.1127@0.23.1920.1127" timestamp="1576198647314" />
     <state x="582" y="246" width="1200" height="800" key="DiffContextDialog" timestamp="1575616248362">
       <screen x="0" y="23" width="1920" height="1124" />
     </state>
     <state x="582" y="246" width="1200" height="800" key="DiffContextDialog/0.23.1920.1124@0.23.1920.1124" timestamp="1575616248362" />
-    <state x="782" y="386" key="Vcs.Push.Dialog.v2" timestamp="1575617047742">
-      <screen x="0" y="23" width="1920" height="1124" />
+    <state width="1311" height="370" key="GridCell.Tab.0.bottom" timestamp="1576572537422">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537422" />
+    <state width="1452" height="370" key="GridCell.Tab.0.bottom/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574525" />
+    <state width="1311" height="370" key="GridCell.Tab.0.center" timestamp="1576572537421">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.0.center/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537421" />
+    <state width="1452" height="370" key="GridCell.Tab.0.center/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574524" />
+    <state width="1311" height="370" key="GridCell.Tab.0.left" timestamp="1576572537420">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.0.left/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537420" />
+    <state width="1452" height="370" key="GridCell.Tab.0.left/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574523" />
+    <state width="1311" height="370" key="GridCell.Tab.0.right" timestamp="1576572537422">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.0.right/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537422" />
+    <state width="1452" height="370" key="GridCell.Tab.0.right/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574524" />
+    <state width="1311" height="370" key="GridCell.Tab.1.bottom" timestamp="1576572537424">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537424" />
+    <state width="1452" height="370" key="GridCell.Tab.1.bottom/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574527" />
+    <state width="1311" height="370" key="GridCell.Tab.1.center" timestamp="1576572537423">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.1.center/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537423" />
+    <state width="1452" height="370" key="GridCell.Tab.1.center/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574526" />
+    <state width="1311" height="370" key="GridCell.Tab.1.left" timestamp="1576572537423">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.1.left/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537423" />
+    <state width="1452" height="370" key="GridCell.Tab.1.left/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574525" />
+    <state width="1311" height="370" key="GridCell.Tab.1.right" timestamp="1576572537424">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state width="1311" height="370" key="GridCell.Tab.1.right/0.23.1920.1125@0.23.1920.1125" timestamp="1576572537424" />
+    <state width="1452" height="370" key="GridCell.Tab.1.right/0.23.1920.1127@0.23.1920.1127" timestamp="1576198574526" />
+    <state x="782" y="387" key="Vcs.Push.Dialog.v2" timestamp="1576198667017">
+      <screen x="0" y="23" width="1920" height="1127" />
     </state>
     <state x="782" y="386" key="Vcs.Push.Dialog.v2/0.23.1920.1124@0.23.1920.1124" timestamp="1575617047742" />
-    <state x="782" y="386" key="Vcs.Push.Dialog.v2/0.23.1920.1125@0.23.1920.1125" timestamp="1575615012937" />
+    <state x="782" y="386" key="Vcs.Push.Dialog.v2/0.23.1920.1125@0.23.1920.1125" timestamp="1575879153437" />
+    <state x="782" y="387" key="Vcs.Push.Dialog.v2/0.23.1920.1127@0.23.1920.1127" timestamp="1576198667017" />
     <state x="468" y="387" key="VcsDiffUtil.ChangesDialog" timestamp="1575616218450">
       <screen x="0" y="23" width="1920" height="1124" />
     </state>
@@ -126,6 +226,10 @@
       <screen x="0" y="23" width="1920" height="1125" />
     </state>
     <state x="971" y="570" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1920.1125@0.23.1920.1125" timestamp="1575614508291" />
+    <state x="718" y="297" width="816" height="540" key="find.popup" timestamp="1576045698891">
+      <screen x="0" y="23" width="1920" height="1125" />
+    </state>
+    <state x="718" y="297" width="816" height="540" key="find.popup/0.23.1920.1125@0.23.1920.1125" timestamp="1576045698891" />
     <state x="487" y="444" key="git4idea.merge.GitPullDialog" timestamp="1575616128809">
       <screen x="0" y="23" width="1920" height="1124" />
     </state>
@@ -134,5 +238,31 @@
       <screen x="0" y="23" width="1920" height="1124" />
     </state>
     <state x="744" y="244" width="670" height="676" key="search.everywhere.popup/0.23.1920.1124@0.23.1920.1124" timestamp="1575620594702" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ex1-8/main.go</url>
+          <line>12</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ex1-12/main.go</url>
+          <line>86</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ex1-12/main.go</url>
+          <line>27</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ex1-12/main.go</url>
+          <line>63</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
