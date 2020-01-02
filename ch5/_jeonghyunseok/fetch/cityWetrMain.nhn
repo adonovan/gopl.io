@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta property="og:title" content="네이버 날씨"/>
+	<meta property="og:url" content="http://weather.naver.com/rgn/cityWetrMain.nhn"/>
+	<meta property="og:image" content="https://ssl.pstatic.net/static/weather/m/og_weather.png"/>
+	<meta property="og:description" content="생활에 꼭 필요한 날씨와 대기환경정보"/>
+	<link rel="shortcut icon" href="https://ssl.pstatic.net/static/www/nFavicon64.ico" type="image/x-icon">
+	<title>네이버 날씨</title>
+	<link rel="stylesheet" type="text/css" href="/common/css/weather_common.css?20150911">
+	<link rel="stylesheet" type="text/css" href="/common/css/weather_renew.css?20150911">
+	<!-- AU 추가 CSS -->
+	<style type="text/css">
+		.tab_bx.nhn_ui_panel { display: none; }
+		.tab_bx.nhn_ui_selected { display: block; }
+	</style>
+	<!-- AU 추가 CSS -->
+	<!-- AU foggy css -->
+	<style type="text/css">
+		div.z_select .layer_popup,
+		.remove_item {
+			display:none;
+		}
+
+		div.dim_new {
+			position:absolute;
+			left:0; top:0; padding:0; margin:0; border:0;
+			width:100px; height:100px;
+			background-color:white;
+			opacity:0;
+		}
+
+		#favorite_region_wrapper {
+			position: absolute;
+			display:none;
+		}
+	</style>
+
+	<!-- AU foggy css -->
+	<script type="text/javascript">
+		var APP = {};
+		var baseURL = location.protocol +"//" + location.hostname;
+		var aplDocRoot = baseURL;
+		document.domain="naver.com";
+	</script>
+
+	<!-- nClicks -->
+	<script type="text/javascript" src="/common/js/clickcr.js"></script>
+	<script type="text/javascript">
+		var nsc="weather.home";
+		var ccsrv="cc.naver.com";
+		var reqUri = "/rgn/cityWetrMain.nhn";
+		
+		if (reqUri.indexOf("/rgn") > -1) {
+			var nsc="weather.rgn";
+		}
+		if (reqUri.indexOf("/period") > -1) {
+			var nsc="weather.rgn";
+		}
+		if (reqUri.indexOf("/news") > -1) {
+			var nsc="weather.period";
+		}
+		if (reqUri.indexOf("/photo") > -1) {
+			var nsc="weather.photo";
+		}
+		if (reqUri.indexOf("/life") > -1) {
+			var nsc="weather.life";
+		}
+		if (reqUri.indexOf("/world") > -1) {
+			var nsc="weather.world";
+		}
+		if (reqUri.indexOf("/air") > -1) {
+			var nsc="weather.air";
+		}
+	</script>
+	<!-- //nClicks -->
+
+	<script type="text/javascript" src="/common/js/lcslog.js"></script>
+
+	<!-- AU 추가 script -->
+	<script type="text/javascript" src="/common/js/ajaxUI/jindo2_wcomp.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/WeatherTabControl.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/WeatherMapManager.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/WeatherTabLeisureSea.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/RegionDropdown.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/RegionSelector.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/TownMainInfo.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/FoggyManager.js"></script>
+	<script type="text/javascript" src="/common/js/ajaxUI/weatherCommon.js"></script>
+	<!-- AU 추가 script -->
+	<script type="text/javascript" src="/common/js/jindo.min.ns.js"></script>
+	<script type="text/javascript" src="/common/js/weatherServiceCommon.js"></script>
+	<!-- OPS방식 도움말적용  script -->
+	<script type="text/javascript" src="https://ssl.pstatic.net/static/common/js/cs_ops_webncc.js"></script>
+	<!-- 뉴스 GNB script -->
+	<script type="text/javascript" src="/common/js/news/lnbTopNoWeather.js"></script>
+	<!-- HTML5/CSS3 지원여부 체크 lib (Modernizr) -->
+	<script type="text/javascript" src="/common/js/modernizr.min.js"></script>
+<script type="text/javascript">
+		var baseURL = location.protocol +"//" + location.hostname;
+		// AjaxUI init start
+		var wMapManager = new nhn.WeatherMapManager('weatherMap', {
+			mapClassName : 'map',
+			baseURL : baseURL,
+			imgURL : 'https://ssl.pstatic.net/static/weather/images/w_icon/',
+			oPathByMapType : {
+				currentWeather : '/json/crntWetr.nhn',
+				forecast : '/json/hdayFcast.nhn'
+			},
+			sForcastMethod :"cityRgnHdayFcast",
+			sSelectedRegionCode : "",
+			doRoundTemperature : true
+		});
+		// AjaxUI init end
+		
+		function mapSelectCurWetr(idx) {
+			wMapManager.setWeatherData();
+			imgSelectChange(idx);
+		}
+		
+		function mapSelectChange(isToday, isAm, idx) {
+			wMapManager.setWeatherData({
+				code : "CT000000",
+				isToday : isToday, 
+				isAm : isAm
+			});
+
+			imgSelectChange(idx);
+			
+			var selectDay = "";
+			switch(idx) {
+			case 1 : 
+				selectDay = "현재날씨";
+				break;
+			case 2 :
+				selectDay = "오늘오전";
+				break;
+			case 3 : 
+				selectDay = "오늘오후";
+				break;
+			case 4 :
+				selectDay = "내일오전";
+				break;
+			case 5 :
+				selectDay = "내일오후";
+				break;
+			default : "현재날씨";
+			}
+			$('map_select_day').innerHTML = selectDay;
+		}
+		
+		function imgSelectChange(idx) {
+			var aElImg= cssquery ('.k_map li a img');
+			
+			for (var i=0, len = aElImg.length; i < len ;i++) {
+				var el = aElImg[i];
+				el.src = el.src.replace (/_on/, ""); 
+
+				if (i + 1 == idx) {
+					el.src=el.src.replace (/.gif/, "_on.gif");
+				}
+			}
+		}
+		
+		function goCityWetrWarea(cityRgnCd) {
+			location.href = "/rgn/cityWetrWarea.nhn?cityRgnCd="+cityRgnCd;
+		}
+
+	</script>
+<body>
+<div id="wrap">
+	<!-- 레이어 - 딤처리 -->
+	<!-- <div class="dim_new"></div> -->
+	<!-- 스킵네비게이션 -->
+    <div id="u_skip">
+    	<a href="#lnb"><span>메인 메뉴로 바로가기</span></a>
+        <a href="#content"><span>본문으로 바로가기</span></a>
+    </div>
+    <!-- //스킵네비게이션 -->
+	<!-- header -->
+	<div id="header">
+		<script type="text/javascript">
+	//	function newsSearch(frm) {
+	//		document.charset='euc-kr';
+	//		window.onbeforeunload = function () {document.charset='utf-8';};
+	//	}
+
+		isMobileOver = false;
+		
+		function onMobileOver() {
+			isMobileOver = true;
+			window.setTimeout(showPlusMobile, 500);
+
+		}
+		
+		function onMobileOut() {
+			isMobileOver = false;
+			window.setTimeout(hidePlusMobile, 1);
+		}
+		
+		function showPlusMobile() {
+			if (isMobileOver) {
+				document.getElementById("plusMobile").style.display="block";
+				document.getElementById("ie6Mobile").style.display="block";
+			}
+		}
+		
+		function hidePlusMobile() {
+			if (isMobileOver == false) {
+				document.getElementById("plusMobile").style.display="none";
+				document.getElementById("ie6Mobile").style.display="none";
+			}
+		}
+
+		function mobilePreview(){
+			// 팝업창의 크기
+			var nWidth = 375;
+			var nHeight = 645;
+			
+			// popup 윈도우의 위치
+			var nLeft = screen.availWidth - nWidth;
+			var nTop = (screen.availHeight - nHeight)/2;
+			var wId = window.open('http://mobile.naver.com/service/popup_iphone.nhn?url=https://m.weather.naver.com','mobile_preview','top='+nTop+',left='+nLeft+',resizable=no,width='+nWidth+',height=' + nHeight);
+
+			wId.focus();
+		} 
+
+		function blockChk() { 
+			var aa = "http://webmsg.naver.com/popup_send/send_url.php?code=weather&SMSID=ESW00017&MMSID=EMG00005"; 
+			var smsPopup = window.open(aa,"pop_alert","toolbar=no,scrollbars=no ,width=285,height=402,top=100,left=100"); 
+			smsPopup.focus();
+			return; 
+		}
+
+		// 공통GNB관련 변수 선언부
+		var baseURL = location.protocol +"//" + location.hostname;
+		var gnb_service="weather";
+		var gnb_template="gnb_utf8";
+		var gnb_logout=baseURL;
+		var gnb_brightness=1 ;
+		var gnb_item_hide_option= 0;
+	</script>
+	
+	<div class="weather_gnb_wrap">
+		<div id="gnb">
+			<script type="text/javascript" charset="utf-8" src="https://ssl.pstatic.net/static.gn/templates/gnb_utf8.nhn?2020010308"></script>
+		</div>
+	</div>
+	
+	<!-- <iframe title="GNB" id="gnb_box" name="gnb_new" src="http://gn.naver.com/?tmpl=210" width="100%" height="22" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
+
+	<div id="snb_wrap">
+		<h1><a href="http://www.naver.com/" onclick="clickcr(this,'STA.naverlogo','','',event)"><img src="https://ssl.pstatic.net/static/weather/images/bi_naver.gif" width="73" height="25" alt="NAVER"></a>
+		<a href="http://weather.naver.com" onclick="clickcr(this,'STA.weather','','',event)"><img src="https://ssl.pstatic.net/static/common/snb/090513/h_weather.gif" width="39" height="25" alt="날씨" title="날씨"></a></h1>
+
+		<ul class="snb_related_service">
+		<li><a href="http://news.naver.com" onclick="clickcr(this,'STA.news','','',event)"><img src="https://ssl.pstatic.net/static/weather/images/snb_h_news.gif"width="26" height="13" alt="뉴스"></a></li>
+		<li><a href="http://newsstand.naver.com" onclick="clickcr(this,'STA.newsstand','','',event)"><img src="https://ssl.pstatic.net/static/weather/images/snb_h_newsstand.gif" width="61" height="13" alt="뉴스스탠드"></a></li>
+		<li><a href="http://sports.news.naver.com/" onclick="clickcr(this,'STA.sports','','',event)"><img src="https://ssl.pstatic.net/static/weather/images/snb_h_sports.gif" width="38" height="13" alt="스포츠"></a></li>
+		</ul>
+	</div>
+	<div class="lnb">
+		<span class="lnb_date"><spna class="blind">오늘날짜</spna><strong>01</strong><span class="blind">월</span>.<strong>03</strong><span class="blind">일</span><span class="day">(금<span class="blind">요일</span>)</span></span>
+		</div>
+	
+<script type="text/javascript">
+	//GNB영역 외부를 클릭했을때 GNB Layer 닫기
+	$Fn(function(we){
+		if(!$Element(we.element).isChildOf("gnb_my_lyr") && !$Element(we.element).isChildOf("gnb_lst")){
+			gnbAllLayerClose();
+		}
+	}).attach($Element(document), "click");
+</script>
+</div>
+
+	<div id="container">
+		<!-- left area -->
+		<div class="snb">
+			<script type="text/javascript" src="/common/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/common/js/json2.js"></script>
+
+<script type="text/javascript">
+var j = jQuery.noConflict();
+var memberId = "";
+var baseURL = location.protocol +"//" + location.hostname;
+
+j(document).ready(function(){
+	if (memberId == null || memberId == "") {
+		fn_noLogin();	
+	} else {
+		j.ajax({
+			type : "POST"
+			, async : true
+			, url : "/nidapi/interest_area_api.nhn"
+			, dataType : "json"
+			, data : {
+				mode : "getListWithSvcForCache"
+				, id : memberId
+				, svc_cd : "002"
+			}
+			, cache : false
+			, success : function(responseData) {
+				var concernRgnCnt = responseData.result.length;
+				
+				if (concernRgnCnt == 0) {
+					fn_emptyConcernRgn();
+				} else {
+					fn_JsonParser(responseData);
+				}
+			}, error : function(resultData) {
+				
+			}
+		});	
+	}
+});
+
+function fn_JsonParser(responseData) {
+	j.ajax({
+		type : "POST"
+		, async : true
+		, url : "/common/concernArea.nhn"
+		, dataType : "html"
+		, data : {
+			"jsonResult" : JSON.stringify(responseData) 
+		}
+		, cache : false
+		, success : function(data) {
+			j('#concernArea').html(data);
+		}
+	});
+}
+
+function fn_noLogin() {
+	j('#concernArea').html('<div class="lst" style="display:block"><div class="alert">로그인 후 이용해 주세요.</div></div>');
+}
+
+function fn_emptyConcernRgn() {
+	j('#concernArea').html('<div class="lst" style="display:block"><div class="alert2">관심지역 설정이<br>필요합니다.</div></div>');
+}
+
+function concernRgnPopup() {
+	var rurl = baseURL + '/common/blankPopup.nhn';
+	var name = "관심지역설정";
+	window.open(rurl, name, "toolbar=no,location=no,menubar=no,scrollbals=yes,status=no,resizable=no");
+}
+
+function concernHelpShow() {
+	var helpHtml = '<div class="ly_dsc" style="display:none">'
+		+ '<p>관심지역 설정 기능이 로그인을<br>하지 않아도 사용하실 수 있게<br>개선될 예정이며, 기존<br>설정하신 지역이 유지되지 않을<br>수 있으니 참고 바랍니다.</p>'
+		+ '<a href="javascript:concernHelpHide();" title="닫기" class="close"><span>닫기</span></a>'
+		+ '</div>';
+	
+	if(!j('#concernArea div').is('.ly_dsc')){
+		j('#concernArea div.lst').prepend(helpHtml);
+	}
+	j('#concernArea div.ly_dsc').attr('style', 'display:block').attr('style');
+}
+
+function concernHelpHide() {
+	j('#concernArea div.ly_dsc').attr('style', 'display:none').attr('style');
+}
+
+</script>
+<!-- LNB -->
+<div id="lnb" class="lnb_out">
+	<h2><a href="/main/wetrMain.nhn" onclick="clickcr(this,'men.title','','',event)" class="select">날씨 홈</a></h2> 
+             <!-- [D] 선택메뉴 <li>에 class="on" (1,2depth 모두) --> 
+	
+	<ul class="lnb">
+		<li class="on"><a href="/rgn/cityWetrMain.nhn" onclick="clickcr(this,'men.local','','',event)" class="w_type1"><span>지역별 날씨</span></a>
+					<ul style="display:block;">
+					<li ><a href="/rgn/cityWetrMain.nhn" class="w_type1_1"><span>도시별 날씨</span></a></li>
+					<li ><a href="/rgn/townWetr.nhn" class="w_type1_2"><span>동네별 날씨</span></a></li>
+					<li ><a href="/rgn/seaWetr.nhn?seaRgnCd=SE001001" class="w_type1_4"><span>바다 날씨</span></a></li>
+					</ul>
+				</li>
+			<li><a href="/period/weeklyFcast.nhn" onclick="clickcr(this,'men.week','','',event)" class="w_type2"><span>기간별 날씨</span></a></li>
+			<li><a href="/news/wetrNewsList.nhn" onclick="clickcr(this,'men.news','','',event)" class="w_type3"><span>뉴스,기상특보</span></a></li>
+			<li><a href="/photo/satPhoto.nhn?photoType=IR&photoRgn=L" onclick="clickcr(this,'men.sat','','',event)" class="w_type4"><span>날씨영상</span></a></li>
+			<li><a href="/life/lifeNdx.nhn?cityRgnCd=CT001000" onclick="clickcr(this,'men.life','','',event)" class="w_type5"><span>생활정보</span></a></li>
+			<li><a href="/world/worldWetrCtnt.nhn?worldRgnCd=WD00000004" onclick="clickcr(this,'men.wld','','',event)" class="w_type6"><span>세계날씨</span></a></li>	
+			<li class="last"><a href="/air/airFcast.nhn" onclick="clickcr(this,'men.air','','',event)" class="w_type7"><span>대기환경정보</span></a></li>
+			</ul>
+</div>
+
+<!-- 관심지역 설정/내가 찾아본 동네 -->
+<div class="village_out">
+	<div class="tit">
+		<h3><img src="https://ssl.pstatic.net/static/weather/images/h3_zone_weather.gif" width="61" height="11" alt="관심지역 날씨"></h3>
+		</div>
+	<div id="concernArea"></div>
+	<!-- 내가 찾아본 동네 -->
+	<div class="tit t2">
+		<h3><img src="https://ssl.pstatic.net/static/weather/images/h3_view_village.gif" width="73" height="11" alt="내가 찾아본 동네"></h3>
+	</div>
+	<div class="lst_out">
+		<!-- 도움말 레이어 -->
+		<div id="layer_bubble_out" class="layer_bubble" style="display:none; top:-5px; left:0px;">
+			<div class="layer_content">
+				<!-- Layer Content -->
+				<div class="layer_body">
+					<h5>내가 찾아본 동네</h5>
+					<ul>
+					<li>동네별 날씨를 확인한 다음 다시 접속하면 [내가 찾아본 동네]에 날씨 정보가 나타납니다 . [내가 찾아본 동네]에 나타나는 지역은 <span>최대 5개</span>입니다.</li>
+					<li style="margin-top:7px;">내가 찾아본 동네가 관심 지역으로 등록된 지역이면<br>
+						[관심 지역 날씨]에 날씨 정보가 나타납니다.</li>
+					<li style="margin-top:7px;">행정구역변경으로 지역구분 및 지역명에 변동이 있을<br>
+						경우,&nbsp;&nbsp;내가 찾아본 동네에서 삭제될 수 있습니다.</li><!-- 100702 추가 -->
+					</ul>
+					<h6>내가 찾아본 동네를 삭제하는 방법</h6>
+					<ul>
+					<li>컴퓨터에 저장된 쿠키를 삭제한 다음 새 창에서 다시<br>
+						접속하십시오.</li>
+					 <li style="margin-top:3px;"><em class="txt_ip">Internet Explorer</em>에서는 <span>[도구 &gt; 인터넷 옵션]</span> 메뉴를 
+                             	선택한 다음 <span>[검색 기록]</span>의 <span>[삭제]</span> 버튼을 눌러 쿠키를 
+						삭제할 수 있습니다.</li>
+					</ul>
+				</div>
+				<a href="#" class="close_layer"><img src="https://ssl.pstatic.net/static/weather/images/btn_layer_close.gif" alt="레이어닫기" width="12" height="12"></a>
+				<!-- //Layer Content -->
+			</div>
+			<span class="shadow shadow2"></span>
+		</div>
+		<!-- //도움말 레이어 -->
+		<div class="lst" style="display:none;" id="tracedRgn">
+			<table cellpadding="0" cellspacing="0" border="0">
+			<caption class="blind">내가 찾아본 동네 목록. 지역, 날씨, 기온 정보</caption>
+			<col><col width="36"><col width="30">
+			<tbody>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- //내가 찾아본 동네 -->
+</div>
+<!-- 배너 -->
+<!-- 392669_thumb_DA.jpg -->
+<!-- http://mobile.naver.com/mobileweb/weather.nhn -->
+<!-- 도움말 -->
+<div class="img_mrgn"><a href="#" onclick="clickcr(this,'lef.help','','',event); OPS.viewOPS('ops', {url : 'https://help.naver.com/support/service/main.nhn',  param : 'serviceNo=5843&categoryNo=13449'}); return false;" title="새 창"><img src="https://ssl.pstatic.net/static/weather/images/img_left_help.gif" width="145" height="28" alt="네이버 고객센터 날씨 : 도움말"></a></div>
+<!-- 자료제공 -->
+<div id="banner_wi" class="img_mrgn"><a href="http://www.weatheri.co.kr/" onclick="clickcr(this,'lef.banner','','',event)" target="_blank"><img src="https://ssl.pstatic.net/static/weather/images/img_left_weatheri.gif" width="145" height="33" alt="자료제공 - weatheri"></a></div>
+<div id="banner_kw" class="img_mrgn"><a href="http://www.kweather.co.kr/" onclick="clickcr(this,'lef.banner','','',event)" target="_blank"><img src="https://ssl.pstatic.net/static/weather/images/img_left_kweather_v1.gif" width="145" height="33" alt="자료제공 - kweather"></a></div>
+<div id="banner_aw" style="display: none;" class="img_mrgn"><a href="http://www.accuweather.com/ " onclick="clickcr(this,'lef.banner','','',event)" target="_blank"><img src="https://ssl.pstatic.net/static/weather/images/logo_accuweather.gif" width="145" height="33" alt="자료제공 - accuweather"></a></div>
+<div id="banner_wn" style="display: none;" class="img_mrgn"><a href="https://global.weathernews.com/?language=ko" onclick="clickcr(this,'lef.banner','','',event)" target="_blank"><img src="https://ssl.pstatic.net/static/weather/images/logo_weathernews.gif" width="145" height="33" alt="자료제공 - weathernews"></a></div>
+<script type="text/javascript">
+	var path = location.pathname;
+	if(path.indexOf("/world/") >= 0){
+		$Element("banner_wi").hide();
+		$Element("banner_kw").hide();
+		$Element("banner_aw").show();
+		$Element("banner_wn").show();
+	}
+	if(path.indexOf("/main/") >= 0 || path.localeCompare("/") == 0){
+		$Element("banner_wi").show();
+		$Element("banner_kw").show();
+		$Element("banner_aw").show();
+		$Element("banner_wn").show();
+	}
+</script>			</div>
+		<!-- //left area -->
+
+		<!-- content -->
+		<div id="content">
+			<h3 class="title2"><img src="https://ssl.pstatic.net/static/n/local/206/weather/tit_c01_1.gif" width="64" height="15" alt="도시별 날씨"></h3>
+			<table cellpadding="0" cellspacing="0" border="0" class="tbl_weather tbl_today">
+			<caption class="blind">도시별 날씨</caption>
+			<col width="31"><col width="139"><col width="139">
+			<thead>
+			<tr>
+				<th scope="col" class="area">지역</th>
+				<th scope="col">오늘오전</th>
+				<th scope="col" class="line">오늘오후</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT001000">
+						서울<br>경기</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>-3.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>5.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT002000">
+						서해<br>5도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>1.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>6.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT003000">
+						강원<br>영서</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>-5.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>5.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT004000">
+						강원<br>영동</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>2.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>11.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT005000">
+						충청<br>북도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>-2.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>6.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT006000">
+						충청<br>남도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>-1.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>8.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT007000">
+						경상<br>북도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>0.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>9.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT008000">
+						경상<br>남도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>3.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>12.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT009000">
+						울릉<br>독도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>4.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l1.gif" width="64" height="46" alt="맑음"></p>
+						<ul class="text">
+						<li class="nm">맑음</li>
+						<li>기온 <span class="temp"><strong>8.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>0</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT010000">
+						전라<br>북도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>0.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>8.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT011000">
+						전라<br>남도</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>1.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>9.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			<tr>
+					<th scope="row">
+						<a href="/rgn/cityWetrWarea.nhn?cityRgnCd=CT012000">
+						제주</a>
+					</th>
+					<td>
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>7.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+					<td class="line">
+						<p class="icon"><img src="https://ssl.pstatic.net/static/weather/images/w_icon/w_l21.gif" width="64" height="46" alt="구름많음"></p>
+						<ul class="text">
+						<li class="nm">구름많음</li>
+						<li>기온 <span class="temp"><strong>11.0</strong>℃</span><br>
+							강수확률 <span class="rain"><strong>20</strong>%</span></li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+			<!-- 전국지도 -->
+			<div class="today_map">
+				<div class="k_map">
+					<ul class="tab">
+					<li><a href="#a_whtr" onclick="mapSelectCurWetr(1); return false;"><img src="https://ssl.pstatic.net/static/weather/images/tab_w_1_on.gif" width="51" height="20" alt="현재날씨"></a></li>
+					<li><a href="#a_whtr" onclick="mapSelectChange(true, true, 2); return false;"><img src="https://ssl.pstatic.net/static/weather/images/tab_w_2.gif" width="51" height="20" alt="오늘오전"></a></li>
+					<li><a href="#a_whtr" onclick="mapSelectChange(true, false, 3); return false;"><img src="https://ssl.pstatic.net/static/weather/images/tab_w_3.gif" width="51" height="20" alt="오늘오후"></a></li>
+					<li><a href="#a_whtr" onclick="mapSelectChange(false, true, 4); return false;"><img src="https://ssl.pstatic.net/static/weather/images/tab_w_4.gif" width="51" height="20" alt="내일오전"></a></li>
+					<li><a href="#a_whtr" onclick="mapSelectChange(false, false, 5); return false;"><img src="https://ssl.pstatic.net/static/weather/images/tab_w_5.gif" width="51" height="20" alt="내일오후"></a></li>
+					</ul>
+					<!-- 지도 영역 -->
+					<h4 id="map_select_day">현재날씨</h4>
+					<p class="txt">* 지도에서 지역을 누르면 자세한 날씨 정보를 볼 수 있습니다.</p>
+					<div class="map" id="weatherMap">
+						<!-- 서울/경기 -->
+						<a href="#" id="m_CT001000" class="zone z1" onClick="javascript:goCityWetrWarea('CT001000')">
+							<span class="ico"></span>						
+							<span class="temp"></span>
+						</a>
+						<!-- 서해5도 -->
+						<a href="#" id="m_CT002000" class="zone z2" onClick="javascript:goCityWetrWarea('CT002000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 영서 -->
+						<a href="#" id="m_CT003000" class="zone z3" onClick="javascript:goCityWetrWarea('CT003000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 영동 -->
+						<a href="#" id="m_CT004000" class="zone z4" onClick="javascript:goCityWetrWarea('CT004000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 충북 -->
+						<a href="#" id="m_CT005000" class="zone z5" onClick="javascript:goCityWetrWarea('CT005000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 충남 -->
+						<a href="#" id="m_CT006000" class="zone z6" onClick="javascript:goCityWetrWarea('CT006000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 경북 -->
+						<a href="#" id="m_CT007000" class="zone z7" onClick="javascript:goCityWetrWarea('CT007000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 경남 -->
+						<a href="#" id="m_CT008000" class="zone z8" onClick="javascript:goCityWetrWarea('CT008000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 울릉/독도 -->
+						<a href="#" id="m_CT009000" class="zone z9" onClick="javascript:goCityWetrWarea('CT009000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 전북 -->
+						<a href="#" id="m_CT010000" class="zone z10" onClick="javascript:goCityWetrWarea('CT010000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 전남 -->
+						<a href="#" id="m_CT011000" class="zone z11" onClick="javascript:goCityWetrWarea('CT011000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 제주도 -->
+						<a href="#" id="m_CT012000" class="zone z12" onClick="javascript:goCityWetrWarea('CT012000')">
+							<span class="ico"></span>
+							<span class="temp"></span>
+						</a>
+						<!-- 현재시간 -->
+						<div class="date" id="sTime"></div>
+		
+					</div>
+					
+		<script type="text/javascript">
+		$Fn(function () {
+			wMapManager.setWeatherData(null);
+		}).attach (document, 'domready');
+		</script>
+					
+					<!-- //지도 영역 -->
+				</div>
+				<p class="btn"><a href="/period/weeklyFcast.nhn"><img src="https://ssl.pstatic.net/static/weather/images/btn_forecast_view.gif" width="79" height="22" alt="주간예보 보기"></a></p>
+			</div>
+			<!-- //전국지도 -->
+		</div>
+		<!-- //content -->
+
+		<!-- right area -->
+		<div class="aside">
+			<!-- 지난 날씨 달력 -->
+			<div class="rt_calendar">
+				<h4><img src="https://ssl.pstatic.net/static/weather/images/h4_rt_last_calendar.gif" width="66" height="12" alt="지난 날씨 달력"></h4>
+				<form name="past" method="get" action="" target="_top">
+				<input type="hidden" name="ym">
+				<table width="176" cellspacing="0" cellpadding="0" role="presentation">
+				<tr>
+				<td align="left">
+					<label for="pastAddr1" class="blind">지역</label>
+					<select name='upperNaverRgnCd' id='pastAddr1' style='width:84px;height:18px' >
+					<option value="09" >서울특별시</option>
+					<option value="17" >세종특별자치시</option>
+					<option value="08" >부산광역시</option>
+					<option value="11" >인천광역시</option>
+					<option value="06" >대구광역시</option>
+					<option value="05" >광주광역시</option>
+					<option value="07" >대전광역시</option>
+					<option value="10" >울산광역시</option>
+					<option value="01" >강원도</option>
+					<option value="02" >경기도</option>
+					<option value="16" >충청북도</option>
+					<option value="15" >충청남도</option>
+					<option value="04" >경상북도</option>
+					<option value="03" >경상남도</option>
+					<option value="13" >전라북도</option>
+					<option value="12" >전라남도</option>
+					<option value="14" >제주도</option>
+					</select>
+					<label for="pastYear" class="blind">연도</label>			
+					<select id="pastYear" name="year" style="width:84px;height:18px" onChange='chk_month()'>
+					</select>
+				</td>
+				</tr>
+				<tr><td height="7"></td></tr>
+				</table>
+				</form>
+				<script type="text/javascript">
+					var year = '2020';
+					var f = document.past;
+	
+					for(var i=year; i>=2002; i--)
+					{
+						var nIndex = f.year.length;
+						f.year.options[nIndex] = new Option(i+'년', i);
+					}
+				</script>	
+				<table width="177" cellspacing="1"  cellpadding="0" class="calendar">
+					<tr align="center">
+						<td id='m_1' width="43" height="26">1월</td>
+						<td id='m_2' width="43" height="26">2월</td>
+						<td id='m_3' width="43" height="26">3월</td>
+						<td id='m_4' width="44" height="26">4월</td>
+					</tr>
+					<tr align="center">
+						<td id='m_5' width="43" height="26">5월</td>
+						<td id='m_6' width="43" height="26">6월</td>
+						<td id='m_7' width="43" height="26">7월</td>
+						<td id='m_8' width="44" height="26">8월</td>
+					</tr>
+					<tr align="center">
+						<td id='m_9' width="43" height="26">9월</td>
+						<td id='m_10' width="43" height="26">10월</td>
+						<td id='m_11' width="43" height="26">11월</td>
+						<td id='m_12' width="44" height="26">12월</td>
+					</tr>
+				</table>
+
+				<script type="text/javascript">
+				function past_go(obj, month, e) {					
+					var frm = document.past;
+					var ym = frm.year.value + (month < 10 ? '0' : '') + month;			
+					var upperNaverRgnCd = frm.upperNaverRgnCd.value;
+					var evt = window.event || e;
+
+					clickcr(obj,'pst.month', frm.upperNaverRgnCd.value, ym ,evt);
+
+					obj.href = '/period/pastWetrMain.nhn?ym='+ym+'&upperNaverRgnCd='+upperNaverRgnCd;				
+				}
+				
+				function chk_month()
+				{	
+					var date1 = new Date('2020','1','1');
+					time1 = date1.getTime();
+					yy = document.past.year.value;
+	
+					for(i = 1; i <= 12; i++)
+					{
+						var date2 = new Date(yy, i - 1);
+						var time2 = date2.getTime();
+						if(time1 - time2 > 0)
+						{
+							no_link = false;
+							obj = document.getElementById('m_' + i);
+							obj.style.backgroundColor = '';
+							obj.innerHTML = "<a href=\"#\" onclick=\"past_go(this, " + i +", event);\" class='gray03'>" + i + "월</a>";
+						}
+						else
+						{
+							no_link = true;
+							obj = document.getElementById('m_' + i);
+							obj.style.backgroundColor = '#FFFFFF';
+							obj.innerHTML = "<span style='color:#989898'>" +i + "월</span>";
+						}
+					}
+				}
+				chk_month();
+				</script>
+			</div>
+</div>
+		<!-- //right area -->
+	</div>
+
+	<!-- footer area -->
+	<div id="footer">
+		<!-- Footer 090928-->
+	<ul>
+	<li class="frst"><a href="http://www.naver.com/rules/service.html" onclick="clickcr(this,'fot.service','','',event)" target="_blank">이용약관</a></li>
+	<li><a href="http://www.naver.com/rules/privacy.html" onclick="clickcr(this,'fot.privacy','','',event)" target="_blank"><strong>개인정보처리방침</strong></a></li>
+	<li><a href="http://www.naver.com/rules/disclaimer.html" onclick="clickcr(this,'fot.disclaimer','','',event)" target="_blank">책임의 한계와 법적고지</a></li>
+	<li><a href="https://help.naver.com/support/service/main.nhn?serviceNo=5843" onclick="clickcr(this,'fot.whelp','','',event)" target="_blank">날씨 고객센터</a></li>
+	</ul>
+	<p class="copy">본 콘텐츠의 저작권은 제공처에 있으며, 이를 무단 이용하는 경우 저작권법 등에 따라 법적책임을 질 수 있습니다.</p>
+	<address>
+		<a class="logo" href="https://www.navercorp.com/" onclick="clickcr(this,'fot.nhn','','',event)" target="_blank"><img src="https://ssl.pstatic.net/static/common/footer/ci_naver.gif" width="63" height="11" alt="NAVER"></a>
+		<em>Copyright &copy;</em>
+		<a href="https://www.navercorp.com/" onclick="clickcr(this,'fot.nhn','','',event)" target="_blank">NAVER Corp.</a>
+		<span>All Rights Reserved.</span>
+	</address>
+<!--//Footer 090928-->
+
+	<!-- AU Favorite Region -->
+	<script type="text/javascript">
+		$Fn (function () {
+			//------------------------------------
+			// help
+
+			var welHelp = $Element ( 'layer_bubble_out');
+			//show and hide
+			$Fn (function (e) {
+				//e.stop();			0610 삭제
+				welHelp.toggle();
+				if($('tracedRgn').style.display == "none"
+					&& $('tracedRgn').getElementsByTagName('tr').length != 0 ) {
+					$('tracedRgn').style.display = 'block';
+				}
+			}).attach ($('btn_help'), 'click')
+
+			//close
+			$Fn (function (e) {
+				e.stop();
+				if (e.element.tagName == "IMG" || e.element.tagName == "A") {
+					welHelp.hide();
+					if($('tracedRgn').getElementsByTagName('tr').length != 0 ){
+						$('tracedRgn').style.display = 'block';
+					}
+				}
+			}).attach (welHelp.$value(), 'click');
+
+			$Fn (function (e) {
+				if (e.element == $('btn_help')) {
+					e.stop();
+					return;
+				}
+				else {
+					//welHelp.hide();
+					if($('tracedRgn').getElementsByTagName('tr').length != 0 ){
+						$('tracedRgn').style.display = 'block';
+					}
+				}		//0601 추가.
+
+			}).attach (document, 'click');
+		}).attach (document, 'domready');
+	</script>
+	<!-- AU Favorite Region -->
+
+	<script type="text/javascript">
+        getGNB();
+        var eventType = "onpageshow" in window ? "pageshow" : "load";
+        jindo.$Fn(function(){
+            lcs_do();
+        }).attach(window, eventType);
+	</script>
+</div>
+	<!-- //footer area -->
+</div>
+</body>
+</html>
