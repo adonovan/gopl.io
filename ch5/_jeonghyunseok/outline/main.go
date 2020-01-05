@@ -1,31 +1,26 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// Outline 은 HTML 문서 트리의 아웃라인을 출력해준다
 
-// See page 123.
-
-// Outline prints the outline of an HTML document tree.
 package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"golang.org/x/net/html"
 )
 
-//!+
 func main() {
 	doc, err := html.Parse(os.Stdin)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "outline: %v\n", err)
-		os.Exit(1)
+		log.Fatalf("outline: %v\n", err)
 	}
 	outline(nil, doc)
 }
 
 func outline(stack []string, n *html.Node) {
 	if n.Type == html.ElementNode {
-		stack = append(stack, n.Data) // push tag
+		stack = append(stack, n.Data)
 		fmt.Println(stack)
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
@@ -33,4 +28,41 @@ func outline(stack []string, n *html.Node) {
 	}
 }
 
-//!-
+/*
+go build -o outline.exe
+outline.exe < test.html
+
+
+*/
+
+// [html]
+// [html head]
+// [html body]
+// [html body style]
+// [html body a]
+// [html body a img]
+// [html body a]
+// [html body a]
+// [html body a]
+// [html body a]
+// [html body a]
+// [html body h1]
+// [html body div]
+// [html body div img]
+// [html body div div]
+// [html body div]
+// [html body p]
+// [html body p span]
+// [html body p br]
+// [html body p span]
+// [html body p span]
+// [html body p br]
+// [html body p br]
+// [html body p br]
+// [html body p span]
+// [html body a]
+// [html body a span]
+// [html body a]
+// [html body a span]
+// [html body a]
+// [html body a span]

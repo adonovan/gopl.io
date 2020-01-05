@@ -1,10 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// links 패키지는 링크를 추출해내는 함수를 제공한다.package links
 
-// See page 138.
-//!+Extract
-
-// Package links provides a link-extraction function.
 package links
 
 import (
@@ -14,20 +9,19 @@ import (
 	"golang.org/x/net/html"
 )
 
-// Extract makes an HTTP GET request to the specified URL, parses
-// the response as HTML, and returns the links in the HTML document.
+// Extract 는 HTTP GET request 를 만들어서 response 를 HTML 로 파싱하고
+// HTML 문서의 links 를 리턴해준다.
 func Extract(url string) ([]string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		resp.Body.Close()
 		return nil, fmt.Errorf("getting %s: %s", url, resp.Status)
 	}
 
 	doc, err := html.Parse(resp.Body)
-	resp.Body.Close()
 	if err != nil {
 		return nil, fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
@@ -41,7 +35,7 @@ func Extract(url string) ([]string, error) {
 				}
 				link, err := resp.Request.URL.Parse(a.Val)
 				if err != nil {
-					continue // ignore bad URLs
+					continue
 				}
 				links = append(links, link.String())
 			}
@@ -51,9 +45,6 @@ func Extract(url string) ([]string, error) {
 	return links, nil
 }
 
-//!-Extract
-
-// Copied from gopl.io/ch5/outline2.
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
