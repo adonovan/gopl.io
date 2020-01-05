@@ -1,16 +1,20 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// square 프로그램은 상태를 가진 함수를 보여준다.package main
 
-// See page 135.
-
-// The squares program demonstrates a function value with state.
 package main
 
 import "fmt"
 
-//!+
-// squares returns a function that returns
-// the next square number each time it is called.
+func main() {
+	f := squares()
+
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+	fmt.Println(f())
+}
+
 func squares() func() int {
 	var x int
 	return func() int {
@@ -19,12 +23,5 @@ func squares() func() int {
 	}
 }
 
-func main() {
-	f := squares()
-	fmt.Println(f()) // "1"
-	fmt.Println(f()) // "4"
-	fmt.Println(f()) // "9"
-	fmt.Println(f()) // "16"
-}
-
-//!-
+// go run main.go
+// 신기하다!

@@ -1,9 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+//Outline 2
 
-// See page 133.
-
-// Outline prints the outline of an HTML document tree.
 package main
 
 import (
@@ -32,40 +28,28 @@ func outline(url string) error {
 		return err
 	}
 
-	//!+call
 	forEachNode(doc, startElement, endElement)
-	//!-call
 
 	return nil
 }
 
-//!+forEachNode
-// forEachNode calls the functions pre(x) and post(x) for each node
-// x in the tree rooted at n. Both functions are optional.
-// pre is called before the children are visited (preorder) and
-// post is called after (postorder).
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
 	}
-
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		forEachNode(c, pre, post)
 	}
-
 	if post != nil {
 		post(n)
 	}
 }
 
-//!-forEachNode
-
-//!+startend
 var depth int
 
 func startElement(n *html.Node) {
 	if n.Type == html.ElementNode {
-		fmt.Printf("%*s<%s>\n", depth*2, "", n.Data)
+		fmt.Printf("%*s<%s>\n", depth*2, "+", n.Data) // %* 는 depth*2 만큼 패딩을 주라는 말이다. 그러고 나서 "" 를 출력하니 아무것도 출력 안함. 그다음에 <%s> 출력
 		depth++
 	}
 }
@@ -73,8 +57,13 @@ func startElement(n *html.Node) {
 func endElement(n *html.Node) {
 	if n.Type == html.ElementNode {
 		depth--
-		fmt.Printf("%*s</%s>\n", depth*2, "", n.Data)
+		fmt.Printf("%*s<%s>\n", depth*2, "", n.Data)
 	}
 }
 
-//!-startend
+/*
+go build -o outline2.exe
+outline2.exe http://www.github.com
+
+
+*/
