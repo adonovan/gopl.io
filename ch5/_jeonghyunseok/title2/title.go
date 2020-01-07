@@ -1,10 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 145.
-
-// Title2 prints the title of an HTML document specified by a URL.
-// It uses defer to simplify closing the response body stream.
+// Title2 는 Title1 과 다르게 defer 를 사용한다.
+// 그게 전부이다. 그런데 이미 Title1 할때 defer 를 써버림 하하하
 package main
 
 import (
@@ -29,7 +24,6 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	}
 }
 
-//!+
 func title(url string) error {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -47,8 +41,6 @@ func title(url string) error {
 		return fmt.Errorf("parsing %s as HTML: %v", url, err)
 	}
 
-	// ...print doc's title element...
-	//!-
 	visitNode := func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "title" &&
 			n.FirstChild != nil {
@@ -56,12 +48,9 @@ func title(url string) error {
 		}
 	}
 	forEachNode(doc, visitNode, nil)
-	//!+
 
 	return nil
 }
-
-//!-
 
 func main() {
 	for _, arg := range os.Args[1:] {

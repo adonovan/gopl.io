@@ -1,9 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// Title3 역시 url 을 HTTP GET 해서 title 을 출력해준다.
 
-// See page 153.
-
-// Title3 prints the title of an HTML document specified by a URL.
 package main
 
 import (
