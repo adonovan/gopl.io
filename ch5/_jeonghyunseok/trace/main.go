@@ -1,9 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// Trace 프로그램이 defer 를 이용해서 함수에 진입하고 나가는 것을 분석한다.
 
-// See page 146.
-
-// The trace program uses defer to add entry/exit diagnostics to a function.
 package main
 
 import (
@@ -11,30 +7,29 @@ import (
 	"time"
 )
 
-//!+main
 func bigSlowOperation() {
-	defer trace("bigSlowOperation")() // don't forget the extra parentheses
-	// ...lots of work...
-	time.Sleep(10 * time.Second) // simulate slow operation by sleeping
+	defer trace("bigSlowOperation")()
+	time.Sleep(10 * time.Second)
 }
 
 func trace(msg string) func() {
 	start := time.Now()
 	log.Printf("enter %s", msg)
-	return func() { log.Printf("exit %s (%s)", msg, time.Since(start)) }
+	return func() {
+		log.Printf("exit %s (%s)", msg, time.Since(start))
+	}
 }
-
-//!-main
 
 func main() {
 	bigSlowOperation()
 }
 
 /*
-!+output
-$ go build gopl.io/ch5/trace
-$ ./trace
-2015/11/18 09:53:26 enter bigSlowOperation
-2015/11/18 09:53:36 exit bigSlowOperation (10.000589217s)
-!-output
+go build -o trace.exe
+trace.exe
+
 */
+
+// d:\golang\src\gopl.io\ch5\_jeonghyunseok\trace>trace.exe
+// 2020/01/08 18:17:28 enter bigSlowOperation
+// 2020/01/08 18:17:38 exit bigSlowOperation (10.0644745s)
