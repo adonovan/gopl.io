@@ -3,6 +3,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -11,7 +12,6 @@ import (
 	"golang.org/x/net/html"
 )
 
-// Copied from gopl.io/ch5/outline2.
 func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	if pre != nil {
 		pre(n)
@@ -24,9 +24,6 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node)) {
 	}
 }
 
-//!+
-// soleTitle returns the text of the first non-empty title element
-// in doc, and an error if there was not exactly one.
 func soleTitle(doc *html.Node) (title string, err error) {
 	type bailout struct{}
 
@@ -35,48 +32,44 @@ func soleTitle(doc *html.Node) (title string, err error) {
 		case nil:
 			// no panic
 		case bailout{}:
-			// "expected" panic
-			err = fmt.Errorf("multiple title elements")
+			// expected panic
+			err = errors.New("multiple title elements")
 		default:
-			panic(p) // unexpected panic; carry on panicking
+			panic(p)
 		}
 	}()
 
-	// Bail out of recursion if we find more than one non-empty title.
 	forEachNode(doc, func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "title" &&
 			n.FirstChild != nil {
 			if title != "" {
-				panic(bailout{}) // multiple title elements
+				panic(bailout{})
 			}
 			title = n.FirstChild.Data
 		}
 	}, nil)
 	if title == "" {
-		return "", fmt.Errorf("no title element")
+		return "", errors.New("no title element")
+
 	}
 	return title, nil
 }
-
-//!-
 
 func title(url string) error {
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 
-	// Check Content-Type is HTML (e.g., "text/html; charset=utf-8").
 	ct := resp.Header.Get("Content-Type")
 	if ct != "text/html" && !strings.HasPrefix(ct, "text/html;") {
-		resp.Body.Close()
-		return fmt.Errorf("%s has type %s, not text/html", url, ct)
+		return fmt.Errorf("%s has type $s, not text/html", url, ct)
 	}
 
 	doc, err := html.Parse(resp.Body)
-	resp.Body.Close()
 	if err != nil {
-		return fmt.Errorf("parsing %s as HTML: %v", url, err)
+		return fmt.Errorf("parseing %s as HTML: %v", url, err)
 	}
 	title, err := soleTitle(doc)
 	if err != nil {
@@ -93,3 +86,10 @@ func main() {
 		}
 	}
 }
+
+/*
+go build -o title3.exe
+title3.exe http://www.job.com http://www.sf.com http://www.dance.com
+
+
+*/
