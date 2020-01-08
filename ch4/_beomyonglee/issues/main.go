@@ -16,7 +16,12 @@ func main() {
 	}
 	fmt.Printf("%d issues:\n", result.TotalCount)
 	for _, item := range result.Items {
-		fmt.Printf("#%-5d %9.9s %.55s\n",
+		fmt.Printf("|#%-5d|%9.9s|%.55s|\n", //-5: -는 좌측정렬, 5는 너비| 9.9: 점 앞 9는 너비, 점 뒤 9는 글자수
 			item.Number, item.User.Login, item.Title)
 	}
 }
+
+/*
+go build main.go
+./main repo:golang/go is:open json decoder
+*/
