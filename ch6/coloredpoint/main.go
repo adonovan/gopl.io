@@ -25,7 +25,7 @@ type ColoredPoint struct {
 
 func (p Point) Distance(q Point) float64 {
 	dX := q.X - p.X
-	dY := q.Y - p.Y
+	dY := q.Y - q.Y
 	return math.Sqrt(dX*dX + dY*dY)
 }
 
