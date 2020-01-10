@@ -3,9 +3,9 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 	"math"
 )
-import "image/color"
 
 type Point struct{ X, Y float64 }
 
