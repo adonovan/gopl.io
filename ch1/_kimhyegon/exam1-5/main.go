@@ -1,8 +1,16 @@
+// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// Run with "web" command-line argument for web server.
+// See page 13.
+//!+main
+
+// Lissajous generates GIF animations of random Lissajous figures.
 package main
 
 import (
 	"image"
-	"image/color/palette"
+	"image/color"
 	"image/gif"
 	"io"
 	"math"
@@ -10,42 +18,69 @@ import (
 	"os"
 )
 
+//!-main
+// Packages not needed by version in book.
+import (
+	"log"
+	"net/http"
+	"time"
+)
+
+//!+main
+
+var palette = []color.Color{color.White, color.RGBA{0, 255, 0, 1}}
+
 const (
-	whiteIndex = 0 // 팔레트의 첫 번째 색상
-	blackIndex = 1 // 팔레트의 다음 색상
+	whiteIndex = 0 // first color in palette
+	greenIndex = 1 // next color in palette
 )
 
 func main() {
+	//!-main
+	// The sequence of images is deterministic unless we seed
+	// the pseudo-random number generator using the current time.
+	// Thanks to Randall McPherson for pointing out the omission.
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	if len(os.Args) > 1 && os.Args[1] == "web" {
+		//!+http
+		handler := func(w http.ResponseWriter, r *http.Request) {
+			lissajous(w)
+		}
+		http.HandleFunc("/", handler)
+		//!-http
+		log.Fatal(http.ListenAndServe("localhost:8000", nil))
+		return
+	}
+	//!+main
 	lissajous(os.Stdout)
 }
 
 func lissajous(out io.Writer) {
 	const (
-		cycles  = 5     // x 진동자의 회전수
-		res     = 0.001 // 회전각
-		size    = 100   // 이미지 캔버스 크기[-size..+size]
-		nframes = 64    // 애니메이션 프레임 수
-		delay   = 8     // 10ms 단위의 프레임 간의 지연
-
+		cycles  = 5     // number of complete x oscillator revolutions
+		res     = 0.001 // angular resolution
+		size    = 100   // image canvas covers [-size..+size]
+		nframes = 64    // number of animation frames
+		delay   = 8     // delay between frames in 10ms units
 	)
-
-	freq := rand.Float64() * 3.0 // y 진동자의 상대적 진동수
+	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
-	phase := 0.0 // 위상 차이
-
+	phase := 0.0 // phase difference
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
-		//img := image.N         .NewPaletted(rect, palette)
-		img := image.NewPaletted(rect, palette.Plan9)
+		img := image.NewPaletted(rect, palette)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), blackIndex)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
+				greenIndex)
 		}
-
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
 		anim.Image = append(anim.Image, img)
 	}
-	gif.EncodeAll(out, &anim) // NOTE : 인코딩 무시
+	gif.EncodeAll(out, &anim) // NOTE: ignoring encoding errors
 }
+
+//!-main
