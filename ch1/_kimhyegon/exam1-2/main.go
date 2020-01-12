@@ -6,12 +6,9 @@ import (
 )
 
 func main() {
-	//s, sep := "", ""
-	for _, arg := range os.Args[1:] {
-		fmt.Println(arg)
+	for index, arg := range os.Args[1:] {
+		fmt.Println("index: ", index, "argument: ", arg)
 
-		//s += sep + arg
-		//sep = " "
 	}
 
 }
