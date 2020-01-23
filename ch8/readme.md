@@ -18,3 +18,7 @@
 ⬜️: submit not
 
 ## Tips
+
+### cake
+
+- cake_test.go 에는 default 에서 testing.Verbose() 가 쓰이는데 이건 testing.Init() 이전에 불리는 셈이라 문제가 있다. 각각의 Benchmark 함수 안에 default 를 정의하거나 혹은 다른 방법이 필요하다. 
