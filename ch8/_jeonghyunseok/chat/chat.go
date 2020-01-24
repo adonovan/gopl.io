@@ -1,10 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 클라이언트들이 채팅하게 해주는 서버
 
-// See page 254.
-//!+
-
-// Chat is a server that lets clients chat with each other.
 package main
 
 import (
@@ -14,22 +9,19 @@ import (
 	"net"
 )
 
-//!+broadcaster
-type client chan<- string // an outgoing message channel
+type client chan<- string
 
 var (
 	entering = make(chan client)
 	leaving  = make(chan client)
-	messages = make(chan string) // all incoming client messages
+	messages = make(chan string)
 )
 
 func broadcaster() {
-	clients := make(map[client]bool) // all connected clients
+	clients := make(map[client]bool)
 	for {
 		select {
 		case msg := <-messages:
-			// Broadcast incoming message to all
-			// clients' outgoing message channels.
 			for cli := range clients {
 				cli <- msg
 			}
@@ -41,14 +33,12 @@ func broadcaster() {
 			delete(clients, cli)
 			close(cli)
 		}
+
 	}
 }
 
-//!-broadcaster
-
-//!+handleConn
 func handleConn(conn net.Conn) {
-	ch := make(chan string) // outgoing client messages
+	ch := make(chan string)
 	go clientWriter(conn, ch)
 
 	who := conn.RemoteAddr().String()
@@ -60,8 +50,6 @@ func handleConn(conn net.Conn) {
 	for input.Scan() {
 		messages <- who + ": " + input.Text()
 	}
-	// NOTE: ignoring potential errors from input.Err()
-
 	leaving <- ch
 	messages <- who + " has left"
 	conn.Close()
@@ -69,13 +57,10 @@ func handleConn(conn net.Conn) {
 
 func clientWriter(conn net.Conn, ch <-chan string) {
 	for msg := range ch {
-		fmt.Fprintln(conn, msg) // NOTE: ignoring network errors
+		fmt.Fprintf(conn, msg)
 	}
 }
 
-//!-handleConn
-
-//!+main
 func main() {
 	listener, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
@@ -90,7 +75,6 @@ func main() {
 			continue
 		}
 		go handleConn(conn)
+
 	}
 }
-
-//!-main

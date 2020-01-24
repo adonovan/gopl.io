@@ -1,10 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 시계1 은 그냥 시간 써주는 서버이다
 
-// See page 219.
-//!+
-
-// Clock1 is a TCP server that periodically writes the time.
 package main
 
 import (
@@ -15,17 +10,17 @@ import (
 )
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:8000")
+	l, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
 		log.Fatal(err)
 	}
 	for {
-		conn, err := listener.Accept()
+		conn, err := l.Accept()
 		if err != nil {
-			log.Print(err) // e.g., connection aborted
+			log.Print(err)
 			continue
 		}
-		handleConn(conn) // handle one connection at a time
+		handleConn(conn)
 	}
 }
 
@@ -34,10 +29,14 @@ func handleConn(c net.Conn) {
 	for {
 		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
 		if err != nil {
-			return // e.g., client disconnected
+			return
 		}
 		time.Sleep(1 * time.Second)
 	}
 }
 
-//!-
+/*
+go run clock.go
+../go run netcat1.go  // TCP client
+
+*/
