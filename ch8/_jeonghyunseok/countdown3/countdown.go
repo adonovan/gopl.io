@@ -1,13 +1,6 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 246.
-
-// Countdown implements the countdown for a rocket launch.
+// 고루틴 릭이 있다고 한다. 이걸 어찌 막을까?
+// 오, 이건 내가 countdown 2를 수정한것과 비슷하다.
 package main
-
-// NOTE: the ticker goroutine never terminates if the launch is aborted.
-// This is a "goroutine leak".
 
 import (
 	"fmt"
@@ -15,12 +8,7 @@ import (
 	"time"
 )
 
-//!+
-
 func main() {
-	// ...create abort channel...
-
-	//!-
 
 	abort := make(chan struct{})
 	go func() {
@@ -41,6 +29,7 @@ func main() {
 			return
 		}
 	}
+	close(abort)  // 이렇게 넣어주면 되지 않을까?
 	launch()
 }
 

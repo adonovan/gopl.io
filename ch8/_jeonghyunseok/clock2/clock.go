@@ -1,9 +1,4 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 222.
-
-// Clock is a TCP server that periodically writes the time.
+// 클락1이랑 뭐가 다를까? 그냥 defer 유무인듯 하다.package clock2
 package main
 
 import (
@@ -14,29 +9,37 @@ import (
 )
 
 func handleConn(c net.Conn) {
-	defer c.Close()
+	defer func() {
+		c.Close()
+		log.Print("disconneted")
+	}()
 	for {
 		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
 		if err != nil {
-			return // e.g., client disconnected
+			return
 		}
 		time.Sleep(1 * time.Second)
 	}
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:8000")
+	l, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
 		log.Fatal(err)
 	}
-	//!+
 	for {
-		conn, err := listener.Accept()
+		conn, err := l.Accept()
 		if err != nil {
-			log.Print(err) // e.g., connection aborted
+			log.Print(err)
 			continue
 		}
-		go handleConn(conn) // handle connections concurrently
+		log.Print("connected")
+		go handleConn(conn)
 	}
-	//!-
 }
+
+/*
+go run .
+go run ..\netcat1.go
+
+*/

@@ -1,29 +1,23 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 카운트다운은 로켓 발사 카운트 다운을 구현한것이다.package countdown1
 
-// See page 244.
-
-// Countdown implements the countdown for a rocket launch.
 package main
 
 import (
+	"log"
 	"fmt"
 	"time"
 )
 
-//!+
 func main() {
-	fmt.Println("Commencing countdown.")
+	log.Print("Commencing countdown.")
 	tick := time.Tick(1 * time.Second)
-	for countdown := 10; countdown > 0; countdown-- {
-		fmt.Println(countdown)
-		<-tick
+	for cd := 10; cd > 0; cd-- {
+		fmt.Print(cd)
+		fmt.Println(": ", <-tick)
 	}
 	launch()
 }
 
-//!-
-
 func launch() {
-	fmt.Println("Lift off!")
+	log.Print("Lift off!")
 }
