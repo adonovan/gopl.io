@@ -1,9 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 에코해주는  TCP 서버
 
-// See page 223.
-
-// Reverb1 is a TCP server that simulates an echo.
 package main
 
 import (
@@ -15,13 +11,13 @@ import (
 	"time"
 )
 
-//!+
 func echo(c net.Conn, shout string, delay time.Duration) {
 	fmt.Fprintln(c, "\t", strings.ToUpper(shout))
 	time.Sleep(delay)
 	fmt.Fprintln(c, "\t", shout)
 	time.Sleep(delay)
 	fmt.Fprintln(c, "\t", strings.ToLower(shout))
+
 }
 
 func handleConn(c net.Conn) {
@@ -29,11 +25,8 @@ func handleConn(c net.Conn) {
 	for input.Scan() {
 		echo(c, input.Text(), 1*time.Second)
 	}
-	// NOTE: ignoring potential errors from input.Err()
 	c.Close()
 }
-
-//!-
 
 func main() {
 	l, err := net.Listen("tcp", "localhost:8000")
@@ -43,7 +36,7 @@ func main() {
 	for {
 		conn, err := l.Accept()
 		if err != nil {
-			log.Print(err) // e.g., connection aborted
+			log.Print(err)
 			continue
 		}
 		go handleConn(conn)

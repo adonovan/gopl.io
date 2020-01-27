@@ -1,9 +1,7 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 2와의 차이점은 뭔가?
+// conn 이라는 스트림이 끝나더라도, 내부의 goroutine 이 끝날때까지
+// main routine 이 기다려주게 하는 것
 
-// See page 227.
-
-// Netcat is a simple read/write client for TCP servers.
 package main
 
 import (
@@ -13,24 +11,21 @@ import (
 	"os"
 )
 
-//!+
 func main() {
 	conn, err := net.Dial("tcp", "localhost:8000")
 	if err != nil {
 		log.Fatal(err)
 	}
-	done := make(chan struct{})
+	defer conn.Close()
+	done := make(chan int)
 	go func() {
-		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
+		io.Copy(os.Stdout, conn)
 		log.Println("done")
-		done <- struct{}{} // signal the main goroutine
+		done <- 0
 	}()
 	mustCopy(conn, os.Stdin)
-	conn.Close()
-	<-done // wait for background goroutine to finish
+	<-done
 }
-
-//!-
 
 func mustCopy(dst io.Writer, src io.Reader) {
 	if _, err := io.Copy(dst, src); err != nil {

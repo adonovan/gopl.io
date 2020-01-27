@@ -1,9 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 스피너는 애니메이션을 보여준다.package main
 
-// See page 218.
-
-// Spinner displays an animation while computing the 45th Fibonacci number.
 package main
 
 import (
@@ -11,18 +7,17 @@ import (
 	"time"
 )
 
-//!+
 func main() {
 	go spinner(100 * time.Millisecond)
 	const n = 45
-	fibN := fib(n) // slow
+	fibN := fib(n)
 	fmt.Printf("\rFibonacci(%d) = %d\n", n, fibN)
 }
 
 func spinner(delay time.Duration) {
 	for {
 		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
+			fmt.Printf("\r%c%c%c%c%c", r, r, r, r, r)
 			time.Sleep(delay)
 		}
 	}
@@ -34,5 +29,3 @@ func fib(x int) int {
 	}
 	return fib(x-1) + fib(x-2)
 }
-
-//!-

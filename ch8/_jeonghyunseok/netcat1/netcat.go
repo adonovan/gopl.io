@@ -1,10 +1,6 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 그냥 읽기만 하는 TCP client
+// 즉 server 에서 보내주는 걸 출력만 해준다.package netcat1
 
-// See page 221.
-//!+
-
-// Netcat1 is a read-only TCP client.
 package main
 
 import (
@@ -28,5 +24,3 @@ func mustCopy(dst io.Writer, src io.Reader) {
 		log.Fatal(err)
 	}
 }
-
-//!-
