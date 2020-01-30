@@ -1,13 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 249.
-
-// The du2 command computes the disk usage of the files in a directory.
+// du2 uses select and time.Ticker
 package main
-
-// The du2 variant uses select and a time.Ticker
-// to print the totals periodically if -v is set.
 
 import (
 	"flag"
@@ -18,14 +10,12 @@ import (
 	"time"
 )
 
-//!+
+// -v 플래그를 사용한다.
 var verbose = flag.Bool("v", false, "show verbose progress messages")
 
 func main() {
-	// ...start background goroutine...
 
-	//!-
-	// Determine the initial directories.
+	// 플래그가 있건 없건 flag.Args() 로 플래그 아닌 녀석들 다 가져올 수 있나 보다.
 	flag.Parse()
 	roots := flag.Args()
 	if len(roots) == 0 {
@@ -41,13 +31,16 @@ func main() {
 		close(fileSizes)
 	}()
 
-	//!+
-	// Print the results periodically.
+	// tick 은 time.Time 을 읽는 채널이고
+	// verbose 플래그가 설정되었다면 500ms Tick 을 넣어준다.
 	var tick <-chan time.Time
 	if *verbose {
-		tick = time.Tick(500 * time.Millisecond)
+		tick = time.Tick(50 * time.Millisecond) // 이렇게 해주면 500ms 마다 tick 에 값을 써준다고 보면 된다.
 	}
 	var nfiles, nbytes int64
+
+	// 1. close 체크를 해준다.
+	// 2. tick 이 들어올때마다 중간 출력을 해준다.
 loop:
 	for {
 		select {
@@ -57,7 +50,8 @@ loop:
 			}
 			nfiles++
 			nbytes += size
-		case <-tick:
+		case t := <-tick:
+			fmt.Println("time: ", t)
 			printDiskUsage(nfiles, nbytes)
 		}
 	}
@@ -92,3 +86,9 @@ func dirents(dir string) []os.FileInfo {
 	}
 	return entries
 }
+
+/*
+go build -o du2.exe
+du2.exe -v D:\study
+
+*/
