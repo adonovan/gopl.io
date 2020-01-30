@@ -1,38 +1,31 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 파이프라인2는 유한한 파이프라인 구현을 보여준다
 
-// See page 229.
-
-// Pipeline2 demonstrates a finite 3-stage pipeline.
 package main
 
 import "fmt"
 
-//!+
 func main() {
-	naturals := make(chan int)
+	nt := make(chan int)
 	squares := make(chan int)
 
-	// Counter
+	// 카운터
 	go func() {
 		for x := 0; x < 100; x++ {
-			naturals <- x
+			nt <- x
 		}
-		close(naturals)
+		close(nt)
 	}()
 
-	// Squarer
+	// 제곱
 	go func() {
-		for x := range naturals {
+		for x := range nt {
 			squares <- x * x
 		}
 		close(squares)
 	}()
 
-	// Printer (in main goroutine)
 	for x := range squares {
 		fmt.Println(x)
 	}
-}
 
-//!-
+}
