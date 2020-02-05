@@ -1,9 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 251.
-
-// The du4 command computes the disk usage of the files in a directory.
 package main
 
 // The du4 variant includes cancellation:
@@ -17,7 +11,6 @@ import (
 	"time"
 )
 
-//!+1
 var done = make(chan struct{})
 
 func cancelled() bool {
@@ -29,22 +22,17 @@ func cancelled() bool {
 	}
 }
 
-//!-1
-
 func main() {
-	// Determine the initial directories.
 	roots := os.Args[1:]
 	if len(roots) == 0 {
 		roots = []string{"."}
 	}
 
-	//!+2
-	// Cancel traversal when input is detected.
+	// always check if there's any input
 	go func() {
 		os.Stdin.Read(make([]byte, 1)) // read a single byte
 		close(done)
 	}()
-	//!-2
 
 	// Traverse each root of the file tree in parallel.
 	fileSizes := make(chan int64)
@@ -65,15 +53,13 @@ loop:
 	//!+3
 	for {
 		select {
-		case <-done:
+		case <-done: // this is the point of the example
 			// Drain fileSizes to allow existing goroutines to finish.
 			for range fileSizes {
 				// Do nothing.
 			}
 			return
 		case size, ok := <-fileSizes:
-			// ...
-			//!-3
 			if !ok {
 				break loop // fileSizes was closed
 			}
@@ -92,15 +78,12 @@ func printDiskUsage(nfiles, nbytes int64) {
 
 // walkDir recursively walks the file tree rooted at dir
 // and sends the size of each found file on fileSizes.
-//!+4
 func walkDir(dir string, n *sync.WaitGroup, fileSizes chan<- int64) {
 	defer n.Done()
 	if cancelled() {
 		return
 	}
 	for _, entry := range dirents(dir) {
-		// ...
-		//!-4
 		if entry.IsDir() {
 			n.Add(1)
 			subdir := filepath.Join(dir, entry.Name())
@@ -112,12 +95,8 @@ func walkDir(dir string, n *sync.WaitGroup, fileSizes chan<- int64) {
 	}
 }
 
-//!-4
-
 var sema = make(chan struct{}, 20) // concurrency-limiting counting semaphore
 
-// dirents returns the entries of directory dir.
-//!+5
 func dirents(dir string) []os.FileInfo {
 	select {
 	case sema <- struct{}{}: // acquire token
@@ -143,3 +122,10 @@ func dirents(dir string) []os.FileInfo {
 	}
 	return entries
 }
+
+/*
+go build -o du4.exe
+du4 -v
+du4 -v c:
+
+*/
