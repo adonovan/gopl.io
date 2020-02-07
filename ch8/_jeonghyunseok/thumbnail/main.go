@@ -1,5 +1,4 @@
-// 썸네일을 만들어준다. 
-
+// 썸네일을 만들어준다.
 
 package main
 
@@ -11,10 +10,11 @@ import (
 
 	"gopl.io/ch8/thumbnail"
 )
+
 func main() {
 	input := bufio.NewScanner(os.Stdin)
 	for input.Scan() {
-		thumb, err := thumbnail.ImageFile(input.Text())  // 이게 실제 동작시키는 녀석
+		thumb, err := thumbnail.ImageFile(input.Text()) // 이게 실제 동작시키는 녀석
 		if err != nil {
 			log.Print(err)
 			continue
@@ -23,6 +23,7 @@ func main() {
 	}
 	if err := input.Err(); err != nil {
 		log.Fatal(err)
+		// test
 	}
 }
 
