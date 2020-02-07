@@ -1,20 +1,6 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 썸네일을 만들어준다. 
 
-// +build ignore
 
-// The thumbnail command produces thumbnails of JPEG files
-// whose names are provided on each line of the standard input.
-//
-// The "+build ignore" tag (see p.295) excludes this file from the
-// thumbnail package, but it can be compiled as a command and run like
-// this:
-//
-// Run with:
-//   $ go run $GOPATH/src/gopl.io/ch8/thumbnail/main.go
-//   foo.jpeg
-//   ^D
-//
 package main
 
 import (
@@ -25,11 +11,10 @@ import (
 
 	"gopl.io/ch8/thumbnail"
 )
-
 func main() {
 	input := bufio.NewScanner(os.Stdin)
 	for input.Scan() {
-		thumb, err := thumbnail.ImageFile(input.Text())
+		thumb, err := thumbnail.ImageFile(input.Text())  // 이게 실제 동작시키는 녀석
 		if err != nil {
 			log.Print(err)
 			continue
@@ -40,3 +25,10 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
+/*
+go build -o t.exe
+t foo.jpeg
+
+
+*/

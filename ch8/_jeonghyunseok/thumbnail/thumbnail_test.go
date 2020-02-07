@@ -1,9 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// This file is just a place to put example code from the book.
-// It does not actually run any code in gopl.io/ch8/thumbnail.
-
 package thumbnail_test
 
 import (
@@ -11,11 +5,9 @@ import (
 	"os"
 	"sync"
 
-	"gopl.io/ch8/thumbnail"
+	"github.com/gopl-study/gopl.io/ch8/_jeonghyunseok/thumbnail"
 )
 
-//!+1
-// makeThumbnails makes thumbnails of the specified files.
 func makeThumbnails(filenames []string) {
 	for _, f := range filenames {
 		if _, err := thumbnail.ImageFile(f); err != nil {
@@ -24,20 +16,12 @@ func makeThumbnails(filenames []string) {
 	}
 }
 
-//!-1
-
-//!+2
-// NOTE: incorrect!
 func makeThumbnails2(filenames []string) {
 	for _, f := range filenames {
 		go thumbnail.ImageFile(f) // NOTE: ignoring errors
 	}
 }
 
-//!-2
-
-//!+3
-// makeThumbnails3 makes thumbnails of the specified files in parallel.
 func makeThumbnails3(filenames []string) {
 	ch := make(chan struct{})
 	for _, f := range filenames {
@@ -53,11 +37,6 @@ func makeThumbnails3(filenames []string) {
 	}
 }
 
-//!-3
-
-//!+4
-// makeThumbnails4 makes thumbnails for the specified files in parallel.
-// It returns an error if any step failed.
 func makeThumbnails4(filenames []string) error {
 	errors := make(chan error)
 
@@ -77,12 +56,6 @@ func makeThumbnails4(filenames []string) error {
 	return nil
 }
 
-//!-4
-
-//!+5
-// makeThumbnails5 makes thumbnails for the specified files in parallel.
-// It returns the generated file names in an arbitrary order,
-// or an error if any step failed.
 func makeThumbnails5(filenames []string) (thumbfiles []string, err error) {
 	type item struct {
 		thumbfile string
@@ -109,11 +82,6 @@ func makeThumbnails5(filenames []string) (thumbfiles []string, err error) {
 	return thumbfiles, nil
 }
 
-//!-5
-
-//!+6
-// makeThumbnails6 makes thumbnails for each file received from the channel.
-// It returns the number of bytes occupied by the files it creates.
 func makeThumbnails6(filenames <-chan string) int64 {
 	sizes := make(chan int64)
 	var wg sync.WaitGroup // number of working goroutines
@@ -144,5 +112,3 @@ func makeThumbnails6(filenames <-chan string) int64 {
 	}
 	return total
 }
-
-//!-6
