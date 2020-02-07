@@ -23,7 +23,7 @@ func main() {
 	}
 	if err := input.Err(); err != nil {
 		log.Fatal(err)
-		// test
+		// tests
 	}
 }
 
