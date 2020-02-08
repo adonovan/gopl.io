@@ -1,15 +1,6 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 278.
-
-// Package memo provides a concurrency-safe non-blocking memoization
-// of a function.  Requests for different keys proceed in parallel.
-// Concurrent requests for the same key block until the first completes.
-// This implementation uses a monitor goroutine.
+// 메모5번 구현
+// 이건 너무 어려워서 패쓰한다.
 package memo
-
-//!+Func
 
 // Func is the type of the function to memoize.
 type Func func(key string) (interface{}, error)
@@ -25,19 +16,18 @@ type entry struct {
 	ready chan struct{} // closed when res is ready
 }
 
-//!-Func
-
-//!+get
-
 // A request is a message requesting that the Func be applied to key.
 type request struct {
 	key      string
 	response chan<- result // the client wants a single result
 }
 
+// 성능은 좋아질지 몰라도 너무 지저분해지는 것 같다.
+// 일단 메모는 리퀘스츠 채널을 가지고 있다.
 type Memo struct{ requests chan request }
 
 // New returns a memoization of f.  Clients must subsequently call Close.
+// 메모를 생성해주는데, 일단 go memo.server(f) 를 먼저 돌리고 리턴해준다.
 func New(f Func) *Memo {
 	memo := &Memo{requests: make(chan request)}
 	go memo.server(f)
@@ -52,10 +42,6 @@ func (memo *Memo) Get(key string) (interface{}, error) {
 }
 
 func (memo *Memo) Close() { close(memo.requests) }
-
-//!-get
-
-//!+monitor
 
 func (memo *Memo) server(f Func) {
 	cache := make(map[string]*entry)
@@ -84,5 +70,3 @@ func (e *entry) deliver(response chan<- result) {
 	// Send the result to the client.
 	response <- e.res
 }
-
-//!-monitor

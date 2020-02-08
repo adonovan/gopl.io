@@ -1,11 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 276.
-
-// Package memo provides a concurrency-safe memoization a function of
-// type Func.  Requests for different keys run concurrently.
-// Concurrent requests for the same key result in duplicate work.
+// 메모3은 뭐가 다를까?
+// 일단 나머지는 같고, 메쏘드 Get 만 다르다
 package memo
 
 import "sync"
@@ -27,8 +21,10 @@ func New(f Func) *Memo {
 	return &Memo{f: f, cache: make(map[string]result)}
 }
 
-//!+
 
+// 이번에는 memo.cache 에 접근할때만 락을 걸게 해두었다. 
+// 하지만 완벽해보이지는 않는다. 계산하는 memo.f(key) 가 동시에 여러개 돌아갈 가능성이 있다.
+// 아무튼 지저분하다. 여기저기 뮤텍스
 func (memo *Memo) Get(key string) (value interface{}, err error) {
 	memo.mu.Lock()
 	res, ok := memo.cache[key]
@@ -45,4 +41,4 @@ func (memo *Memo) Get(key string) (value interface{}, err error) {
 	return res.value, res.err
 }
 
-//!-
+
