@@ -1,10 +1,5 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// memo2 의 핵심은 Memo 의 cache 에 접근할때 뮤텍스를 사용한다는 것이다.
 
-// See page 275.
-
-// Package memo provides a concurrency-safe memoization a function of
-// type Func.  Concurrent requests are serialized by a Mutex.
 package memo
 
 import "sync"
@@ -21,15 +16,13 @@ func New(f Func) *Memo {
 	return &Memo{f: f, cache: make(map[string]result)}
 }
 
-//!+
-
 type Memo struct {
 	f     Func
 	mu    sync.Mutex // guards cache
 	cache map[string]result
 }
 
-// Get is concurrency-safe.
+// 뮤텍스를 이용한 동시성 safe
 func (memo *Memo) Get(key string) (value interface{}, err error) {
 	memo.mu.Lock()
 	res, ok := memo.cache[key]

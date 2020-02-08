@@ -6,7 +6,7 @@ package memo_test
 import (
 	"testing"
 
-	"gopl.io/ch9/memo2"
+	memo "github.com/gopl-study/gopl.io/ch9/memo2"
 	"gopl.io/ch9/memotest"
 )
 
