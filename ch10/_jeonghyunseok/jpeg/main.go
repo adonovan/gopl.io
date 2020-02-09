@@ -1,18 +1,12 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+// 공백임포트를 챙겨보는 예제
 
-// See page 287.
-
-//!+main
-
-// The jpeg command reads a PNG image from the standard input
-// and writes it as a JPEG image to the standard output.
 package main
 
 import (
 	"fmt"
 	"image"
 	"image/jpeg"
+
 	_ "image/png" // register PNG decoder
 	"io"
 	"os"
@@ -31,22 +25,29 @@ func toJPEG(in io.Reader, out io.Writer) error {
 		return err
 	}
 	fmt.Fprintln(os.Stderr, "Input format =", kind)
-	return jpeg.Encode(out, img, &jpeg.Options{Quality: 95})
+	return jpeg.Encode(out, img, &jpeg.Options{Quality: 5})
 }
-
-//!-main
 
 /*
 //!+with
-$ go build gopl.io/ch3/mandelbrot
-$ go build gopl.io/ch10/jpeg
-$ ./mandelbrot | ./jpeg >mandelbrot.jpg
+go build github.com/gopl-study/gopl.io/ch3/_jeonghyunseok/mandelbrot
+go build -o pkg.exe github.com/gopl-study/gopl.io/ch10/_jeonghyunseok/jpeg
+mandelbrot.exe | pkg.exe >mandelbrot.jpg
 Input format = png
 //!-with
 
 //!+without
-$ go build gopl.io/ch10/jpeg
-$ ./mandelbrot | ./jpeg >mandelbrot.jpg
+go build -o nopkg.exe github.com/gopl-study/gopl.io/ch10/_jeonghyunseok/jpeg
+mandelbrot | nopkg.exe >mandelbrot.jpg
 jpeg: image: unknown format
 //!-without
+*/
+
+// 참고
+/*
+https://github.com/golang/go/blob/master/src/image/png/reader.go
+
+func init() {
+	image.RegisterFormat("png", pngHeader, Decode, DecodeConfig)
+}
 */
