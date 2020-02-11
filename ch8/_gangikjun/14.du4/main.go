@@ -42,6 +42,12 @@ func main() {
 		close(fileSizes)
 	}()
 
+	// 입력이 감지되면 탐색을 취소한다
+	go func() {
+		os.Stdin.Read(make([]byte, 1))
+		close(done)
+	}()
+
 	// 주기적으로 결과 출력
 	var tick <-chan time.Time
 	ticker := time.NewTicker(500 * time.Millisecond)
@@ -53,6 +59,11 @@ func main() {
 loop:
 	for {
 		select {
+		case <-done:
+			// 기존의 고루팅이 완료되도록 fileSizes를 소진
+			for range fileSizes {
+			}
+			return
 		case size, ok := <-fileSizes:
 			if !ok {
 				break loop
@@ -75,6 +86,11 @@ func printDiskUsage(nfiles, nbytes int64) {
 // 찾은 파일의 크기를 fileSizes로 보낸다.
 func walkDir(dir string, n *sync.WaitGroup, fileSizes chan<- int64) {
 	defer n.Done()
+
+	if cancelled() {
+		return
+	}
+
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			n.Add(1)
@@ -90,6 +106,15 @@ var sema = make(chan struct{}, 20)
 
 // dirents 는 dir 디렉토리의 항목을 반환
 func dirents(dir string) []os.FileInfo {
+
+	select {
+	case sema <- struct{}{}:
+	case <-done:
+		return nil
+	}
+	defer func() { <-sema }()
+
+
 	sema <- struct{}{}
 	defer func() { <-sema }()
 	entries, err := ioutil.ReadDir(dir)
