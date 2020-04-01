@@ -1,0 +1,24 @@
+language: go
+dist: trusty
+
+go:
+  - 1.6.x
+  - 1.7.x
+  - 1.8.x
+  - master
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libbz2-dev
+
+install:
+  - ./build.sh
+  - go clean
+
+before_script:
+  - go vet ./...
+
+script:
+  #- go test -v ./...
+  - echo
+
