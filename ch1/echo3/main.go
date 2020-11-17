@@ -9,12 +9,18 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
+	"time"
 )
 
 //!+
 func main() {
-	fmt.Println(strings.Join(os.Args[1:], " "))
+	start := time.Now()
+	for i := 1; i < len(os.Args); i++ {
+		fmt.Println("Index: ", i, "Value: ", os.Args[i], time.Since(start).Seconds())
+	}
+
+	//start := time.Now()
+	//fmt.Println(strings.Join(os.Args[1:], " "), time.Since(start).Seconds())
 }
 
 //!-

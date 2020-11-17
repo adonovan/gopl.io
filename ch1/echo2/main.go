@@ -13,12 +13,9 @@ import (
 )
 
 func main() {
-	s, sep := "", ""
-	for _, arg := range os.Args[1:] {
-		s += sep + arg
-		sep = " "
+	for i := 1; i < len(os.Args); i++ {
+		fmt.Println("Index: ", i, "Value: ", os.Args[i])
 	}
-	fmt.Println(s)
 }
 
 //!-
