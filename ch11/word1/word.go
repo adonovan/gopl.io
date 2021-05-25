@@ -10,7 +10,7 @@ package word
 // IsPalindrome reports whether s reads the same forward and backward.
 // (Our first attempt.)
 func IsPalindrome(s string) bool {
-	for i := range s {
+	for i := 0; i < len(s)/2; i++ {
 		if s[i] != s[len(s)-1-i] {
 			return false
 		}
