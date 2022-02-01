@@ -1,0 +1,42 @@
+// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
+// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+// See page 43.
+//!+
+
+// Cf converts its numeric argument to Celsius and Fahrenheit.
+package main
+
+import (
+	"flag"
+	"fmt"
+	"os"
+	"strconv"
+
+	"gopl.io/ch2/tempconv"
+)
+
+func main() {
+	f2c := flag.Bool("f2c", false, "Convert F to C only")
+	flag.Parse()
+
+	for _, arg := range flag.Args() {
+		t, err := strconv.ParseFloat(arg, 64)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "cf: %v\n", err)
+			os.Exit(1)
+		}
+		f := tempconv.Fahrenheit(t)
+		c := tempconv.Celsius(t)
+		if *f2c {
+			fmt.Printf("Coversion: %s = %s\n",
+				f, tempconv.FToC(f))
+
+		} else {
+			fmt.Printf("Coversions: %s = %s, %s = %s\n",
+				f, tempconv.FToC(f), c, tempconv.CToF(c))
+		}
+	}
+}
+
+//!-
