@@ -17,15 +17,33 @@ import (
 func main() {
 	counts := make(map[string]int)
 	input := bufio.NewScanner(os.Stdin)
+	//fmt.Println(input)
+	//var value int = 0
+	//value := 0
 	for input.Scan() {
+		// Actuallyinput.Scan()There is no jump in this loop. 
+		// The program will listen to the input information all the time.
+		// Just added an interrupt to jump out
+		if input.Text() == "end" { break }
+		//fmt.Println("input", input.Text())
 		counts[input.Text()]++
+		//fmt.Println(counts)
 	}
-	// NOTE: ignoring potential errors from input.Err()
-	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
+	// NOTE:added potential error check
+	if input.Err() != nil{
+        fmt.Print("err")
+    }
+	fmt.Println(counts)
+	for k, c := range counts {
+		if c>1 {
+			fmt.Printf("%s\t%d\n",k,c)
 		}
 	}
+	// for line, n := range counts {
+	// 	if n > 1 {
+	// 		fmt.Printf("%d\t%s\n", n, line)
+	// 	}
+	// }
 }
 
 //!-
