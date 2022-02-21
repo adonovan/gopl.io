@@ -21,6 +21,9 @@ func main() {
 	//var value int = 0
 	//value := 0
 	for input.Scan() {
+		// Actuallyinput.Scan()There is no jump in this loop. 
+		// The program will listen to the input information all the time.
+		// Just added an interrupt to jump out
 		if input.Text() == "end" { break }
 		//fmt.Println("input", input.Text())
 		counts[input.Text()]++
