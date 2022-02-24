@@ -8,6 +8,16 @@ func main()  {
 	fmt.Println(v)
 	incrWithNewVariable(&v)
 	fibonacci(6)
+
+	// below code is to verify if the variable has different 
+	// address if declared in different blocks.
+	// ans is yes they do have different address.
+	x := "h"
+	fmt.Println(&x)
+	for _, x := range x {
+		fmt.Println(&x)
+		fmt.Printf( "%c\n",x)
+	}
 }
 
 func incr(p *int) int  {
