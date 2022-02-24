@@ -21,6 +21,7 @@ func intsToString(values []int) string {
 			buf.WriteString(", ")
 		}
 		fmt.Fprintf(&buf, "%d", v)
+		fmt.Println(&buf)
 	}
 	buf.WriteByte(']')
 	return buf.String()
