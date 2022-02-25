@@ -4,22 +4,33 @@
 // See page 83.
 
 // The sha256 command computes the SHA256 hash (an array) of a string.
+//!+
 package main
 
-import "fmt"
+import (
+	"crypto/sha256"
+	"flag"
+	"fmt"
 
-//!+
-import "crypto/sha256"
-
+	"gopl.io/ch4/sha256/sha512"
+)
+var algo = flag.String("a", "SHA256", "algorithm name")
+var text = flag.String("t", "Hello World!", "Text which needs to be hashed")
+var result string
+//var algoByte [32]byte = [32]byte{}
+var textByte []byte = []byte{}
 func main() {
-	c1 := sha256.Sum256([]byte("x"))
-	c2 := sha256.Sum256([]byte("X"))
-	fmt.Printf("%x\n%x\n%t\n%T\n", c1, c2, c1 == c2, c1)
-	// Output:
-	// 2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-	// 4b68ab3847feda7d6c62c1fbcbeebfa35eab7351ed5e78f4ddadea5df64b8015
-	// false
-	// [32]uint8
+	flag.Parse()
+	textByte = []byte(*text)
+
+	if(*algo != "" || *text != ""){
+		result = sha512.CommandLineHash(*algo, textByte)
+	}else{
+		byteArray := sha256.Sum256([]byte(textByte))
+		result = string(byteArray[:])
+	}
+
+	fmt.Printf("%x \n", result)
 }
 
 //!-
