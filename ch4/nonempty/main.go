@@ -13,13 +13,19 @@ import "fmt"
 // nonempty returns a slice holding only the non-empty strings.
 // The underlying array is modified during the call.
 func nonempty(strings []string) []string {
+	fmt.Println(strings)
 	i := 0
 	for _, s := range strings {
 		if s != "" {
 			strings[i] = s
 			i++
+		fmt.Printf("s: %s, string: %s\n",s, strings)
+
+		}else{
+		//fmt.Println("in else ",s)
 		}
 	}
+	//fmt.Printf("string: %s\n",strings)
 	return strings[:i]
 }
 
