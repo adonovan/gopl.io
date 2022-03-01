@@ -26,10 +26,14 @@ func main() {
 
 	//!+slice
 	s := []int{0, 1, 2, 3, 4, 5}
+	t := make([]int, len(s))
+	copy(t, s)
 	// Rotate s left by two positions.
 	reverse.Reverse(s[:2])
-	reverse.Reverse(s[2:])
-	reverse.Reverse(s)
+	fmt.Println(":2 ",s) // 1,0,2,3,4,5
+	reverse.Reverse(s[2:]) 
+	fmt.Println(":2 ",s) // 1,0,5,4,3,2
+	reverse.Reverse(s) //
 	fmt.Println("move left by 2 positions",s) // "[2 3 4 5 0 1]"
 	//!-slice
 	//var x []*int = &s
@@ -37,6 +41,10 @@ func main() {
 	fmt.Println("\n", reflect.ValueOf(s1).Kind())
 	reverse.ReverseUsingPointer(&s1)
 	fmt.Println("ReverseUsingPointer : ", s1)
+	reverse.Rotate(t, 2, true)
+	fmt.Println("t : ", t)
+	reverse.RemoveDuplicatesFromStringSlice([]string{"abc", "abc","ccc", "ddd","ccc","ccc"})
+	reverse.ReverseTheCharOfByteSlice([]byte("Hello"))
 	// Interactive test of reverse.
 	input := bufio.NewScanner(os.Stdin)
 mainloop:
