@@ -23,7 +23,10 @@ func main() {
 
 	in := bufio.NewReader(os.Stdin)
 	for {
+		//fmt.Println("n")
 		r, n, err := in.ReadRune() // returns rune, nbytes, error
+		fmt.Println(r)
+
 		if err == io.EOF {
 			break
 		}
@@ -40,6 +43,7 @@ func main() {
 	}
 	fmt.Printf("rune\tcount\n")
 	for c, n := range counts {
+		fmt.Println(c,n)
 		fmt.Printf("%q\t%d\n", c, n)
 	}
 	fmt.Print("\nlen\tcount\n")
@@ -48,6 +52,7 @@ func main() {
 			fmt.Printf("%d\t%d\n", i, n)
 		}
 	}
+	fmt.Println(counts)
 	if invalid > 0 {
 		fmt.Printf("\n%d invalid UTF-8 characters\n", invalid)
 	}
