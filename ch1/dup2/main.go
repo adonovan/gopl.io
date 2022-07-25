@@ -1,11 +1,3 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 10.
-//!+
-
-// Dup2 prints the count and text of lines that appear more than once
-// in the input.  It reads from stdin or from a list of named files.
 package main
 
 import (
@@ -16,6 +8,7 @@ import (
 
 func main() {
 	counts := make(map[string]int)
+	//founded_files := make([]int, 0)
 	files := os.Args[1:]
 	if len(files) == 0 {
 		countLines(os.Stdin, counts)
@@ -26,7 +19,11 @@ func main() {
 				fmt.Fprintf(os.Stderr, "dup2: %v\n", err)
 				continue
 			}
-			countLines(f, counts)
+			res := countLines(f, counts)
+			if res == true {
+				fmt.Printf("%v\n", arg)
+			}
+
 			f.Close()
 		}
 	}
@@ -37,12 +34,16 @@ func main() {
 	}
 }
 
-func countLines(f *os.File, counts map[string]int) {
+func countLines(f *os.File, counts map[string]int) bool {
 	input := bufio.NewScanner(f)
+	found := false
+	//text := ""
 	for input.Scan() {
-		counts[input.Text()]++
+		text := input.Text()
+		counts[text]++
+		if counts[text] > 2 {
+			found = true
+		}
 	}
-	// NOTE: ignoring potential errors from input.Err()
+	return found
 }
-
-//!-
