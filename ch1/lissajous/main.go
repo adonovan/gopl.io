@@ -28,14 +28,12 @@ import (
 
 //!+main
 
-var palette = []color.Color{color.White, color.Black}
-
-const (
-	whiteIndex = 0 // first color in palette
-	blackIndex = 1 // next color in palette
-)
-
 func main() {
+	diffColors := false
+	if len(os.Args) > 1 && os.Args[1] == "colors" {
+		diffColors = true
+	}
+
 	//!-main
 	// The sequence of images is deterministic unless we seed
 	// the pseudo-random number generator using the current time.
@@ -45,7 +43,7 @@ func main() {
 	if len(os.Args) > 1 && os.Args[1] == "web" {
 		//!+http
 		handler := func(w http.ResponseWriter, r *http.Request) {
-			lissajous(w)
+			lissajous(w, diffColors)
 		}
 		http.HandleFunc("/", handler)
 		//!-http
@@ -53,10 +51,10 @@ func main() {
 		return
 	}
 	//!+main
-	lissajous(os.Stdout)
+	lissajous(os.Stdout, diffColors)
 }
 
-func lissajous(out io.Writer) {
+func lissajous(out io.Writer, diffColors bool) {
 	const (
 		cycles  = 5     // number of complete x oscillator revolutions
 		res     = 0.001 // angular resolution
@@ -64,6 +62,10 @@ func lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
+
+	palette := getPalette()
+	color := getColorIndex(palette)
+
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
@@ -73,8 +75,11 @@ func lissajous(out io.Writer) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				blackIndex)
+			colorIndex := color
+			if diffColors == true {
+				colorIndex = getColorIndex(palette)
+			}
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), colorIndex)
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
@@ -84,3 +89,22 @@ func lissajous(out io.Writer) {
 }
 
 //!-main
+
+func getPalette() []color.Color {
+	//var palette = []color.Color{color.White, color.Black}
+	//var palette = []color.Color{color.Black, color.RGBA{0x00, 0xff, 0x00, 0xff}}
+	var palette = []color.Color{color.Black, color.RGBA{G: 0xff, A: 0xff}}
+
+	for len(palette) < 10 {
+		palette = append(palette, color.RGBA{getRandUint(), getRandUint(), getRandUint(), 255})
+	}
+	return palette
+}
+
+func getRandUint() uint8 {
+	return uint8(rand.Intn(255))
+}
+
+func getColorIndex(palette []color.Color) uint8 {
+	return uint8(rand.Intn(len(palette) + 1))
+}
