@@ -8,9 +8,9 @@ These example programs are licensed under a <a rel="license" href="http://creati
 
 You can download, build, and run the programs with the following commands:
 
-	$ export GOPATH=$HOME/gobook            # choose workspace directory
-	$ go get gopl.io/ch1/helloworld         # fetch, build, install
-	$ $GOPATH/bin/helloworld                # run
+	$ export GOPATH=$HOME/gobook            	# choose workspace directory
+	$ go install gopl.io/ch1/helloworld@latest      # fetch, build, install
+	$ $GOPATH/bin/helloworld                	# run
 	Hello, 世界
 
 Many of the programs contain comments of the form `//!+` and `//!-`.
