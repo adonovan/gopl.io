@@ -1,4 +1,4 @@
-module gopl.io
+module github.com/KipsasJaujoj/gopl.io
 
 go 1.16
 
