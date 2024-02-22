@@ -39,8 +39,8 @@ func main() {
 
 func countLines(f *os.File, counts map[string]int) {
 	input := bufio.NewScanner(f)
-	for input.Scan() {
-		counts[input.Text()]++
+	for i := 1; input.Scan(); i++ {
+		counts[input.Text()] = i
 	}
 	// NOTE: ignoring potential errors from input.Err()
 }
