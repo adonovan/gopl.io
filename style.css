@@ -1,7 +1,7 @@
 @font-face {
-	font-family:	MinionPro;
+	font-family:	CrimsonText;
 	font-weight:	normal;
-	src: 		url("fonts/MinionPro-Regular.ttf");
+	src: 		url("fonts/CrimsonText-Regular.ttf");
 }
 @font-face {
 	font-family:	Lato;
@@ -9,12 +9,14 @@
 	src: 		url("fonts/Lato-Bold.ttf");
 }
 @font-face {
-	font-family:	Consolas;
+	font-family:	InconsolataGo;
 	font-weight:	normal;
-	src: 		url("fonts/Consolas.ttf");
+	src: 		url("fonts/InconsolataGo.ttf");
 }
+/*
+*/
 body {
-	font-family:	MinionPro,"Times New Roman";
+	font-family:	MinionPro,CrimsonText,"Times New Roman";
 }
 table {
 	margin:		auto;
@@ -25,6 +27,6 @@ h1 {
 	margin-bottom:	0.5em;
 }
 code, pre {
-	font-family:	Consolas;
-    	font-size:	92%; 
+	font-family:	Consolas,Inconsolata;
+    	font-size:	92%;
 }
